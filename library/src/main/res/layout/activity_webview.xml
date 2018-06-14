@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        >
+
+        <include layout="@layout/layout_toolbar"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:progressDrawable="@drawable/progress_solidprimary"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        />
+
+    <com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView
+        android:id="@+id/refreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:tr_overscroll_height="@dimen/over_scrollHeight"
+        app:tr_pureScrollMode_on="true">
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            />
+
+    </com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView>
+
+</LinearLayout>
