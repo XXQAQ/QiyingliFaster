@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
-import com.xq.fasterdialog.toast.DefaultToast;
 import com.xq.projectdefine.base.baserefreshload.IFasterBaseRefreshLoadView;
+import com.xq.projectdefine.util.DefaultToast;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
