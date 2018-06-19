@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
+import top.zibin.luban.OnRenameListener;
 
 
 /**
@@ -72,7 +73,17 @@ public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMedia
                     {
                         try
                         {
-                            File file = Luban.with(getContext()).load(new File(path)).get().get(0);
+                            File file = Luban
+                                    .with(getContext())
+                                    .setRenameListener(new OnRenameListener() {
+                                        @Override
+                                        public String rename(String filePath) {
+                                            return SDUtils.getCachePhoto(getContext(),new File(filePath).getName());
+                                        }
+                                    })
+                                    .load(new File(path))
+                                    .get()
+                                    .get(0);
                             list_file.add(file);
                         }
                         catch (IOException e)

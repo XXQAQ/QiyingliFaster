@@ -3,14 +3,18 @@ package com.xq.qiyinglifaster.base.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.xq.projectdefine.util.tools.DensityUtils;
 import com.xq.projectdefine.util.tools.ViewUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.projectdefine.base.base.FasterBaseView;
+import com.xq.qiyinglifaster.widget.customview.IconFontTextview;
 import com.yanzhenjie.statusview.StatusUtils;
 
 public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseView<T> implements IMyBaseView<T> {
@@ -41,8 +45,17 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
     }
 
     @Override
+    public void initToolbar(String title, boolean isback) {
+        super.initToolbar(title, isback);
+        if (isback && getNavIcon() <= 0)
+        {
+            toolbar.setNavigationIcon(new BitmapDrawable(ViewUtils.convertViewToBitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),18)).build())));
+        }
+    }
+
+    @Override
     public int getNavIcon() {
-        return R.mipmap.refresh_loading01;
+        return 0;
     }
 
     @Override

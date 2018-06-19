@@ -17,14 +17,14 @@ public class SDUtils {
 
     //获取Android/data/包名下的缓存文件夹
     public static String getCacheDir(Context context){
-        String path = getSDPath()+ File.separator+"Android"+File.separator+"data"+File.separator+context.getPackageName()+File.separator + context.getResources().getString(R.string.app_name);
+        String path = getSDPath()+ File.separator+"Android"+File.separator+"data"+File.separator+context.getPackageName()+File.separator + "data";
         FileUtils.createOrExistsDir(path);
         return path;
     }
 
     //获取/data/data/包名下的存储文件夹
     public static String getDir(Context context){
-        String path = context.getFilesDir().getAbsolutePath()+File.separator + context.getResources().getString(R.string.app_name);
+        String path = context.getFilesDir().getAbsolutePath()+File.separator + "data";
         FileUtils.createOrExistsDir(path);
         return path;
     }
@@ -37,6 +37,11 @@ public class SDUtils {
     //获取摄像或拍照生成的临时文件名
     public static String getCachePhoto(Context context){
         return getCacheDir(context)+File.separator+"Camera_"+new Date().getTime()+".jpg";
+    }
+
+    //获取摄像或拍照生成的临时文件名(文件名不变)
+    public static String getCachePhoto(Context context,String fileName){
+        return getCacheDir(context)+File.separator+fileName;
     }
 
     //获取SD卡根路径
