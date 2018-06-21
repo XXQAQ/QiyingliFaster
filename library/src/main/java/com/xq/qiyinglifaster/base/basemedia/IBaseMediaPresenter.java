@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.xq.projectdefine.util.tools.BundleUtil;
+import com.xq.projectdefine.util.tools.FileUtils;
 import com.xq.projectdefine.util.tools.UriToPathUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.util.SDUtils;
@@ -75,13 +76,13 @@ public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMedia
                         {
                             File file = Luban
                                     .with(getContext())
+                                    .load(new File(path))
                                     .setRenameListener(new OnRenameListener() {
                                         @Override
                                         public String rename(String filePath) {
-                                            return SDUtils.getCachePhoto(getContext(),new File(filePath).getName());
+                                            return new File(filePath).getName();
                                         }
                                     })
-                                    .load(new File(path))
                                     .get()
                                     .get(0);
                             list_file.add(file);

@@ -49,7 +49,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         super.initToolbar(title, isback);
         if (isback && getNavIcon() <= 0)
         {
-            toolbar.setNavigationIcon(new BitmapDrawable(ViewUtils.convertViewToBitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),18)).build())));
+            toolbar.setNavigationIcon(new BitmapDrawable(ViewUtils.convertViewToBitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
         }
     }
 
