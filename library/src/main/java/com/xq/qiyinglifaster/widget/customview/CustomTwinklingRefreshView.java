@@ -1,4 +1,4 @@
-package com.xq.qiyinglifaster.base.baserefreshload;
+package com.xq.qiyinglifaster.widget.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;

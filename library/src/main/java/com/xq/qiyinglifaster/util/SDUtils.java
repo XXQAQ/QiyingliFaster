@@ -4,7 +4,6 @@ package com.xq.qiyinglifaster.util;
 import android.content.Context;
 import android.os.Environment;
 import com.xq.projectdefine.util.tools.FileUtils;
-import com.xq.qiyinglifaster.R;
 import java.io.File;
 import java.util.Date;
 

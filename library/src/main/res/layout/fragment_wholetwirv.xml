@@ -17,7 +17,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView
+    <com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView
         android:id="@+id/refreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             android:overScrollMode="never"
             />
 
-    </com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView>
+    </com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView>
 
 </android.support.design.widget.CoordinatorLayout>
 

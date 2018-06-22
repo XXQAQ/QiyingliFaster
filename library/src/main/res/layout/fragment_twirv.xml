@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView
+<com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshView"
@@ -17,4 +17,4 @@
     android:overScrollMode="never"
     />
 
-</com.xq.qiyinglifaster.base.baserefreshload.CustomTwinklingRefreshView>
+</com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView>
