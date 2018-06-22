@@ -13,7 +13,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.xq.projectdefine.util.tools.SystemUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.base.base.MyBaseView;
 import com.xq.qiyinglifaster.util.SDUtils;
@@ -120,7 +119,6 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                SystemUtils.openWeb(getContext(),url);
                 if (webView.canGoBack() == false)
                 {
                     ((Activity)getContext()).onBackPressed();

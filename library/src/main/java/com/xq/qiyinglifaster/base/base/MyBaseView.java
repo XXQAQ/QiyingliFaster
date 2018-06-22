@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.xq.projectdefine.util.tools.BarUtils;
 import com.xq.projectdefine.util.tools.DensityUtils;
-import com.xq.projectdefine.util.tools.ViewUtils;
+import com.xq.projectdefine.util.tools.ImageUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.projectdefine.base.base.FasterBaseView;
 import com.xq.qiyinglifaster.widget.customview.IconFontTextview;
@@ -49,7 +49,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         super.initToolbar(title, isback);
         if (isback && getNavIcon() <= 0)
         {
-            toolbar.setNavigationIcon(new BitmapDrawable(ViewUtils.convertViewToBitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
+            toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
         }
     }
 
@@ -104,8 +104,8 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
             ViewGroup.LayoutParams lp = view.getLayoutParams();
-            lp.height += ViewUtils.getStatusBarHeight(context);//增高
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + ViewUtils.getStatusBarHeight(context),
+            lp.height += BarUtils.getStatusBarHeight();//增高
+            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + BarUtils.getStatusBarHeight(),
                     view.getPaddingRight(), view.getPaddingBottom());
         }
     }

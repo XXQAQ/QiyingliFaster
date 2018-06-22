@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.xq.projectdefine.util.tools.SystemUtils;
+import com.xq.projectdefine.util.tools.KeyboardUtils;
 import com.xq.qiyinglifaster.eventbus.FinishEvent;
 import com.xq.qiyinglifaster.eventbus.FourComponentsEvent;
 import com.xq.projectdefine.base.base.FasterBaseActivity;
@@ -31,7 +31,7 @@ public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseAc
     @Override
     public void onResume() {
         super.onResume();
-        SystemUtils.closeSoftInput(getContext());
+        KeyboardUtils.hideSoftInput(this);
     }
 
     @Override
@@ -46,7 +46,7 @@ public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseAc
             // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
             View v = getCurrentFocus();
             if (isShouldHideInput(v, ev)) {
-                SystemUtils.closeSoftInput(getContext());
+                KeyboardUtils.hideSoftInput(this);
             }
         }
         return super.dispatchTouchEvent(ev);

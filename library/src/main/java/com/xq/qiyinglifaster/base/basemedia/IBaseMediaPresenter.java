@@ -9,8 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.xq.projectdefine.util.tools.BundleUtil;
-import com.xq.projectdefine.util.tools.FileUtils;
-import com.xq.projectdefine.util.tools.UriToPathUtils;
+import com.xq.projectdefine.util.tools.UriUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.util.SDUtils;
 import com.xq.projectdefine.base.abs.AbsView;
@@ -152,7 +151,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMedia
             if (uri == null)
                 return;
 
-            onReceiveFile(new File(UriToPathUtils.getFileAbsolutePath(getContext(), uri)),getMediaBuilder().what);
+            onReceiveFile(new File(UriUtils.getFileAbsolutePath(getContext(), uri)),getMediaBuilder().what);
         }
     }
 
