@@ -1,4 +1,4 @@
-package com.xq.qiyinglifaster.widget.customview;
+package com.xq.qiyinglifaster.widget.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -28,7 +28,7 @@
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         />
 
-    <com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView
+    <com.xq.qiyinglifaster.widget.view.CustomTwinklingRefreshView
         android:id="@+id/refreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,6 +43,6 @@
             android:overScrollMode="never"
             />
 
-    </com.xq.qiyinglifaster.widget.customview.CustomTwinklingRefreshView>
+    </com.xq.qiyinglifaster.widget.view.CustomTwinklingRefreshView>
 
 </LinearLayout>
