@@ -7,14 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
 import com.xq.projectdefine.base.abs.AbsPresenter;
 import com.xq.projectdefine.util.tools.BundleUtil;
 import com.xq.projectdefine.util.tools.UriUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.util.SDUtils;
 import com.xq.projectdefine.base.abs.AbsView;
-import com.xq.projectdefine.base.basemedia.IFasterBaseMediaPresenter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -227,7 +225,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> 
     //接收到一个文件后调用
     public abstract void onReceiveFile(File file, int what);
 
-    public IFasterBaseMediaPresenter.MediaBuilder getMediaBuilder();
+    public MediaBuilder getMediaBuilder();
 
     public static class MediaBuilder{
         public int what;
