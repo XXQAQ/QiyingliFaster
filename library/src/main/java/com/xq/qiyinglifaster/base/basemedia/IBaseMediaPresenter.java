@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.xq.projectdefine.base.abs.AbsPresenter;
 import com.xq.projectdefine.util.tools.BundleUtil;
 import com.xq.projectdefine.util.tools.UriUtils;
 import com.xq.qiyinglifaster.R;
@@ -32,26 +33,27 @@ import top.zibin.luban.OnRenameListener;
  * Created by xq on 2017/4/11 0011.
  */
 
-public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMediaPresenter<T> {
+public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> {
+
+    public static final int REQUEST_CODE_PHOTOS = 1;
+    public static final int REQUEST_CODE_CUT = 2;
+    public static final int REQUEST_CODE_CAMERA= 3;
+    public static final int REQUEST_CODE_FILE= 4;
 
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {
-        IFasterBaseMediaPresenter.super.afterOnCreate(savedInstanceState);
     }
 
     @Override
     default void onResume() {
-        IFasterBaseMediaPresenter.super.onResume();
     }
 
     @Override
     default void onPause() {
-        IFasterBaseMediaPresenter.super.onPause();
     }
 
     @Override
     default void onDestroy() {
-        IFasterBaseMediaPresenter.super.onDestroy();
     }
 
     default void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -179,6 +181,18 @@ public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMedia
         //TODO:摄像
     }
 
+    default void getFile(int what) {
+        getMediaBuilder().what = what;
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (getAreActivity() != null)
+            getAreActivity().startActivityForResult(intent, REQUEST_CODE_FILE);
+        else    if (getAreFragment() != null)
+            getAreFragment().startActivityForResult(intent,REQUEST_CODE_FILE);
+    }
+
     //剪裁的方法
     default void curImage(Uri uri) {
 
@@ -203,4 +217,21 @@ public interface IBaseMediaPresenter<T extends AbsView> extends IFasterBaseMedia
 
         ((Activity)getContext()).startActivityForResult(intent,REQUEST_CODE_CUT);
     }
+
+    //接收到图片后调用
+    public abstract void onReceivePhotos(List<File> list_file, int what);
+
+    //接收到一个录像后调用
+    public abstract void onReceiveCamera(File file, int what);
+
+    //接收到一个文件后调用
+    public abstract void onReceiveFile(File file, int what);
+
+    public IFasterBaseMediaPresenter.MediaBuilder getMediaBuilder();
+
+    public static class MediaBuilder{
+        public int what;
+        public int width, height;
+    }
+
 }

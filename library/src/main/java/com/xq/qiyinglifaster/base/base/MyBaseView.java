@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.ViewGroup;
+import com.xq.customview.view.IconFontTextView;
 import com.xq.projectdefine.util.tools.BarUtils;
 import com.xq.projectdefine.util.tools.DensityUtils;
 import com.xq.projectdefine.util.tools.ImageUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.projectdefine.base.base.FasterBaseView;
-import com.xq.qiyinglifaster.widget.customview.IconFontTextview;
 import com.yanzhenjie.statusview.StatusUtils;
 
 public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseView<T> implements IMyBaseView<T> {
@@ -49,7 +49,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         super.initToolbar(title, isback);
         if (isback && getNavIcon() <= 0)
         {
-            toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextview.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
+            toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextView.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
         }
     }
 
