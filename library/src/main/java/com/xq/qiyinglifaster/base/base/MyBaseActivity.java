@@ -83,6 +83,6 @@ public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseAc
             onFourCompoentsEvent(event);
     }
 
-    //当接受到传递给本Actiity的事件时回调的方法
+    //当接受到传递给本Activity的事件时回调的方法
     protected abstract void onFourCompoentsEvent(FourComponentsEvent event);
 }

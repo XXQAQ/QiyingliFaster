@@ -36,4 +36,16 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
         IFasterBaseViewPagerView.super.onSaveInstanceState(outState);
     }
 
+    default int getTabTextNormalColor() {
+        return -1;
+    }
+
+    default int getTabTextSelectColor() {
+        return -1;
+    }
+
+    default int getTabBackgroundColor() {
+        return -1;
+    }
+
 }

@@ -61,7 +61,7 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
     }
 
     @Override
-    public void initwebView(String url){
+    public void initWebView(String url){
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);  //支持js

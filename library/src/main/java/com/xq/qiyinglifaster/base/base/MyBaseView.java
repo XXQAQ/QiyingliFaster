@@ -36,7 +36,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         if (isHideSystemBar())
             hideSystemBar();
 
-        //TODO:针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
+        //针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
         if (getPresenter().getAreActivity() != null)
         {
             if (isLightStyle())

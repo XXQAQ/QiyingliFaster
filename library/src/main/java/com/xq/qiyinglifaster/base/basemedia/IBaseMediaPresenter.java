@@ -155,6 +155,10 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> 
         }
     }
 
+    default void getPhotos(int what, int number){
+        getPhotos(what,number,0,0);
+    }
+
     default void getPhotos(int what, int number, int width, int height) {
         getMediaBuilder().what = what;
         getMediaBuilder().width = width;

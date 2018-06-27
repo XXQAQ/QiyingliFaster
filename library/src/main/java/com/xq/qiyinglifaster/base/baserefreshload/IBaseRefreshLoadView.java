@@ -98,7 +98,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         return new LoadingView(getContext());
     }
 
-    //根据您的需要重写该方法，设置空布局样式,如果不需要空布局返回null即可(仅在FamiliarRecyclerView下有意义)
+    @Override
     default View getEmptyView() {
         return null;
     }

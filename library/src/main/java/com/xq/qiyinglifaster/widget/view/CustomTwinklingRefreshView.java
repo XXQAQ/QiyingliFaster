@@ -2,12 +2,11 @@ package com.xq.qiyinglifaster.widget.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
 import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.xq.projectdefine.base.baserefreshload.RefreshLoadCustomView;
+import com.xq.projectdefine.base.basesimplerefreshload.RefreshLoadCustomView;
 
 public class CustomTwinklingRefreshView extends TwinklingRefreshLayout implements RefreshLoadCustomView {
 

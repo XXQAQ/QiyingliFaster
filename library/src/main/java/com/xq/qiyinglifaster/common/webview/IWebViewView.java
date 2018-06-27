@@ -11,7 +11,7 @@ import com.xq.qiyinglifaster.base.base.IMyBaseView;
 
 public interface IWebViewView extends IMyBaseView<IWebViewPresenter> {
 
-    public void initwebView(String url);
+    public void initWebView(String url);
 
     public WebView getWebView();
 

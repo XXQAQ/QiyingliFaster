@@ -20,7 +20,7 @@ public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWe
         {
             getBindView().initToolbar("加载中...", true);
 
-            getBindView().initwebView(url);
+            getBindView().initWebView(url);
         }
     }
 
