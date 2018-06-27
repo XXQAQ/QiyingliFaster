@@ -33,6 +33,8 @@ public abstract class MyBaseFragment<T extends IMyBaseView> extends FasterBaseFr
     }
 
     //当接受到传递给本Activity的事件时回调的方法
-    protected abstract void onFourCompoentsEvent(FourComponentsEvent event);
+    protected void onFourCompoentsEvent(FourComponentsEvent event){
+
+    }
 
 }

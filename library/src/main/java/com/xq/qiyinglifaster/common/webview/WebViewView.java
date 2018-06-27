@@ -13,10 +13,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.xq.projectdefine.util.tools.IntentUtils;
+import com.xq.projectdefine.util.tools.PathUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.base.base.MyBaseView;
-import com.xq.qiyinglifaster.util.SDUtils;
-import java.io.File;
 
 public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebViewView  {
 
@@ -73,10 +73,10 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         // 设置数据库缓存路径
         // 开启database storage API功能
         webSettings.setDatabaseEnabled(true);
-        webSettings.setDatabasePath(SDUtils.getCacheDir(getContext())+ File.pathSeparatorChar+"web"); // API 19 deprecated
+        webSettings.setDatabasePath(PathUtils.getAppIntDbPath("webView")); // API 19 deprecated
         // 设置Application caches缓存目录
         webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(SDUtils.getCacheDir(getContext())+ File.pathSeparatorChar+"web");
+        webSettings.setAppCachePath(PathUtils.getAppExtCachePath());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             webView.setNestedScrollingEnabled(false);
@@ -119,6 +119,7 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                getContext().startActivity(IntentUtils.getWebIntent(url));
                 if (webView.canGoBack() == false)
                 {
                     ((Activity)getContext()).onBackPressed();
