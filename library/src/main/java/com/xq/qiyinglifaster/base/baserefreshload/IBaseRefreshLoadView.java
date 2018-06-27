@@ -41,14 +41,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         IFasterBaseRefreshLoadView.super.onSaveInstanceState(outState);
     }
 
-    default void afterRefreshLoadEnd() {
-        DefaultToast.showToast(getContext(),"没有更多数据啦");
-    }
-
-    default void afterRefreshLoadErro(){
-        DefaultToast.showToast(getContext(),"加载失败,请稍后重试");
-    }
-
+    @Override
     default int getHeadViewCount() {
         if (getRefreshLoadBuilder().rv instanceof FamiliarRecyclerView)
         {
@@ -58,6 +51,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         return 0;
     }
 
+    @Override
     default int getFoodViewCount() {
         if (getRefreshLoadBuilder().rv instanceof FamiliarRecyclerView)
         {
@@ -67,6 +61,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         return 0;
     }
 
+    @Override
     default void afterEmpty(){
         if (getRefreshLoadBuilder().rv instanceof FamiliarRecyclerView && ((FamiliarRecyclerView)getRefreshLoadBuilder().rv).getEmptyView() == null)     //如果是FamiliarRecyclerView，且没有空布局，则设置空布局
         {
@@ -79,12 +74,12 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
     }
 
     @Override
-    default void showRefreshLoadEnd() {
+    default void afterRefreshLoadEnd() {
         DefaultToast.showToast(getContext(),"已经到底了啦");
     }
 
     @Override
-    default void showRefreshLoadErro() {
+    default void afterRefreshLoadErro() {
         DefaultToast.showToast(getContext(),"没有数据哦");
     }
 
