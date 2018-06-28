@@ -27,10 +27,6 @@ import top.zibin.luban.OnCompressListener;
 import top.zibin.luban.OnRenameListener;
 
 
-/**
- * Created by xq on 2017/4/11 0011.
- */
-
 public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> {
 
     public static final int REQUEST_CODE_PHOTOS = 1;

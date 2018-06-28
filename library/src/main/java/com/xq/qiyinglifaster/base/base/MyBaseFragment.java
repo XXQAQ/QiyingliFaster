@@ -3,7 +3,7 @@ package com.xq.qiyinglifaster.base.base;
 
 import android.os.Bundle;
 
-import com.xq.qiyinglifaster.eventbus.FourComponentsEvent;
+import com.xq.qiyinglifaster.eventbus.ComponentEvent;
 import com.xq.projectdefine.base.base.FasterBaseFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,15 +25,15 @@ public abstract class MyBaseFragment<T extends IMyBaseView> extends FasterBaseFr
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void isMineFourCompoentsEvent(FourComponentsEvent event){
-        if (!Arrays.asList(event.getComponentsName()).contains(getClass().getName()))
+    public void isMineComponentEvent(ComponentEvent event){
+        if (!Arrays.asList(event.getDestCommunicator()).contains(getClass().getName()))
             return;
         else
-            onFourCompoentsEvent(event);
+            onComponentEvent(event);
     }
 
     //当接受到传递给本Activity的事件时回调的方法
-    protected void onFourCompoentsEvent(FourComponentsEvent event){
+    protected void onComponentEvent(ComponentEvent event){
 
     }
 

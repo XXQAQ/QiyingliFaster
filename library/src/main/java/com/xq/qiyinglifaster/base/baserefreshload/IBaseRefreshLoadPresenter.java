@@ -7,10 +7,6 @@ import android.os.Bundle;
 import com.xq.projectdefine.base.baserefreshload.IFasterBaseRefreshLoadPresenter;
 
 
-/**
- * Created by xq on 2017/4/11 0011.
- */
-
 public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> extends IFasterBaseRefreshLoadPresenter<T> {
 
     @Override

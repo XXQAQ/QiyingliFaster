@@ -7,9 +7,6 @@ import com.xq.projectdefine.util.tools.FileUtils;
 import java.io.File;
 import java.util.Date;
 
-/**
- * Created by xq on 2017/4/11 0011.
- */
 
 //本类专用于存储各种静态变量（可变）
 public class SDUtils {

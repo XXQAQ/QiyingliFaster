@@ -8,7 +8,6 @@ import com.xq.projectdefine.base.basesimplerefreshload.IFasterSimpleBaseRefreshL
 import com.xq.projectdefine.util.DefaultToast;
 
 
-
 public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends IFasterSimpleBaseRefreshLoadView<T> {
 
     @Override

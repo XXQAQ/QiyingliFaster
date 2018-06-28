@@ -8,6 +8,7 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.xq.projectdefine.base.basesimplerefreshload.RefreshLoadCustomView;
 
+
 public class CustomTwinklingRefreshView extends TwinklingRefreshLayout implements RefreshLoadCustomView {
 
     public CustomTwinklingRefreshView(Context context) {

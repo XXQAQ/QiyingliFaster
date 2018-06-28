@@ -5,9 +5,6 @@ import android.os.Bundle;
 
 import com.xq.projectdefine.base.baseviewpager.IFasterBaseViewPagerView;
 
-/**
- * Created by xq on 2017/4/11 0011.
- */
 
 public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends IFasterBaseViewPagerView<T> {
 

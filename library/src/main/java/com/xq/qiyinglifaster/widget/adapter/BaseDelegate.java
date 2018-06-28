@@ -7,9 +7,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
 
-/**
- * Created by xq on 2017/8/2.
- */
 
 public abstract class BaseDelegate implements ItemViewDelegate {
 

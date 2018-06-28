@@ -6,9 +6,6 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.Request;
 import com.xq.projectdefine.callback.FasterBaseCallback;
 
-/**
- * Created by xq on 2017/4/7 0007.
- */
 
 public abstract class MyBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T>{
 

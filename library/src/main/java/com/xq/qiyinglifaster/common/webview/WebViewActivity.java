@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import com.xq.qiyinglifaster.base.base.MyBaseActivity;
-import com.xq.qiyinglifaster.eventbus.FourComponentsEvent;
+import com.xq.qiyinglifaster.eventbus.ComponentEvent;
 
 public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWebViewPresenter {
 
@@ -34,11 +34,6 @@ public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWe
 
         //获取url
         url = bundle.getString("url");
-    }
-
-    @Override
-    protected void onFourCompoentsEvent(FourComponentsEvent event) {
-
     }
 
     @Override
