@@ -42,7 +42,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
     }
 
     @Override
-    default int getHeadViewCount() {
+    default int getAdapterHeadCount() {
         if (getRefreshLoadBuilder().rv instanceof FamiliarRecyclerView)
         {
             FamiliarRecyclerView familiarRecyclerView = (FamiliarRecyclerView) getRefreshLoadBuilder().rv;
@@ -52,7 +52,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
     }
 
     @Override
-    default int getFoodViewCount() {
+    default int getAdapterFootCount() {
         if (getRefreshLoadBuilder().rv instanceof FamiliarRecyclerView)
         {
             FamiliarRecyclerView familiarRecyclerView = (FamiliarRecyclerView) getRefreshLoadBuilder().rv;
