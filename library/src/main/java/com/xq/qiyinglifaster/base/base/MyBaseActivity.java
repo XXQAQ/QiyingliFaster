@@ -77,7 +77,7 @@ public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseAc
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isMineComponentEvent(ComponentEvent event){
-        if (!Arrays.asList(event.getDestCommunicator()).contains(getClass().getName()))
+        if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))
             return;
         else
             onComponentEvent(event);

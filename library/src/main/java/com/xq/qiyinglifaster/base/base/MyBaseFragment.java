@@ -26,7 +26,7 @@ public abstract class MyBaseFragment<T extends IMyBaseView> extends FasterBaseFr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isMineComponentEvent(ComponentEvent event){
-        if (!Arrays.asList(event.getDestCommunicator()).contains(getClass().getName()))
+        if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))
             return;
         else
             onComponentEvent(event);
