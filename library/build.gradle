@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.android.support:design:27.+'
     implementation 'com.android.support:cardview-v7:27.+'
     implementation 'com.github.XXQAQ:ProjectDefine:0.+'
-    implementation 'com.github.XXQAQ:FasterResource:0.+'
+    implementation 'com.github.XXQAQ:FasterResource:1.+'
     implementation 'com.github.XXQAQ:CustomView:1.+'
 
     //    以下为工具库
