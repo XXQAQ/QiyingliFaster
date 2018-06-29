@@ -67,7 +67,7 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         webSettings.setJavaScriptEnabled(true);  //支持js
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); // 设置缓存模式
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
         // 开启DOM storage API 功能
         webSettings.setDomStorageEnabled(true);
         // 设置数据库缓存路径
