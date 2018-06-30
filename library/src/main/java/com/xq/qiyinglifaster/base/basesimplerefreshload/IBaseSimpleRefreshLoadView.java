@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import com.xq.projectdefine.base.basesimplerefreshload.IFasterSimpleBaseRefreshLoadView;
-import com.xq.projectdefine.util.DefaultToast;
+import com.xq.projectdefine.util.tools.ToastUtils;
 
 
 public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends IFasterSimpleBaseRefreshLoadView<T> {
@@ -13,7 +13,6 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {
         IFasterSimpleBaseRefreshLoadView.super.afterOnCreate(savedInstanceState);
-
     }
 
     @Override
@@ -44,12 +43,12 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
 
     @Override
     default void afterRefreshLoadEnd() {
-        DefaultToast.showToast(getContext(),"已经到底了啦");
+        ToastUtils.showShort("已经到底了啦");
     }
 
     @Override
     default void afterRefreshLoadErro() {
-        DefaultToast.showToast(getContext(),"没有数据哦");
+        ToastUtils.showShort("没有数据哦");
     }
 
     @Override

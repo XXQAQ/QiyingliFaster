@@ -3,11 +3,10 @@ package com.xq.qiyinglifaster.base.baserefreshload;
 
 import android.os.Bundle;
 import android.view.View;
-
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import com.xq.projectdefine.base.baserefreshload.IFasterBaseRefreshLoadView;
-import com.xq.projectdefine.util.DefaultToast;
+import com.xq.projectdefine.util.tools.ToastUtils;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
@@ -75,12 +74,12 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
     @Override
     default void afterRefreshLoadEnd() {
-        DefaultToast.showToast(getContext(),"已经到底了啦");
+        ToastUtils.showShort("已经到底了啦");
     }
 
     @Override
     default void afterRefreshLoadErro() {
-        DefaultToast.showToast(getContext(),"没有数据哦");
+        ToastUtils.showShort("没有数据哦");
     }
 
     @Override

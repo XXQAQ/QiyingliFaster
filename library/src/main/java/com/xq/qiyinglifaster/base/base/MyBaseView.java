@@ -48,8 +48,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         //针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
         if (getPresenter().getAreActivity() != null)
         {
-            if (isLightStyle())
-                statusBarDarkFont();
+            BarUtils.setStatusBarLightMode(getPresenter().getAreActivity(),isLightStyle());
         }
     }
 
@@ -124,30 +123,11 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         return true;
     }
 
-    //修改状态栏字体颜色为黑色
-    private void statusBarDarkFont(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            ((Activity)getContext()).getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-    }
-
     //隐藏系统栏
     private void hideSystemBar() {
         StatusUtils.setFullToStatusBar((Activity)getContext());
         if (toolbar != null)
-        {
-            setHeightAndPadding(getContext(), toolbar);
-        }
+            BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
     }
 
-    private void setHeightAndPadding(Context context, View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            ViewGroup.LayoutParams lp = view.getLayoutParams();
-            lp.height += BarUtils.getStatusBarHeight();//增高
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + BarUtils.getStatusBarHeight(),
-                    view.getPaddingRight(), view.getPaddingBottom());
-        }
-    }
 }

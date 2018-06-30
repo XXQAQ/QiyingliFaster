@@ -10,11 +10,11 @@
     app:tr_overscroll_height="@dimen/over_scrollHeight"
     >
 
-<cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
-    android:id="@+id/rv"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:overScrollMode="never"
-    />
+    <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        />
 
 </com.xq.qiyinglifaster.widget.view.CustomTwinklingRefreshView>
