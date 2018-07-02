@@ -29,8 +29,8 @@ import top.zibin.luban.OnRenameListener;
 public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> {
 
     public static final int REQUEST_CODE_PHOTOS = 1;
-    public static final int REQUEST_CODE_CAMERA= 3;
-    public static final int REQUEST_CODE_FILE= 4;
+    public static final int REQUEST_CODE_CAMERA= 2;
+    public static final int REQUEST_CODE_FILE= 3;
 
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {

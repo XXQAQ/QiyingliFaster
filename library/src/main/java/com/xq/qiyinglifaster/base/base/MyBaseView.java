@@ -2,24 +2,19 @@ package com.xq.qiyinglifaster.base.base;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.xq.customview.view.IconFontTextView;
 import com.xq.projectdefine.util.tools.BarUtils;
 import com.xq.projectdefine.util.tools.DensityUtils;
 import com.xq.projectdefine.util.tools.ImageUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.projectdefine.base.base.FasterBaseView;
-import com.yanzhenjie.statusview.StatusUtils;
 
 public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseView<T> implements IMyBaseView<T> {
 
@@ -48,7 +43,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         //针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
         if (getPresenter().getAreActivity() != null)
         {
-            BarUtils.setStatusBarLightMode(getPresenter().getAreActivity(),isLightStyle());
+
         }
     }
 
@@ -79,7 +74,7 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
 
         if (isShowIcon)
         {
-            if (getNavIcon() >0 )
+            if (getNavIcon() !=0 )
                 toolbar.setNavigationIcon(getNavIcon());
             else
                 toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextView.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(DensityUtils.dip2px(getContext(),16)).build())));
@@ -118,16 +113,16 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         return false;
     }
 
-    //重写该方法以自定Systembar上的字体颜色风格
-    protected boolean isLightStyle(){
-        return true;
+    //使用该方法改变Systembar上的字体色风格
+    protected void setStatusBarLightMode(boolean isLightStyle){
+        BarUtils.setStatusBarLightMode(getPresenter().getAreActivity(),isLightStyle);
     }
 
     //隐藏系统栏
     private void hideSystemBar() {
-        StatusUtils.setFullToStatusBar((Activity)getContext());
+        BarUtils.setStatusBarFull((Activity) getContext());
         if (toolbar != null)
-            BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+            BarUtils.addHeightEqualStatusBarHeight(toolbar);
     }
 
 }
