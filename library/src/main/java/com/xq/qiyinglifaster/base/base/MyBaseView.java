@@ -37,8 +37,14 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         if (sv != null)
             sv.setNestedScrollingEnabled(false);
 
-        if (isHideSystemBar())
-            hideSystemBar();
+        //针对顶部容器作特殊处理
+        if (isTopContainer())
+        {
+            //隐藏状态栏
+            if (isHideSystemBar()) hideSystemBar();
+            //设置状态栏字体颜色
+            setStatusBarLightMode(isLightStyle());
+        }
 
         //针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
         if (getPresenter().getAreActivity() != null)
@@ -108,17 +114,20 @@ public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseV
         return getContext().getResources().getColor(R.color.textcolor_normal);
     }
 
-    //重写该方法以沉浸状态栏
+    //重写该方法以沉浸状态栏(仅在TopContainer有意义)
     protected boolean isHideSystemBar(){
-        return false;
+        return true;
     }
 
-    //使用该方法改变Systembar上的字体色风格
-    protected void setStatusBarLightMode(boolean isLightStyle){
+    //重写该方法以改变状态栏字体颜色
+    protected boolean isLightStyle(){
+        return true;
+    }
+
+    private void setStatusBarLightMode(boolean isLightStyle){
         BarUtils.setStatusBarLightMode(getPresenter().getAreActivity(),isLightStyle);
     }
 
-    //隐藏系统栏
     private void hideSystemBar() {
         BarUtils.setStatusBarFull((Activity) getContext());
         if (toolbar != null)
