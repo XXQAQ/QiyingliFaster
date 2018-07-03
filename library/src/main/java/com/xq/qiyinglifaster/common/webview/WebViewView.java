@@ -123,11 +123,12 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(300);
                                 ((Activity)getContext()).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        pb.setVisibility(View.INVISIBLE);
+                                        if (pb.getProgress() >=100)
+                                            pb.setVisibility(View.INVISIBLE);
                                     }
                                 });
                             } catch (InterruptedException e) {
