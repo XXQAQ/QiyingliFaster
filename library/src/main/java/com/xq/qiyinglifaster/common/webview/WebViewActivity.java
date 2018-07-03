@@ -10,6 +10,8 @@ import com.xq.qiyinglifaster.eventbus.ComponentEvent;
 
 public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWebViewPresenter {
 
+    public static final String KEY_URL = "url";
+
     private String url;
 
     @Override
@@ -25,15 +27,9 @@ public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWe
     }
 
     @Override
-    protected void initData() {
-
-    }
-
-    @Override
     protected void resolveBundle(Bundle bundle) {
-
         //获取url
-        url = bundle.getString("url");
+        url = bundle.getString(KEY_URL);
     }
 
     @Override

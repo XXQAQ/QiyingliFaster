@@ -1,6 +1,7 @@
 package com.xq.qiyinglifaster.common.webview;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +14,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.xq.projectdefine.base.base.TopContainer;
 import com.xq.projectdefine.util.tools.IntentUtils;
+import com.xq.projectdefine.util.tools.NetworkUtils;
 import com.xq.projectdefine.util.tools.PathUtils;
 import com.xq.qiyinglifaster.R;
 import com.xq.qiyinglifaster.base.base.MyBaseView;
 
+@TopContainer
 public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebViewView  {
 
     private TwinklingRefreshLayout refreshView;
@@ -60,6 +64,7 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         pb = (ProgressBar)findViewById(R.id.pb);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void initWebView(String url){
 
@@ -67,7 +72,10 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         webSettings.setJavaScriptEnabled(true);  //支持js
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
+        if (NetworkUtils.isConnected())
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        else
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         // 开启DOM storage API 功能
         webSettings.setDomStorageEnabled(true);
         // 设置数据库缓存路径
@@ -104,16 +112,30 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress >= 100)
-                {
-                    pb.setVisibility(View.GONE);
-                }
-                else
+                if (newProgress <= 100)
                 {
                     pb.setVisibility(View.VISIBLE);
                     pb.setProgress(newProgress);
                 }
-
+                if (newProgress >= 100)
+                {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(500);
+                                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        pb.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
             }
         });
         webView.setDownloadListener(new DownloadListener() {
@@ -128,12 +150,6 @@ public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebVi
         });
 
         webView.loadUrl(url);
-    }
-
-
-    @Override
-    protected boolean isHideSystemBar() {
-        return true;
     }
 
     @Override
