@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xq.qiyinglifaster" >
+    package="com.xq.customfaster" >
 
     <application>
 
         <activity
-            android:name="com.xq.qiyinglifaster.common.webview.WebViewActivity"
+            android:name="com.xq.customfaster.common.webview.WebViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
