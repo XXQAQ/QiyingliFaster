@@ -3,7 +3,7 @@ package com.xq.customfaster.callback.httpcallback;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.Request;
+import com.lzy.okgo.request.base.Request;
 import com.xq.projectdefine.callback.httpcallback.FasterBaseCallback;
 
 

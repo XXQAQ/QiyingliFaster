@@ -44,7 +44,7 @@ dependencies {
 
     //    以下为工具库
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.lzy.net:okgo:3.0.1'
+    implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.zhihu.android:matisse:0.5.0-beta3'
     implementation 'top.zibin:Luban:1.1.6'
