@@ -7,11 +7,11 @@ import com.lzy.okgo.request.Request;
 import com.xq.projectdefine.callback.httpcallback.FasterBaseCallback;
 
 
-public abstract class MyBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T> {
+public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T> {
 
     protected Class<T> entityClass;
 
-    public MyBaseCallback(Class<T> entityClass) {
+    public CustomBaseCallback(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
