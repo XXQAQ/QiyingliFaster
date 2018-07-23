@@ -4,35 +4,35 @@ package com.xq.customfaster.base.basesimplerefreshload;
 import android.os.Bundle;
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
-import com.xq.projectdefine.base.basesimplerefreshload.IFasterSimpleBaseRefreshLoadView;
+import com.xq.projectdefine.base.basesimplerefreshload.IFasterBaseSimpleRefreshLoadView;
 import com.xq.projectdefine.util.tools.ToastUtils;
 
 
-public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends IFasterSimpleBaseRefreshLoadView<T> {
+public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends IFasterBaseSimpleRefreshLoadView<T> {
 
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {
-        IFasterSimpleBaseRefreshLoadView.super.afterOnCreate(savedInstanceState);
+        IFasterBaseSimpleRefreshLoadView.super.afterOnCreate(savedInstanceState);
     }
 
     @Override
     default void onResume() {
-        IFasterSimpleBaseRefreshLoadView.super.onResume();
+        IFasterBaseSimpleRefreshLoadView.super.onResume();
     }
 
     @Override
     default void onPause() {
-        IFasterSimpleBaseRefreshLoadView.super.onPause();
+        IFasterBaseSimpleRefreshLoadView.super.onPause();
     }
 
     @Override
     default void onDestroy() {
-        IFasterSimpleBaseRefreshLoadView.super.onDestroy();
+        IFasterBaseSimpleRefreshLoadView.super.onDestroy();
     }
 
     @Override
     default void onSaveInstanceState(Bundle outState) {
-        IFasterSimpleBaseRefreshLoadView.super.onSaveInstanceState(outState);
+        IFasterBaseSimpleRefreshLoadView.super.onSaveInstanceState(outState);
     }
 
     @Override

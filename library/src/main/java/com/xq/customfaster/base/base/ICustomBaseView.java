@@ -3,7 +3,7 @@ package com.xq.customfaster.base.base;
 
 import com.xq.projectdefine.base.base.IFasterBaseView;
 
-public interface IMyBaseView<T extends IMyBasePresenter> extends IFasterBaseView<T> {
+public interface ICustomBaseView<T extends ICustomBasePresenter> extends IFasterBaseView<T> {
 
     //手动调用以设置Toolbar标题
     public void initToolbar(String title);

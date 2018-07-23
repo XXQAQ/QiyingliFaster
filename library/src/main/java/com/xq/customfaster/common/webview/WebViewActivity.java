@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
-import com.xq.customfaster.base.base.MyBaseActivity;
-import com.xq.customfaster.eventbus.ComponentEvent;
+import com.xq.customfaster.base.base.CustomBaseActivity;
 
-public class WebViewActivity extends MyBaseActivity<IWebViewView> implements IWebViewPresenter {
+public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements IWebViewPresenter {
 
     public static final String KEY_URL = "url";
 

@@ -16,23 +16,19 @@ import com.xq.projectdefine.util.tools.ScreenUtils;
 import com.xq.customfaster.R;
 import com.xq.projectdefine.base.base.FasterBaseView;
 
-public abstract class MyBaseView<T extends IMyBasePresenter> extends FasterBaseView<T> implements IMyBaseView<T> {
+public abstract class CustomBaseView<T extends ICustomBasePresenter> extends FasterBaseView<T> implements ICustomBaseView<T> {
 
     protected Toolbar toolbar;
 
     protected NestedScrollView sv;
 
-    public MyBaseView(T presenter) {
+    public CustomBaseView(T presenter) {
         super(presenter);
     }
 
     @Override
     public void afterOnCreate(Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
-
-        toolbar = (Toolbar) rootView.findViewById(getContext().getResources().getIdentifier("toolbar", "id", getContext().getPackageName()));
-
-        sv = (NestedScrollView)findViewById(getContext().getResources().getIdentifier("sv", "id", getContext().getPackageName()));
 
         if (sv != null)
             sv.setNestedScrollingEnabled(false);

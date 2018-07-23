@@ -4,34 +4,34 @@ package com.xq.customfaster.base.basesimplerefreshload;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.xq.projectdefine.base.basesimplerefreshload.IFasterSimpleBaseRefreshLoadPresenter;
+import com.xq.projectdefine.base.basesimplerefreshload.IFasterBaseSimpleRefreshLoadPresenter;
 
 
-public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoadView> extends IFasterSimpleBaseRefreshLoadPresenter<T> {
+public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoadView> extends IFasterBaseSimpleRefreshLoadPresenter<T> {
 
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {
-        IFasterSimpleBaseRefreshLoadPresenter.super.afterOnCreate(savedInstanceState);
+        IFasterBaseSimpleRefreshLoadPresenter.super.afterOnCreate(savedInstanceState);
     }
 
     @Override
     default void onResume() {
-        IFasterSimpleBaseRefreshLoadPresenter.super.onResume();
+        IFasterBaseSimpleRefreshLoadPresenter.super.onResume();
     }
 
     @Override
     default void onPause() {
-        IFasterSimpleBaseRefreshLoadPresenter.super.onPause();
+        IFasterBaseSimpleRefreshLoadPresenter.super.onPause();
     }
 
     @Override
     default void onDestroy() {
-        IFasterSimpleBaseRefreshLoadPresenter.super.onDestroy();
+        IFasterBaseSimpleRefreshLoadPresenter.super.onDestroy();
     }
 
     @Override
     default void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IFasterSimpleBaseRefreshLoadPresenter.super.onActivityResult(requestCode,resultCode,data);
+        IFasterBaseSimpleRefreshLoadPresenter.super.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override

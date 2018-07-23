@@ -19,10 +19,10 @@ import com.xq.projectdefine.util.tools.IntentUtils;
 import com.xq.projectdefine.util.tools.NetworkUtils;
 import com.xq.projectdefine.util.tools.PathUtils;
 import com.xq.customfaster.R;
-import com.xq.customfaster.base.base.MyBaseView;
+import com.xq.customfaster.base.base.CustomBaseView;
 
 @TopContainer
-public class WebViewView extends MyBaseView<IWebViewPresenter> implements IWebViewView  {
+public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IWebViewView  {
 
     private TwinklingRefreshLayout refreshView;
     private WebView webView;

@@ -1,13 +1,13 @@
-package com.xq.customfaster.callback;
+package com.xq.customfaster.callback.httpcallback;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.Request;
-import com.xq.projectdefine.callback.FasterBaseCallback;
+import com.xq.projectdefine.callback.httpcallback.FasterBaseCallback;
 
 
-public abstract class MyBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T>{
+public abstract class MyBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T> {
 
     protected Class<T> entityClass;
 

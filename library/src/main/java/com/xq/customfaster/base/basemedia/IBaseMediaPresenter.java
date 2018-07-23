@@ -120,7 +120,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> 
 
         checkPermission(new UniverseCallback() {
             @Override
-            public void onCallback() {
+            public void onCallback(Object... objects) {
 
                 Matisse matisse = null;
 
@@ -146,7 +146,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> 
 
         checkPermission(new UniverseCallback() {
             @Override
-            public void onCallback() {
+            public void onCallback(Object... objects) {
 
             }
         },PermissionConstants.STORAGE,PermissionConstants.CAMERA);
@@ -157,7 +157,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsPresenter<T> 
 
         checkPermission(new UniverseCallback() {
             @Override
-            public void onCallback() {
+            public void onCallback(Object... objects) {
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。

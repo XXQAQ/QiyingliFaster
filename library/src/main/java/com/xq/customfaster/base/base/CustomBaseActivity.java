@@ -15,9 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Arrays;
-
-public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseActivity<T> implements IMyBasePresenter<T> {
+public abstract class CustomBaseActivity<T extends ICustomBaseView> extends FasterBaseActivity<T> implements ICustomBasePresenter<T> {
 
     @Override
     public void afterOnCreate(Bundle savedInstanceState) {
@@ -75,6 +73,7 @@ public abstract class MyBaseActivity<T extends IMyBaseView> extends FasterBaseAc
         finish();
     }
 
+    @Deprecated
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isMineComponentEvent(ComponentEvent event){
         if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))

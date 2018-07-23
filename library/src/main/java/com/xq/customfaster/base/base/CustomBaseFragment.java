@@ -8,9 +8,8 @@ import com.xq.projectdefine.base.base.FasterBaseFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import java.util.Arrays;
 
-public abstract class MyBaseFragment<T extends IMyBaseView> extends FasterBaseFragment<T> implements IMyBasePresenter<T> {
+public abstract class CustomBaseFragment<T extends ICustomBaseView> extends FasterBaseFragment<T> implements ICustomBasePresenter<T> {
 
     @Override
     public void afterOnCreate(Bundle savedInstanceState) {
@@ -24,6 +23,7 @@ public abstract class MyBaseFragment<T extends IMyBaseView> extends FasterBaseFr
         EventBus.getDefault().unregister(this);
     }
 
+    @Deprecated
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isMineComponentEvent(ComponentEvent event){
         if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))

@@ -3,10 +3,10 @@ package com.xq.customfaster.common.webview;
 
 import android.webkit.WebView;
 
-import com.xq.customfaster.base.base.IMyBaseView;
+import com.xq.customfaster.base.base.ICustomBaseView;
 
 
-public interface IWebViewView extends IMyBaseView<IWebViewPresenter> {
+public interface IWebViewView extends ICustomBaseView<IWebViewPresenter> {
 
     public void initWebView(String url);
 
