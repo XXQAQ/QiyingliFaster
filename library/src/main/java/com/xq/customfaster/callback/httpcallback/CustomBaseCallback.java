@@ -11,6 +11,8 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
 
     protected Class<T> entityClass;
 
+    private T t;
+
     public CustomBaseCallback(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
@@ -24,18 +26,19 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     @Override
     public void onCacheSuccess(Response<T> response) {
         super.onCacheSuccess(response);
-        requestCacheSuccess(response.body(),response);
+        onSuccess(response);
     }
 
     @Override
     public void onSuccess(Response<T> response) {
-        requestSuccess(response.body(),response);
+        t = response.body();
+        requestSuccess(t,response);
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
-        requestFinish();
+        requestFinish(t);
     }
 
     @Override
@@ -46,32 +49,7 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
 
     @Override
     public T convertResponse(okhttp3.Response response) throws Throwable {
-        return convertJson(response.body().string());
+        return new Gson().fromJson(response.body().string(), entityClass);
     }
 
-    //公共部分
-    @Override
-    public void requestStart(Object... objects) {
-
-    }
-
-    @Override
-    public void requestCacheSuccess(T t, Object... objects) {
-        requestSuccess(t,objects);
-    }
-
-    @Override
-    public void requestError(Object... objects) {
-
-    }
-
-    @Override
-    public void requestFinish(Object... objects) {
-
-    }
-
-    @Override
-    public T convertJson(String data) throws Throwable {
-        return new Gson().fromJson(data, entityClass);
-    }
 }
