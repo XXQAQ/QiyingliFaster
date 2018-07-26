@@ -1,4 +1,4 @@
-package com.xq.customfaster.eventbus;
+package com.xq.customfaster.util.eventbus;
 
 import android.os.Bundle;
 import android.os.Parcel;

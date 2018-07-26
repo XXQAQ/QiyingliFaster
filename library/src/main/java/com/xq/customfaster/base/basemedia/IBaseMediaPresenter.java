@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
 import com.xq.projectdefine.FasterInterface;
 import com.xq.projectdefine.base.abs.AbsPresenter;
-import com.xq.projectdefine.callback.UniverseCallback;
+import com.xq.projectdefine.util.callback.UniverseCallback;
 import com.xq.projectdefine.util.constant.PermissionConstants;
 import com.xq.projectdefine.util.tools.PermissionUtils;
 import com.xq.projectdefine.util.tools.UriUtils;

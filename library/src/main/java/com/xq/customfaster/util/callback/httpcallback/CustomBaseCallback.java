@@ -1,10 +1,10 @@
-package com.xq.customfaster.callback.httpcallback;
+package com.xq.customfaster.util.callback.httpcallback;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.projectdefine.callback.httpcallback.FasterBaseCallback;
+import com.xq.projectdefine.util.callback.httpcallback.FasterBaseCallback;
 
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T> {
@@ -38,7 +38,7 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     @Override
     public void onFinish() {
         super.onFinish();
-        requestFinish(t);
+        requestFinish();
     }
 
     @Override
