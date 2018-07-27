@@ -36,8 +36,6 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     public void afterOnCreate(Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
 
-        findView();
-
     }
 
     @Override
@@ -56,12 +54,6 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     public void onDestroy() {
         super.onDestroy();
         getWebView().destroy();
-    }
-
-    private void findView() {
-        refreshView = (TwinklingRefreshLayout)findViewById(R.id.refreshView);
-        webView = (WebView)findViewById(R.id.webView);
-        pb = (ProgressBar)findViewById(R.id.pb);
     }
 
     @SuppressLint("MissingPermission")
