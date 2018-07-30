@@ -18,10 +18,13 @@ public interface RefreshLoadViewInterface {
     public void setEmptyView(Object object);
 
     //设置头布局
-    public void setHeaderView(Object object);
+    public void setRefreshView(Object object);
 
     //设置尾布局
-    public void setFootView(Object object);
+    public void setLoadmoreView(Object object);
+
+    //显示空布局
+    public void showEmptyView();
 
     //设置状态监听
     public void setRefreshLoadListener(OnRefreshLoadListener listeneri);

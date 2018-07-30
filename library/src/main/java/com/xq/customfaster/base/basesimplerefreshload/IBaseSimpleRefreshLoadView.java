@@ -51,8 +51,8 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
                     getPresenter().cancleLoadmore();
                 }
             });
-            getRefreshLoadBuilder().refreshView.setHeaderView(getHeadView());
-            getRefreshLoadBuilder().refreshView.setFootView(getFootView());
+            getRefreshLoadBuilder().refreshView.setRefreshView(getRefreshView());
+            getRefreshLoadBuilder().refreshView.setLoadmoreView(getLoadmoreView());
         }
     }
 
@@ -116,8 +116,7 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
 
     //刷新加载数据为空后处理
     default void afterEmpty(){
-        if (getRefreshLoadBuilder().refreshView != null && getEmptyView() != null)
-            getRefreshLoadBuilder().refreshView.setEmptyView(getEmptyView());
+        //由于使用的RefreshView没有setEmptyView方法，所以本方法在此无用。理论上来说你需要判断RefreshView是否已有EmptyView，如果没有则创建；然后再调用showEmptyView
     }
 
     //刷新加载完毕后处理
@@ -131,12 +130,12 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
     }
 
     //返回刷新布局
-    default Object getHeadView(){
+    default Object getRefreshView(){
         return new ProgressLayout(getContext());
     }
 
     //返回加载布局
-    default Object getFootView() {
+    default Object getLoadmoreView() {
         return new LoadingView(getContext());
     }
 
