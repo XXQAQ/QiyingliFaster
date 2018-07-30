@@ -6,10 +6,9 @@ import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.xq.projectdefine.base.basesimplerefreshload.RefreshLoadView;
 
 
-public class CustomTwinklingRefreshView extends TwinklingRefreshLayout implements RefreshLoadView {
+public class CustomTwinklingRefreshView extends TwinklingRefreshLayout implements RefreshLoadViewInterface {
 
     public CustomTwinklingRefreshView(Context context) {
         super(context);

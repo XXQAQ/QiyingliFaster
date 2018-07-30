@@ -135,10 +135,8 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 getContext().startActivity(IntentUtils.getWebIntent(url));
-                if (webView.canGoBack() == false)
-                {
-                    ((Activity)getContext()).onBackPressed();
-                }
+                if (webView.canGoBack() == true)
+                    webView.goBack();
             }
         });
 

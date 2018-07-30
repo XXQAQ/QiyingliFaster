@@ -4,34 +4,40 @@ package com.xq.customfaster.base.baseviewpager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.xq.projectdefine.base.baseviewpager.IFasterBaseViewPagerPresenter;
+import com.xq.projectdefine.base.abs.AbsPresenter;
+import com.xq.projectdefine.bean.behavior.TitleBehavior;
+
+import java.util.List;
 
 
-public interface IBaseViewPagerPresenter<T extends IBaseViewPagerView> extends IFasterBaseViewPagerPresenter<T> {
+public interface IBaseViewPagerPresenter<T extends IBaseViewPagerView> extends AbsPresenter<T> {
 
     @Override
     default void afterOnCreate(Bundle savedInstanceState) {
-        IFasterBaseViewPagerPresenter.super.afterOnCreate(savedInstanceState);
+
     }
 
     @Override
     default void onResume() {
-        IFasterBaseViewPagerPresenter.super.onResume();
+
     }
 
     @Override
     default void onPause() {
-        IFasterBaseViewPagerPresenter.super.onPause();
+
     }
 
     @Override
     default void onDestroy() {
-        IFasterBaseViewPagerPresenter.super.onDestroy();
+
     }
 
     @Override
     default void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IFasterBaseViewPagerPresenter.super.onActivityResult(requestCode,resultCode,data);
+
     }
+
+    //设置title与fragment集合（需要注意：Fragment附带在TitleBehavior的Tag中）
+    public abstract List<TitleBehavior> getFragmentsAndTitles();
 
 }

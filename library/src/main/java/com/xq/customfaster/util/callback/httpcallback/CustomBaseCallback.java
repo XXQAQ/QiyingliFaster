@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.projectdefine.util.callback.httpcallback.FasterBaseCallback;
+import com.xq.projectdefine.util.callback.httpcallback.BaseCallbackInterface;
 
 
-public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterBaseCallback<T> {
+public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements BaseCallbackInterface<T> {
 
     protected Class<T> entityClass;
 
