@@ -121,12 +121,12 @@ public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPres
 
     //刷新加载完毕后处理
     default void afterRefreshLoadEnd() {
-        ToastUtils.showShort("已经到底了啦");
+        ToastUtils.showShort("没有数据了哦");
     }
 
     //刷新加载错误后处理
     default void afterRefreshLoadErro() {
-        ToastUtils.showShort("没有数据哦");
+        ToastUtils.showShort("数据加载失败");
     }
 
     //返回刷新布局
