@@ -15,66 +15,66 @@ public interface IBaseSimpleRefreshLoadView<T extends AbsSimpleRefreshLoadPresen
 
     @Override
     default void startRefresh(){
-        getRefreshLoadBuilder().startRefresh();
+        getRefreshLoadDelegate().startRefresh();
     }
 
     @Override
     default void startLoadmore(){
-        getRefreshLoadBuilder().startLoadmore();
+        getRefreshLoadDelegate().startLoadmore();
     }
 
     @Override
     default void refreshing() {
-        getRefreshLoadBuilder().refreshing();
+        getRefreshLoadDelegate().refreshing();
     }
 
     @Override
     default void loadmoring() {
-        getRefreshLoadBuilder().loadmoring();
+        getRefreshLoadDelegate().loadmoring();
     }
 
     @Override
     default void afterRefresh() {
-        getRefreshLoadBuilder().afterRefresh();
+        getRefreshLoadDelegate().afterRefresh();
     }
 
     @Override
     default void afterLoadmore() {
-        getRefreshLoadBuilder().afterLoadmore();
+        getRefreshLoadDelegate().afterLoadmore();
     }
 
     @Override
     default void afterEmpty(){
-        getRefreshLoadBuilder().afterEmpty();
+        getRefreshLoadDelegate().afterEmpty();
     }
 
     @Override
     default void afterRefreshLoadEnd() {
-        getRefreshLoadBuilder().afterRefreshLoadEnd();
+        getRefreshLoadDelegate().afterRefreshLoadEnd();
     }
 
     @Override
     default void afterRefreshLoadErro() {
-        getRefreshLoadBuilder().afterRefreshLoadErro();
+        getRefreshLoadDelegate().afterRefreshLoadErro();
     }
 
     @Override
     default void refreshView(Object object) {
-        getRefreshLoadBuilder().refreshView(object);
+        getRefreshLoadDelegate().refreshView(object);
     }
 
     @Override
     default void loadmoreView(Object object) {
-        getRefreshLoadBuilder().loadmoreView(object);
+        getRefreshLoadDelegate().loadmoreView(object);
     }
 
-    public RefreshLoadBuilder getRefreshLoadBuilder();
+    public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadBuilder<T extends AbsSimpleRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsSimpleRefreshLoadView<T> {
+    public abstract class RefreshLoadDelegate<T extends AbsSimpleRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsSimpleRefreshLoadView<T> {
 
         public RefreshLoadViewInterface refreshView;
 
-        public RefreshLoadBuilder(AbsView view) {
+        public RefreshLoadDelegate(AbsView view) {
             super(view);
         }
 

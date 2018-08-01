@@ -32,32 +32,32 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
 
     @Override
     default void getPhotos(int what){
-        getMediaBuilder().getPhotos(what);
+        getMediaDelegate().getPhotos(what);
     }
 
     @Override
     default void getPhotos(int what, int number){
-        getMediaBuilder().getPhotos(what,number);
+        getMediaDelegate().getPhotos(what,number);
     }
 
     @Override
     default void getPhotos(int what, int number, int cutWidth, int cutHeight) {
-        getMediaBuilder().getPhotos(what,number,cutWidth,cutHeight);
+        getMediaDelegate().getPhotos(what,number,cutWidth,cutHeight);
     }
 
     @Override
     default void getCamera(int what) {
-        getMediaBuilder().getCamera(what);
+        getMediaDelegate().getCamera(what);
     }
 
     @Override
     default void getFile(int what) {
-        getMediaBuilder().getFile(what);
+        getMediaDelegate().getFile(what);
     }
 
-    public MediaBuilder getMediaBuilder();
+    public MediaDelegate getMediaDelegate();
 
-    public abstract class MediaBuilder<T extends AbsView> extends AbsPresenterDelegate<T> implements AbsMediaPresenter<T>{
+    public abstract class MediaDelegate<T extends AbsView> extends AbsPresenterDelegate<T> implements AbsMediaPresenter<T>{
 
         public static final int REQUEST_CODE_PHOTOS = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
@@ -65,7 +65,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
 
         public int what;
 
-        public MediaBuilder(AbsPresenter presenter) {
+        public MediaDelegate(AbsPresenter presenter) {
             super(presenter);
         }
 

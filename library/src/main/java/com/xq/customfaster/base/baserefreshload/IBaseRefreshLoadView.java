@@ -19,27 +19,27 @@ public interface IBaseRefreshLoadView<T extends AbsRefreshLoadPresenter> extends
 
     @Override
     default void initAdapter(List list, Object... objects) {
-        getRefreshLoadBuilder().initAdapter(list,objects);
+        getRefreshLoadDelegate().initAdapter(list,objects);
     }
 
     @Override
     default int getAdapterHeadCount() {
-        return getRefreshLoadBuilder().getAdapterHeadCount();
+        return getRefreshLoadDelegate().getAdapterHeadCount();
     }
 
     @Override
     default int getAdapterFootCount() {
-        return getRefreshLoadBuilder().getAdapterFootCount();
+        return getRefreshLoadDelegate().getAdapterFootCount();
     }
 
     @Override
-    public RefreshLoadBuilder getRefreshLoadBuilder();
+    public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadBuilder<T extends AbsRefreshLoadPresenter> extends IBaseSimpleRefreshLoadView.RefreshLoadBuilder<T> implements AbsRefreshLoadView<T>{
+    public abstract class RefreshLoadDelegate<T extends AbsRefreshLoadPresenter> extends IBaseSimpleRefreshLoadView.RefreshLoadDelegate<T> implements AbsRefreshLoadView<T>{
 
         public RecyclerView rv;
 
-        public RefreshLoadBuilder(AbsView view) {
+        public RefreshLoadDelegate(AbsView view) {
             super(view);
         }
 

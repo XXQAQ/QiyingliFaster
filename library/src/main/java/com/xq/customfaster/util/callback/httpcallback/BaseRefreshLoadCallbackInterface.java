@@ -42,9 +42,9 @@ public interface BaseRefreshLoadCallbackInterface<T> extends BaseSimpleRefreshLo
     public static class CallbackBuilder extends BaseSimpleRefreshLoadCallbackInterface.CallbackBuilder{
 
         public IBaseRefreshLoadView refreshLoadView;
-        public IBaseRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData;
+        public IBaseRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData;
 
-        public CallbackBuilder(IBaseRefreshLoadView refreshLoadView, IBaseRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData) {
+        public CallbackBuilder(IBaseRefreshLoadView refreshLoadView, IBaseRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData) {
             super(refreshLoadView, refreshLoadData);
             this.refreshLoadView = refreshLoadView;
             this.refreshLoadData = refreshLoadData;

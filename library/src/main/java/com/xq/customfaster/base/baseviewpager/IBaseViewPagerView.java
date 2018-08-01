@@ -17,17 +17,17 @@ public interface IBaseViewPagerView<T extends AbsViewPagerPresenter> extends Abs
 
     @Override
     default void refreshViewPager(){
-        getViewPagerBuilder().refreshViewPager();
+        getViewPagerDelegate().refreshViewPager();
     }
 
-    public ViewPagerBuilder getViewPagerBuilder();
+    public ViewPagerDelegate getViewPagerDelegate();
 
-    public class ViewPagerBuilder<T extends AbsViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
+    public class ViewPagerDelegate<T extends AbsViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
 
         public ViewPager vp;
         public TabLayout tl;
 
-        public ViewPagerBuilder(AbsView view) {
+        public ViewPagerDelegate(AbsView view) {
             super(view);
         }
 

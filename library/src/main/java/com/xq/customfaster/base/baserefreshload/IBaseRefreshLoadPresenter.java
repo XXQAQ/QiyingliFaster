@@ -11,22 +11,22 @@ public interface IBaseRefreshLoadPresenter<T extends AbsRefreshLoadView> extends
 
     @Override
     default void initAdapter(){
-        getRefreshLoadBuilder().initAdapter();
+        getRefreshLoadDelegate().initAdapter();
     }
 
     @Override
     default List getListData() {
-        return getRefreshLoadBuilder().getListData();
+        return getRefreshLoadDelegate().getListData();
     }
 
     @Override
-    public RefreshLoadBuilder getRefreshLoadBuilder();
+    public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadBuilder<T extends AbsRefreshLoadView> extends IBaseSimpleRefreshLoadPresenter.RefreshLoadBuilder<T> implements AbsRefreshLoadPresenter<T>{
+    public abstract class RefreshLoadDelegate<T extends AbsRefreshLoadView> extends IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate<T> implements AbsRefreshLoadPresenter<T>{
 
         public List list_data = new LinkedList<>();
 
-        public RefreshLoadBuilder(AbsPresenter presenter) {
+        public RefreshLoadDelegate(AbsPresenter presenter) {
             super(presenter);
         }
 

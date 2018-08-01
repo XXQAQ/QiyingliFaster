@@ -11,42 +11,42 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadV
 
     @Override
     default void startRefresh(){
-        getRefreshLoadBuilder().startRefresh();
+        getRefreshLoadDelegate().startRefresh();
     }
 
     @Override
     default void startLoadmore(){
-        getRefreshLoadBuilder().startLoadmore();
+        getRefreshLoadDelegate().startLoadmore();
     }
 
     @Override
     default void refreshing(Object... objects) {
-        getRefreshLoadBuilder().refreshing(objects);
+        getRefreshLoadDelegate().refreshing(objects);
     }
 
     @Override
     default void loadmoring(Object... objects) {
-        getRefreshLoadBuilder().loadmoring(objects);
+        getRefreshLoadDelegate().loadmoring(objects);
     }
 
     @Override
     default void cancleRefresh() {
-        getRefreshLoadBuilder().cancleRefresh();
+        getRefreshLoadDelegate().cancleRefresh();
     }
 
     @Override
     default void cancleLoadmore() {
-        getRefreshLoadBuilder().cancleLoadmore();
+        getRefreshLoadDelegate().cancleLoadmore();
     }
 
-    public RefreshLoadBuilder getRefreshLoadBuilder();
+    public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadBuilder<T extends AbsSimpleRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsSimpleRefreshLoadPresenter<T> {
+    public abstract class RefreshLoadDelegate<T extends AbsSimpleRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsSimpleRefreshLoadPresenter<T> {
 
         public int page = getFirstPage();
         public boolean isRefresh;
 
-        public RefreshLoadBuilder(AbsPresenter presenter) {
+        public RefreshLoadDelegate(AbsPresenter presenter) {
             super(presenter);
         }
 
