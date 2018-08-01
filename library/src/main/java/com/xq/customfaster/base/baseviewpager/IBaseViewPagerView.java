@@ -22,7 +22,7 @@ public interface IBaseViewPagerView<T extends AbsViewPagerPresenter> extends Abs
 
     public ViewPagerBuilder getViewPagerBuilder();
 
-    public abstract class ViewPagerBuilder<T extends AbsViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
+    public class ViewPagerBuilder<T extends AbsViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
 
         public ViewPager vp;
         public TabLayout tl;
