@@ -55,21 +55,6 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
         getMediaBuilder().getFile(what);
     }
 
-    @Override
-    default void onReceivePhotos(List<File> list_file, int what) {
-        getMediaBuilder().onReceivePhotos(list_file,what);
-    }
-
-    @Override
-    default void onReceiveCamera(File file, int what) {
-        getMediaBuilder().onReceiveCamera(file,what);
-    }
-
-    @Override
-    default void onReceiveFile(File file, int what) {
-        getMediaBuilder().onReceiveFile(file,what);
-    }
-
     public MediaBuilder getMediaBuilder();
 
     public abstract class MediaBuilder<T extends AbsView> extends AbsPresenterDelegate<T> implements AbsMediaPresenter<T>{
@@ -230,8 +215,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
 
         }
 
-        public void checkPermission(UniverseCallback callback, String...  permission){
-
+        protected void checkPermission(UniverseCallback callback, String...  permission){
             if (FasterInterface.isIsAutoPermission())
             {
                 PermissionUtils.permission(permission)
@@ -252,5 +236,15 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
                 callback.onCallback();
             }
         }
+
+        //接收到图片后调用
+        protected abstract void onReceivePhotos(List<File> list_file, int what);
+
+        //接收到一个录像后调用
+        protected abstract void onReceiveCamera(File file, int what);
+
+        //接收到一个文件后调用
+        protected abstract void onReceiveFile(File file, int what);
+
     }
 }

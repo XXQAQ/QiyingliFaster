@@ -43,7 +43,7 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadV
 
     public abstract class RefreshLoadBuilder<T extends AbsSimpleRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsSimpleRefreshLoadPresenter<T> {
 
-        public int page = 1;
+        public int page = getFirstPage();
         public boolean isRefresh;
 
         public RefreshLoadBuilder(AbsPresenter presenter) {
@@ -88,7 +88,7 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadV
         @Override
         public void refreshing(Object... objects) {
             isRefresh = true;
-            refreshLoad(true, 1,objects);
+            refreshLoad(true, getFirstPage(),objects);
         }
 
         @Override
@@ -105,6 +105,11 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadV
         @Override
         public void cancleLoadmore() {
 
+        }
+
+        //重写此方法可指定第一页下标
+        public int getFirstPage(){
+            return 1;
         }
 
         //屏蔽了刷新和加载的差异，提供给程序员以实现刷新或加载的方法

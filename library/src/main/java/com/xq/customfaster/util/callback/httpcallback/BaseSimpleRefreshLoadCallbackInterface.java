@@ -37,7 +37,7 @@ public interface BaseSimpleRefreshLoadCallbackInterface<T> extends BaseCallbackI
             if (getCallbackBuilder().refreshLoadData.isRefresh)
             {
                 if (!isEmpty(t))
-                    getCallbackBuilder().refreshLoadData.page = 1;
+                    getCallbackBuilder().refreshLoadData.page = getCallbackBuilder().refreshLoadData.getFirstPage();
                 getCallbackBuilder().refreshLoadView.refreshView(t);
                 getCallbackBuilder().refreshLoadView.afterRefresh();
             }

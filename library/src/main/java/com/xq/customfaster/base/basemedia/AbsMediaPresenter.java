@@ -19,13 +19,4 @@ public interface AbsMediaPresenter<T extends AbsView> extends AbsPresenter<T> {
 
     public void getFile(int what);
 
-    //接收到图片后调用
-    public abstract void onReceivePhotos(List<File> list_file, int what);
-
-    //接收到一个录像后调用
-    public abstract void onReceiveCamera(File file, int what);
-
-    //接收到一个文件后调用
-    public abstract void onReceiveFile(File file, int what);
-
 }
