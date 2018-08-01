@@ -4,8 +4,6 @@ package com.xq.customfaster.util.callback.httpcallback;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.projectdefine.bean.behavior.ListBehavior;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public interface BaseRefreshLoadCallbackInterface<T> extends BaseSimpleRefreshLoadCallbackInterface<T> {
@@ -23,39 +21,34 @@ public interface BaseRefreshLoadCallbackInterface<T> extends BaseSimpleRefreshLo
     }
 
     @Override
-    default void requestFinish(Object... objects) {
-        BaseSimpleRefreshLoadCallbackInterface.super.requestFinish(objects);
+    default void requestFinish(T t,Object... objects) {
+        BaseSimpleRefreshLoadCallbackInterface.super.requestFinish(t,objects);
     }
 
-    default void operateSuccess(T t){
-        List list = null;
-        if (t instanceof List)
-            list = (List) t;
-        else    if (t instanceof ListBehavior)
-            list = ((ListBehavior)t).getList();
+    @Override
+    default boolean isEmpty(Object object) {
+        boolean isEmpty = BaseSimpleRefreshLoadCallbackInterface.super.isEmpty(object);
+        if (isEmpty)
+            return isEmpty;
         else
-            return;
-
-        if (getCallbackBuilder().refreshLoadView != null)
-        {
-            if (list == null)
-                list = new LinkedList();
-
-            if (list.size() <= 0)
-                getCallbackBuilder().refreshLoadView.afterRefreshLoadEnd();
-
-            if (getCallbackBuilder().refreshLoadBuilder.isRefresh)
-                getCallbackBuilder().refreshLoadView.refreshView(list);
+            if (object instanceof ListBehavior)
+                return BaseSimpleRefreshLoadCallbackInterface.super.isEmpty(((ListBehavior) object).getList());
             else
-                getCallbackBuilder().refreshLoadView.loadmoreView(list);
-        }
+                return false;
     }
 
     public CallbackBuilder getCallbackBuilder();
 
     public static class CallbackBuilder extends BaseSimpleRefreshLoadCallbackInterface.CallbackBuilder{
+
         public IBaseRefreshLoadView refreshLoadView;
-        public IBaseRefreshLoadPresenter.RefreshLoadBuilder refreshLoadBuilder;
+        public IBaseRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData;
+
+        public CallbackBuilder(IBaseRefreshLoadView refreshLoadView, IBaseRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData) {
+            super(refreshLoadView, refreshLoadData);
+            this.refreshLoadView = refreshLoadView;
+            this.refreshLoadData = refreshLoadData;
+        }
     }
 
 }

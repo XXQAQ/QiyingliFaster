@@ -38,7 +38,7 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Ba
     @Override
     public void onFinish() {
         super.onFinish();
-        requestFinish();
+        requestFinish(t);
     }
 
     @Override

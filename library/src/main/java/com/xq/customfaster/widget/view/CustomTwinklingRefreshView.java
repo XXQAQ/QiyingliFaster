@@ -48,12 +48,12 @@ public class CustomTwinklingRefreshView extends TwinklingRefreshLayout implement
     }
 
     @Override
-    public void setRefreshView(Object o) {
+    public void setRefreshHeadView(Object o) {
         super.setHeaderView((IHeaderView) o);
     }
 
     @Override
-    public void setLoadmoreView(Object o) {
+    public void setLoadmoreFootView(Object o) {
         super.setBottomView((IBottomView) o);
     }
 

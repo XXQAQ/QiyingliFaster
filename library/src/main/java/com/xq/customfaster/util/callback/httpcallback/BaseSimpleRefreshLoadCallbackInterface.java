@@ -1,8 +1,8 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
-import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadPresenter;
+import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadView;
 import com.xq.projectdefine.util.callback.httpcallback.BaseCallbackInterface;
 
 
@@ -18,51 +18,58 @@ public interface BaseSimpleRefreshLoadCallbackInterface<T> extends BaseCallbackI
 
     default void requestError(Object... objects) {
         BaseCallbackInterface.super.requestError(objects);
-        if (getCallbackBuilder().simpleRefreshLoadView != null)
-            getCallbackBuilder().simpleRefreshLoadView.afterRefreshLoadErro();
+        if (getCallbackBuilder().refreshLoadView != null)
+            getCallbackBuilder().refreshLoadView.afterRefreshLoadErro();
     }
 
     @Override
-    default void requestFinish(Object... objects) {
-        BaseCallbackInterface.super.requestFinish(objects);
-        if (getCallbackBuilder().simpleRefreshLoadView != null)
+    default void requestFinish(T t,Object... objects) {
+        BaseCallbackInterface.super.requestFinish(t,objects);
+        if (getCallbackBuilder().refreshLoadView != null)
         {
-            if (getCallbackBuilder().simpleRefreshLoadBuilder.isRefresh)
+
+            if (isEmpty(t))
             {
-                if (!getCallbackBuilder().isEmpty)
-                    getCallbackBuilder().simpleRefreshLoadBuilder.page = 1;
-                getCallbackBuilder().simpleRefreshLoadView.afterRefresh();
+                getCallbackBuilder().refreshLoadView.afterEmpty();
+                getCallbackBuilder().refreshLoadView.afterRefreshLoadEnd();
+            }
+
+            if (getCallbackBuilder().refreshLoadData.isRefresh)
+            {
+                if (!isEmpty(t))
+                    getCallbackBuilder().refreshLoadData.page = 1;
+                getCallbackBuilder().refreshLoadView.refreshView(t);
+                getCallbackBuilder().refreshLoadView.afterRefresh();
             }
             else
             {
-                if (!getCallbackBuilder().isEmpty)
-                    getCallbackBuilder().simpleRefreshLoadBuilder.page++;
-                getCallbackBuilder().simpleRefreshLoadView.afterLoadmore();
+                if (!isEmpty(t))
+                    getCallbackBuilder().refreshLoadData.page++;
+                getCallbackBuilder().refreshLoadView.loadmoreView(t);
+                getCallbackBuilder().refreshLoadView.afterLoadmore();
             }
-
-            if (getCallbackBuilder().isEmpty)
-                getCallbackBuilder().simpleRefreshLoadView.afterEmpty();
         }
     }
 
     default void operateSuccess(T t) {
-        if (getCallbackBuilder().simpleRefreshLoadView != null)
-        {
-            if (getCallbackBuilder().isEmpty)
-                getCallbackBuilder().simpleRefreshLoadView.afterRefreshLoadEnd();
 
-            if (getCallbackBuilder().simpleRefreshLoadBuilder.isRefresh)
-                getCallbackBuilder().simpleRefreshLoadView.refreshView(t);
-            else
-                getCallbackBuilder().simpleRefreshLoadView.loadmoreView(t);
-        }
+    }
+
+    @Override
+    default boolean isEmpty(Object object) {
+        return BaseCallbackInterface.super.isEmpty(object);
     }
 
     public CallbackBuilder getCallbackBuilder();
 
     public static class CallbackBuilder extends BaseCallbackInterface.CallbackBuilder{
-        public IBaseRefreshLoadView simpleRefreshLoadView;
-        public IBaseSimpleRefreshLoadPresenter.RefreshLoadBuilder simpleRefreshLoadBuilder;
+        public IBaseSimpleRefreshLoadView refreshLoadView;
+        public IBaseSimpleRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData;
+
+        public CallbackBuilder(IBaseSimpleRefreshLoadView refreshLoadView, IBaseSimpleRefreshLoadPresenter.RefreshLoadBuilder refreshLoadData) {
+            this.refreshLoadView = refreshLoadView;
+            this.refreshLoadData = refreshLoadData;
+        }
     }
 
 }

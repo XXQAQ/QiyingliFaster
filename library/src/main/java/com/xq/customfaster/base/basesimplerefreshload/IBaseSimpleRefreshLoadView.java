@@ -2,158 +2,224 @@ package com.xq.customfaster.base.basesimplerefreshload;
 
 
 import android.os.Bundle;
+import android.view.View;
+
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import com.xq.customfaster.widget.view.RefreshLoadViewInterface;
 import com.xq.projectdefine.base.abs.AbsView;
+import com.xq.projectdefine.base.abs.AbsViewDelegate;
 import com.xq.projectdefine.util.tools.ToastUtils;
 
-public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends AbsView<T> {
-
-    default void afterOnCreate(Bundle savedInstanceState) {
-
-        if (getRootView() instanceof RefreshLoadViewInterface)
-            getRefreshLoadBuilder().refreshView = (RefreshLoadViewInterface) getRootView();
-        else
-            getRefreshLoadBuilder().refreshView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshView", "id", getContext().getPackageName()));
-
-        //以下初始化刷新控件
-        if (getRefreshLoadBuilder().refreshView != null)
-        {
-            getRefreshLoadBuilder().refreshView.setRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
-                @Override
-                public void onFinishRefresh(RefreshLoadViewInterface view) {
-
-                }
-
-                @Override
-                public void onRefresh(RefreshLoadViewInterface view) {
-                    refreshing();
-                }
-
-                @Override
-                public void onCancleRefresh(RefreshLoadViewInterface view) {
-                    getPresenter().cancleRefresh();
-                }
-
-                @Override
-                public void onFinishLoadmore(RefreshLoadViewInterface view) {
-
-                }
-
-                @Override
-                public void onLoadmore(RefreshLoadViewInterface view) {
-                    loadmoring();
-                }
-
-                @Override
-                public void onCancleLoadmore(RefreshLoadViewInterface view) {
-                    getPresenter().cancleLoadmore();
-                }
-            });
-            getRefreshLoadBuilder().refreshView.setRefreshView(getRefreshView());
-            getRefreshLoadBuilder().refreshView.setLoadmoreView(getLoadmoreView());
-        }
-    }
+public interface IBaseSimpleRefreshLoadView<T extends AbsSimpleRefreshLoadPresenter> extends AbsSimpleRefreshLoadView<T> {
 
     @Override
-    default void onResume() {
-
-    }
-
-    @Override
-    default void onPause() {
-
-    }
-
-    @Override
-    default void onDestroy() {
-
-    }
-
-    @Override
-    default void onSaveInstanceState(Bundle outState) {
-
-    }
-
-    //开始刷新，主要写给P层调用
     default void startRefresh(){
-        if (getRefreshLoadBuilder().refreshView != null)
-            getRefreshLoadBuilder().refreshView.startRefresh();
-        else
-            refreshing();
+        getRefreshLoadBuilder().startRefresh();
     }
 
-    //开始加载，主要写给P层调用
+    @Override
     default void startLoadmore(){
-        if (getRefreshLoadBuilder().refreshView != null)
-            getRefreshLoadBuilder().refreshView.startLoadmore();
-        else
-            loadmoring();
+        getRefreshLoadBuilder().startLoadmore();
     }
 
-    //通知P层刷新，可以选择重写该方法，在刷新时传入更多参数
+    @Override
     default void refreshing() {
-        getPresenter().refreshing();
+        getRefreshLoadBuilder().refreshing();
     }
 
-    //通知P层加载，可以选择重写该方法，在加载时传入更多参数
+    @Override
     default void loadmoring() {
-        getPresenter().loadmoring();
+        getRefreshLoadBuilder().loadmoring();
     }
 
-    //刷新完成后调用
+    @Override
     default void afterRefresh() {
-        if (getRefreshLoadBuilder().refreshView != null)
-            getRefreshLoadBuilder().refreshView.finishRefreshing();
+        getRefreshLoadBuilder().afterRefresh();
     }
 
-    //加载完成后调用
+    @Override
     default void afterLoadmore() {
-        if (getRefreshLoadBuilder().refreshView != null)
-            getRefreshLoadBuilder().refreshView.finishLoadmore();
+        getRefreshLoadBuilder().afterLoadmore();
     }
 
-    //刷新加载数据为空后处理
+    @Override
     default void afterEmpty(){
-        //由于使用的RefreshView没有setEmptyView方法，所以本方法在此无用。理论上来说你需要判断RefreshView是否已有EmptyView，如果没有则创建；然后再调用showEmptyView
+        getRefreshLoadBuilder().afterEmpty();
     }
 
-    //刷新加载完毕后处理
+    @Override
     default void afterRefreshLoadEnd() {
-        ToastUtils.showShort("没有数据了哦");
+        getRefreshLoadBuilder().afterRefreshLoadEnd();
     }
 
-    //刷新加载错误后处理
+    @Override
     default void afterRefreshLoadErro() {
-        ToastUtils.showShort("数据加载失败");
+        getRefreshLoadBuilder().afterRefreshLoadErro();
     }
 
-    //返回刷新布局
-    default Object getRefreshView(){
-        return new ProgressLayout(getContext());
+    @Override
+    default void refreshView(Object object) {
+        getRefreshLoadBuilder().refreshView(object);
     }
 
-    //返回加载布局
-    default Object getLoadmoreView() {
-        return new LoadingView(getContext());
+    @Override
+    default void loadmoreView(Object object) {
+        getRefreshLoadBuilder().loadmoreView(object);
     }
-
-    //返回刷新加载的空布局方案
-    default Object getEmptyView() {
-        return null;
-    }
-
-    //在刷新时回调此方法，请重写此方法完成后续处理
-    public void refreshView(Object object);
-
-    //在加载时回调此方法，请重写此方法完成后续处理
-    public void loadmoreView(Object object);
 
     public RefreshLoadBuilder getRefreshLoadBuilder();
 
-    public static class RefreshLoadBuilder {
+    public abstract class RefreshLoadBuilder<T extends AbsSimpleRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsSimpleRefreshLoadView<T> {
+
         public RefreshLoadViewInterface refreshView;
+
+        public RefreshLoadBuilder(AbsView view) {
+            super(view);
+        }
+
+        @Override
+        public void afterOnCreate(Bundle savedInstanceState) {
+
+            if (getRootView() instanceof RefreshLoadViewInterface)
+                refreshView = (RefreshLoadViewInterface) getRootView();
+            else
+                refreshView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshView", "id", getContext().getPackageName()));
+
+            //以下初始化刷新控件
+            if (refreshView != null)
+            {
+                refreshView.setRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
+                    @Override
+                    public void onFinishRefresh(RefreshLoadViewInterface view) {
+
+                    }
+
+                    @Override
+                    public void onRefresh(RefreshLoadViewInterface view) {
+                        refreshing();
+                    }
+
+                    @Override
+                    public void onCancleRefresh(RefreshLoadViewInterface view) {
+                        getPresenter().cancleRefresh();
+                    }
+
+                    @Override
+                    public void onFinishLoadmore(RefreshLoadViewInterface view) {
+
+                    }
+
+                    @Override
+                    public void onLoadmore(RefreshLoadViewInterface view) {
+                        loadmoring();
+                    }
+
+                    @Override
+                    public void onCancleLoadmore(RefreshLoadViewInterface view) {
+                        getPresenter().cancleLoadmore();
+                    }
+                });
+                refreshView.setRefreshHeadView(getRefreshHeadView());
+                refreshView.setLoadmoreFootView(getLoadmoreFootView());
+            }
+        }
+
+        @Override
+        public void onResume() {
+
+        }
+
+        @Override
+        public void onPause() {
+
+        }
+
+        @Override
+        public void onDestroy() {
+
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle bundle) {
+
+        }
+
+        @Override
+        public void startRefresh(){
+            if (refreshView != null)
+                refreshView.startRefresh();
+            else
+                refreshing();
+        }
+
+        @Override
+        public void startLoadmore(){
+            if (refreshView != null)
+                refreshView.startLoadmore();
+            else
+                loadmoring();
+        }
+
+        @Override
+        public void refreshing() {
+            getPresenter().refreshing();
+        }
+
+        @Override
+        public void loadmoring() {
+            getPresenter().loadmoring();
+        }
+
+        @Override
+        public void afterRefresh() {
+            if (refreshView != null)
+                refreshView.finishRefreshing();
+        }
+
+        @Override
+        public void afterLoadmore() {
+            if (refreshView != null)
+                refreshView.finishLoadmore();
+        }
+
+        @Override
+        public void afterEmpty(){
+            if (refreshView != null)
+            {
+                View view = (View) getEmptyView();
+                if (view == null)
+                    view = new View(getContext());
+                refreshView.setEmptyView(view);
+                refreshView.showEmptyView();
+            }
+        }
+
+        @Override
+        public void afterRefreshLoadEnd() {
+            ToastUtils.showShort("没有数据了哦");
+        }
+
+        @Override
+        public void afterRefreshLoadErro() {
+            ToastUtils.showShort("数据加载失败");
+        }
+
+        //返回刷新头布局
+        protected Object getRefreshHeadView(){
+            return new ProgressLayout(getContext());
+        }
+
+        //返回加载尾布局
+        protected Object getLoadmoreFootView() {
+            return new LoadingView(getContext());
+        }
+
+        //返回空布局
+        protected Object getEmptyView() {
+            return null;
+        }
+
     }
 
 }
