@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@color/background">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height_min"
             app:tabSelectedTextColor="?colorPrimary"
-            app:tabTextColor="@color/textcolor_normal"
+            app:tabTextColor="@color/text_normal"
             app:tabIndicatorColor="@android:color/transparent"
-            app:tabBackground="@android:color/white"
+            app:tabBackground="@color/widely"
             app:tabMode="fixed"/>
 
     </android.support.design.widget.AppBarLayout>

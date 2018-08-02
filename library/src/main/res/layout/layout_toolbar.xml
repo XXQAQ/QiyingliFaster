@@ -17,6 +17,6 @@
         android:textStyle="bold"
         android:text="测试"
         android:lines="1"
-        android:textColor="@color/textcolor_normal"
+        android:textColor="@color/text_normal"
         />
 </android.support.v7.widget.Toolbar>

@@ -102,12 +102,12 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     //重写该方法以自定Toolbar背景色
     protected int getToolbarBackgroundColor(){
-        return getContext().getResources().getColor(android.R.color.white);
+        return getContext().getResources().getColor(R.color.widely);
     }
 
     //重写该方法以自定Toolbar控件颜色
     protected int getToolbarWidgetColor(){
-        return getContext().getResources().getColor(R.color.textcolor_normal);
+        return getContext().getResources().getColor(R.color.text_normal);
     }
 
     //重写该方法以沉浸状态栏(仅在TopContainer有意义)
