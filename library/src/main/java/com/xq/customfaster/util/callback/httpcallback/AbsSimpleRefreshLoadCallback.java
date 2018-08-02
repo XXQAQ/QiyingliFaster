@@ -1,30 +1,31 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
+import com.xq.customfaster.base.basesimplerefreshload.AbsSimpleRefreshLoadView;
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadPresenter;
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadView;
-import com.xq.projectdefine.util.callback.httpcallback.BaseCallbackInterface;
+import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
 
 
-public interface BaseSimpleRefreshLoadCallbackInterface<T> extends BaseCallbackInterface<T> {
+public interface AbsSimpleRefreshLoadCallback<T> extends AbsCallback<T> {
 
     default void requestStart(Object... objects) {
-        BaseCallbackInterface.super.requestStart(objects);
+        AbsCallback.super.requestStart(objects);
     }
 
     default void requestSuccess(T t, Object... objects) {
-        BaseCallbackInterface.super.requestSuccess(t,objects);
+        AbsCallback.super.requestSuccess(t,objects);
     }
 
     default void requestError(Object... objects) {
-        BaseCallbackInterface.super.requestError(objects);
+        AbsCallback.super.requestError(objects);
         if (getCallbackBuilder().refreshLoadView != null)
             getCallbackBuilder().refreshLoadView.afterRefreshLoadErro();
     }
 
     @Override
     default void requestFinish(T t,Object... objects) {
-        BaseCallbackInterface.super.requestFinish(t,objects);
+        AbsCallback.super.requestFinish(t,objects);
         if (getCallbackBuilder().refreshLoadView != null)
         {
 
@@ -57,12 +58,12 @@ public interface BaseSimpleRefreshLoadCallbackInterface<T> extends BaseCallbackI
 
     @Override
     default boolean isEmpty(Object object) {
-        return BaseCallbackInterface.super.isEmpty(object);
+        return AbsCallback.super.isEmpty(object);
     }
 
     public CallbackBuilder getCallbackBuilder();
 
-    public static class CallbackBuilder extends BaseCallbackInterface.CallbackBuilder{
+    public class CallbackBuilder extends AbsCallback.CallbackBuilder{
         public IBaseSimpleRefreshLoadView refreshLoadView;
         public IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData;
 

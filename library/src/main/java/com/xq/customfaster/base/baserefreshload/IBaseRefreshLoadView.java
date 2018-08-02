@@ -15,7 +15,7 @@ import java.util.List;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
-public interface IBaseRefreshLoadView<T extends AbsRefreshLoadPresenter> extends AbsRefreshLoadView<T> ,IBaseSimpleRefreshLoadView<T> {
+public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> extends AbsRefreshLoadView<T> ,IBaseSimpleRefreshLoadView<T> {
 
     @Override
     default void initAdapter(List list, Object... objects) {
@@ -35,7 +35,7 @@ public interface IBaseRefreshLoadView<T extends AbsRefreshLoadPresenter> extends
     @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends AbsRefreshLoadPresenter> extends IBaseSimpleRefreshLoadView.RefreshLoadDelegate<T> implements AbsRefreshLoadView<T>{
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends IBaseSimpleRefreshLoadView.RefreshLoadDelegate<T> implements AbsRefreshLoadView<T>{
 
         public RecyclerView rv;
 

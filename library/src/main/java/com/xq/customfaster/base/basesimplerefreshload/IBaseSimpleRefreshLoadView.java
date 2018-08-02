@@ -11,7 +11,7 @@ import com.xq.projectdefine.base.abs.AbsView;
 import com.xq.projectdefine.base.abs.AbsViewDelegate;
 import com.xq.projectdefine.util.tools.ToastUtils;
 
-public interface IBaseSimpleRefreshLoadView<T extends AbsSimpleRefreshLoadPresenter> extends AbsSimpleRefreshLoadView<T> {
+public interface IBaseSimpleRefreshLoadView<T extends IBaseSimpleRefreshLoadPresenter> extends AbsSimpleRefreshLoadView<T> {
 
     @Override
     default void startRefresh(){
@@ -70,7 +70,7 @@ public interface IBaseSimpleRefreshLoadView<T extends AbsSimpleRefreshLoadPresen
 
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends AbsSimpleRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsSimpleRefreshLoadView<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseSimpleRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsSimpleRefreshLoadView<T> {
 
         public RefreshLoadViewInterface refreshView;
 

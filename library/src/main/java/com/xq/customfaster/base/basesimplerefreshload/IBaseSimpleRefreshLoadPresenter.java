@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.xq.projectdefine.base.abs.AbsPresenter;
 import com.xq.projectdefine.base.abs.AbsPresenterDelegate;
 
-public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadView> extends AbsSimpleRefreshLoadPresenter<T> {
+public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoadView> extends AbsSimpleRefreshLoadPresenter<T> {
 
     @Override
     default void startRefresh(){
@@ -41,7 +41,7 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends AbsSimpleRefreshLoadV
 
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends AbsSimpleRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsSimpleRefreshLoadPresenter<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseSimpleRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsSimpleRefreshLoadPresenter<T> {
 
         public int page = getFirstPage();
         public boolean isRefresh;

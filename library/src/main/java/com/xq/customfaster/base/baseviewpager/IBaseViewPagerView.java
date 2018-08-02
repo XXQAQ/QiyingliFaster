@@ -13,7 +13,7 @@ import com.xq.projectdefine.bean.behavior.TitleBehavior;
 import java.util.LinkedList;
 import java.util.List;
 
-public interface IBaseViewPagerView<T extends AbsViewPagerPresenter> extends AbsViewPagerView<T> {
+public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends AbsViewPagerView<T> {
 
     @Override
     default void refreshViewPager(){
@@ -22,7 +22,7 @@ public interface IBaseViewPagerView<T extends AbsViewPagerPresenter> extends Abs
 
     public ViewPagerDelegate getViewPagerDelegate();
 
-    public class ViewPagerDelegate<T extends AbsViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
+    public class ViewPagerDelegate<T extends IBaseViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
 
         public ViewPager vp;
         public TabLayout tl;

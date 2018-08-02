@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.projectdefine.util.callback.httpcallback.BaseCallbackInterface;
 
 
-public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements BaseCallbackInterface<T> {
+public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements com.xq.projectdefine.util.callback.httpcallback.AbsCallback<T> {
 
     protected Class<T> entityClass;
 
@@ -17,36 +16,42 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Ba
         this.entityClass = entityClass;
     }
 
+    @Deprecated
     @Override
     public void onStart(Request<T, ? extends Request> request) {
         super.onStart(request);
         requestStart(request);
     }
 
+    @Deprecated
     @Override
     public void onCacheSuccess(Response<T> response) {
         super.onCacheSuccess(response);
         onSuccess(response);
     }
 
+    @Deprecated
     @Override
     public void onSuccess(Response<T> response) {
         t = response.body();
         requestSuccess(t,response);
     }
 
+    @Deprecated
     @Override
     public void onFinish() {
         super.onFinish();
         requestFinish(t);
     }
 
+    @Deprecated
     @Override
     public void onError(Response<T> response) {
         super.onError(response);
         requestError(response);
     }
 
+    @Deprecated
     @Override
     public T convertResponse(okhttp3.Response response) throws Throwable {
         return new Gson().fromJson(response.body().string(), entityClass);

@@ -7,7 +7,7 @@ import com.xq.projectdefine.base.abs.AbsPresenter;
 import java.util.LinkedList;
 import java.util.List;
 
-public interface IBaseRefreshLoadPresenter<T extends AbsRefreshLoadView> extends AbsRefreshLoadPresenter<T> ,IBaseSimpleRefreshLoadPresenter<T> {
+public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> extends AbsRefreshLoadPresenter<T> ,IBaseSimpleRefreshLoadPresenter<T> {
 
     @Override
     default void initAdapter(){
@@ -22,7 +22,7 @@ public interface IBaseRefreshLoadPresenter<T extends AbsRefreshLoadView> extends
     @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends AbsRefreshLoadView> extends IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate<T> implements AbsRefreshLoadPresenter<T>{
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate<T> implements AbsRefreshLoadPresenter<T>{
 
         public List list_data = new LinkedList<>();
 
