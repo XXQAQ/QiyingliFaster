@@ -102,7 +102,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     //重写该方法以自定Toolbar背景色
     protected int getToolbarBackgroundColor(){
-        return getContext().getResources().getColor(R.color.widely);
+        return getContext().getResources().getColor(R.color.colorWidely);
     }
 
     //重写该方法以自定Toolbar控件颜色
