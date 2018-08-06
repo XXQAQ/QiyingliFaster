@@ -7,13 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadView;
+import com.xq.customfaster.widget.view.RecyclerViewInterface;
 import com.xq.projectdefine.base.abs.AbsView;
 import com.xq.projectdefine.bean.behavior.ListBehavior;
-
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
 public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> extends AbsRefreshLoadView<T> ,IBaseSimpleRefreshLoadView<T> {
 
@@ -87,21 +86,15 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public int getAdapterHeadCount() {
-            if (rv instanceof FamiliarRecyclerView)
-            {
-                FamiliarRecyclerView familiarRecyclerView = (FamiliarRecyclerView) rv;
-                return familiarRecyclerView.getHeaderViewsCount();
-            }
+            if (rv instanceof RecyclerViewInterface)
+                return ((RecyclerViewInterface) rv).getHeadCount();
             return 0;
         }
 
         @Override
         public int getAdapterFootCount() {
-            if (rv instanceof FamiliarRecyclerView)
-            {
-                FamiliarRecyclerView familiarRecyclerView = (FamiliarRecyclerView) rv;
-                return familiarRecyclerView.getFooterViewsCount();
-            }
+            if (rv instanceof RecyclerViewInterface)
+                return ((RecyclerViewInterface) rv).getFootCount();
             return 0;
         }
 
@@ -158,13 +151,12 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void afterEmpty(){
-            if (rv instanceof FamiliarRecyclerView && ((FamiliarRecyclerView)rv).getEmptyView() == null)     //如果是FamiliarRecyclerView，且没有空布局，则设置空布局
+            if (rv instanceof RecyclerViewInterface)
             {
-                FamiliarRecyclerView familiarRecyclerView = (FamiliarRecyclerView) rv;
                 View view = (View) getEmptyView();
                 if (view == null)
                     view = new View(getContext());
-                familiarRecyclerView.setEmptyView(view,true);
+                ((RecyclerViewInterface) rv).setEmptyView(view);
             }
         }
 

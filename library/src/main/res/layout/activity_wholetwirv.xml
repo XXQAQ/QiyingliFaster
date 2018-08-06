@@ -26,7 +26,7 @@
         app:tr_overscroll_height="@dimen/over_scrollHeight"
         >
 
-        <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
+        <com.xq.customfaster.widget.view.CustomRecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
