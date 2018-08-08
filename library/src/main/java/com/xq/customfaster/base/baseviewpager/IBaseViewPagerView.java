@@ -79,7 +79,7 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends A
 
         protected void initViewPager(List<TitleBehavior> list) {
 
-            List<String> list_title = new LinkedList<>();
+            List<CharSequence> list_title = new LinkedList<>();
             List<Fragment> list_fragment = new LinkedList<>();
 
             if (list != null && tl != null)

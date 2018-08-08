@@ -50,13 +50,13 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     }
 
     @Override
-    public void initToolbar(String title) {
+    public void initToolbar(CharSequence title) {
 
         initToolbar(title,true);
     }
 
     @Override
-    public void initToolbar(String title, boolean isShowIcon) {
+    public void initToolbar(CharSequence title, boolean isShowIcon) {
         if (toolbar == null)
             return;
 

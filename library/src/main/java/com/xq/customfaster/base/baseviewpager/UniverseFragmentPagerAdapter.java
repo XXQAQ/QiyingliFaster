@@ -11,9 +11,9 @@ import java.util.List;
 public class UniverseFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> list_fragment;
-    private List<String> list_title;
+    private List<CharSequence> list_title;
 
-    public UniverseFragmentPagerAdapter(FragmentManager fm, List<Fragment> list_fragment, List<String> list_title) {
+    public UniverseFragmentPagerAdapter(FragmentManager fm, List<Fragment> list_fragment, List<CharSequence> list_title) {
         super(fm);
         this.list_fragment = list_fragment;
         this.list_title = list_title;
