@@ -1,9 +1,9 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
-import com.xq.customfaster.base.basesimplerefreshload.AbsSimpleRefreshLoadView;
-import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadPresenter;
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadView;
+import com.xq.projectdefine.bean.behavior.SuccessBehavior;
+import com.xq.projectdefine.util.callback.SuccessCallback;
 import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
 
 
@@ -28,26 +28,40 @@ public interface AbsSimpleRefreshLoadCallback<T> extends AbsCallback<T> {
         AbsCallback.super.requestFinish(t,objects);
         if (getCallbackBuilder().refreshLoadView != null)
         {
-
             if (isEmpty(t))
             {
                 getCallbackBuilder().refreshLoadView.afterEmpty();
                 getCallbackBuilder().refreshLoadView.afterRefreshLoadEnd();
             }
 
-            if (getCallbackBuilder().refreshLoadData.isRefresh)
+            if (getCallbackBuilder().isRefresh)
             {
-                if (!isEmpty(t))
-                    getCallbackBuilder().refreshLoadData.page = getCallbackBuilder().refreshLoadData.getFirstPage();
                 getCallbackBuilder().refreshLoadView.refreshView(t);
                 getCallbackBuilder().refreshLoadView.afterRefresh();
             }
             else
             {
-                if (!isEmpty(t))
-                    getCallbackBuilder().refreshLoadData.page++;
                 getCallbackBuilder().refreshLoadView.loadmoreView(t);
                 getCallbackBuilder().refreshLoadView.afterLoadmore();
+            }
+
+            if (!isEmpty(t))
+            {
+                getCallbackBuilder().callback.onCallback(new SuccessBehavior() {
+                    @Override
+                    public boolean isSuccess() {
+                        return true;
+                    }
+                });
+            }
+            else
+            {
+                getCallbackBuilder().callback.onCallback(new SuccessBehavior() {
+                    @Override
+                    public boolean isSuccess() {
+                        return false;
+                    }
+                });
             }
         }
     }
@@ -64,12 +78,14 @@ public interface AbsSimpleRefreshLoadCallback<T> extends AbsCallback<T> {
     public CallbackBuilder getCallbackBuilder();
 
     public class CallbackBuilder extends AbsCallback.CallbackBuilder{
+        public boolean isRefresh;
         public IBaseSimpleRefreshLoadView refreshLoadView;
-        public IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData;
+        public SuccessCallback callback;
 
-        public CallbackBuilder(IBaseSimpleRefreshLoadView refreshLoadView, IBaseSimpleRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData) {
+        public CallbackBuilder(boolean isRefresh,IBaseSimpleRefreshLoadView refreshLoadView, SuccessCallback callback) {
             this.refreshLoadView = refreshLoadView;
-            this.refreshLoadData = refreshLoadData;
+            this.callback = callback;
+            this.isRefresh = isRefresh;
         }
     }
 

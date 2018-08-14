@@ -108,6 +108,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
                 updateList = ((ListBehavior) object).getList();
             else
                 return;
+
             if (updateList == null)
                 updateList = new LinkedList();
 
@@ -133,6 +134,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
                 updateList = ((ListBehavior) object).getList();
             else
                 return;
+
             if (updateList == null)
                 updateList = new LinkedList();
             

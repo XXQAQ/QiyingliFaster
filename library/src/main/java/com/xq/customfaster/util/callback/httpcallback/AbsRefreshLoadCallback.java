@@ -1,10 +1,9 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
-import com.xq.customfaster.base.baserefreshload.AbsRefreshLoadView;
-import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.projectdefine.bean.behavior.ListBehavior;
+import com.xq.projectdefine.util.callback.SuccessCallback;
 
 
 public interface AbsRefreshLoadCallback<T> extends AbsSimpleRefreshLoadCallback<T> {
@@ -42,14 +41,10 @@ public interface AbsRefreshLoadCallback<T> extends AbsSimpleRefreshLoadCallback<
 
     public class CallbackBuilder extends AbsSimpleRefreshLoadCallback.CallbackBuilder{
 
-        public IBaseRefreshLoadView refreshLoadView;
-        public IBaseRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData;
-
-        public CallbackBuilder(IBaseRefreshLoadView refreshLoadView, IBaseRefreshLoadPresenter.RefreshLoadDelegate refreshLoadData) {
-            super(refreshLoadView, refreshLoadData);
-            this.refreshLoadView = refreshLoadView;
-            this.refreshLoadData = refreshLoadData;
+        public CallbackBuilder(boolean isRefresh,IBaseRefreshLoadView refreshLoadView, SuccessCallback callback) {
+            super(isRefresh,refreshLoadView, callback);
         }
+
     }
 
 }

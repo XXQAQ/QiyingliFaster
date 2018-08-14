@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.xq.projectdefine.base.abs.AbsPresenter;
 import com.xq.projectdefine.base.abs.AbsPresenterDelegate;
+import com.xq.projectdefine.bean.behavior.SuccessBehavior;
+import com.xq.projectdefine.util.callback.SuccessCallback;
 
 public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoadView> extends AbsSimpleRefreshLoadPresenter<T> {
 
@@ -45,6 +47,7 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoa
 
         public int page = getFirstPage();
         public boolean isRefresh;
+        protected boolean isWorking;
 
         public RefreshLoadDelegate(AbsPresenter presenter) {
             super(presenter);
@@ -87,14 +90,36 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoa
 
         @Override
         public void refreshing(Object... objects) {
+            if (isWorking)
+                return;
+
+            isWorking = true;
             isRefresh = true;
-            refreshLoad(true, getFirstPage(),objects);
+            refreshLoad(true, getFirstPage(), new SuccessCallback() {
+                @Override
+                public void onCallback(SuccessBehavior successBehavior) {
+                    isWorking = false;
+                    if (successBehavior.isSuccess())
+                        page = getFirstPage();
+                }
+            },objects);
         }
 
         @Override
         public void loadmoring(Object... objects) {
+            if (isWorking)
+                return;
+
+            isWorking = true;
             isRefresh = false;
-            refreshLoad(false, page+1,objects);
+            refreshLoad(false, page + 1, new SuccessCallback() {
+                @Override
+                public void onCallback(SuccessBehavior successBehavior) {
+                    isWorking = false;
+                    if (successBehavior.isSuccess())
+                        page ++;
+                }
+            },objects);
         }
 
         @Override
@@ -108,12 +133,12 @@ public interface IBaseSimpleRefreshLoadPresenter<T extends IBaseSimpleRefreshLoa
         }
 
         //重写此方法可指定第一页下标
-        public int getFirstPage(){
+        protected int getFirstPage(){
             return 1;
         }
 
         //屏蔽了刷新和加载的差异，提供给程序员以实现刷新或加载的方法
-        protected abstract void refreshLoad(boolean isRefresh, int page, Object... objects);
+        protected abstract void refreshLoad(boolean isRefresh, int page, SuccessCallback callback, Object... objects);
 
     }
 }
