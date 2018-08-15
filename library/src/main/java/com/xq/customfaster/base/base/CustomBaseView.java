@@ -41,12 +41,6 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             //设置状态栏字体颜色
             setStatusBarLightMode(isLightStyle());
         }
-
-        //针对activity和fragment的某些控件的初始化方式可能不同，所以不同情况下需要分别处理
-        if (getPresenter().getAreActivity() != null)
-        {
-
-        }
     }
 
     @Override
@@ -84,7 +78,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((AppCompatActivity)getContext()).finish();
+                    finish();
                 }
             });
         }
@@ -115,7 +109,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
         return true;
     }
 
-    //重写该方法以改变状态栏字体颜色
+    //重写该方法以改变状态栏字体颜色(仅在TopContainer有意义)
     protected boolean isLightStyle(){
         return true;
     }
