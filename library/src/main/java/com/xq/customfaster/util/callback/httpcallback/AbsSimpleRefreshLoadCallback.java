@@ -2,7 +2,7 @@ package com.xq.customfaster.util.callback.httpcallback;
 
 
 import com.xq.customfaster.base.basesimplerefreshload.IBaseSimpleRefreshLoadView;
-import com.xq.projectdefine.bean.behavior.SuccessBehavior;
+import com.xq.projectdefine.bean.entity.SuccessBean;
 import com.xq.projectdefine.util.callback.SuccessCallback;
 import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
 
@@ -46,23 +46,9 @@ public interface AbsSimpleRefreshLoadCallback<T> extends AbsCallback<T> {
             }
 
             if (!isEmpty(t))
-            {
-                getCallbackBuilder().callback.onCallback(new SuccessBehavior() {
-                    @Override
-                    public boolean isSuccess() {
-                        return true;
-                    }
-                });
-            }
+                getCallbackBuilder().callback.onCallback(new SuccessBean(true));
             else
-            {
-                getCallbackBuilder().callback.onCallback(new SuccessBehavior() {
-                    @Override
-                    public boolean isSuccess() {
-                        return false;
-                    }
-                });
-            }
+                getCallbackBuilder().callback.onCallback(new SuccessBean(false));
         }
     }
 
