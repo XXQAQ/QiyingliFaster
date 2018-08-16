@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.zhihu.android:matisse:0.5.0-beta3@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/matisse-0.5.0-beta3.aar/04ea3a769cf6c5d1229d931c0df02901/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/matisse-0.5.0-beta3.aar/04ea3a769cf6c5d1229d931c0df02901/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/matisse-0.5.0-beta3.aar/04ea3a769cf6c5d1229d931c0df02901/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.zhihu.android/matisse/0.5.0-beta3/a53461913e474b39e8be613605432aeb3c500f4d/matisse-0.5.0-beta3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -63,7 +63,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
         public static final int REQUEST_CODE_CAMERA= 2;
         public static final int REQUEST_CODE_FILE= 3;
 
-        public int what;
+        protected int what;
 
         public MediaDelegate(AbsPresenter presenter) {
             super(presenter);

@@ -1,50 +1,43 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
-import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
-import com.xq.projectdefine.bean.behavior.ListBehavior;
-import com.xq.projectdefine.util.callback.SuccessCallback;
+import com.xq.customfaster.base.basesimplerefreshload.IBaseRefreshLoadPresenter;
+import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
 
 
-public interface AbsRefreshLoadCallback<T> extends AbsSimpleRefreshLoadCallback<T> {
+public interface AbsRefreshLoadCallback<T> extends AbsCallback<T> {
 
     default void requestStart(Object... objects) {
-        AbsSimpleRefreshLoadCallback.super.requestStart(objects);
+        AbsCallback.super.requestStart(objects);
     }
 
     default void requestSuccess(T t, Object... objects) {
-        AbsSimpleRefreshLoadCallback.super.requestSuccess(t,objects);
+        AbsCallback.super.requestSuccess(t,objects);
     }
 
     default void requestError(Object... objects) {
-        AbsSimpleRefreshLoadCallback.super.requestError(objects);
+        AbsCallback.super.requestError(objects);
+        getCallbackBuilder().presenter.refreshLoadErro();
     }
 
     @Override
     default void requestFinish(T t,Object... objects) {
-        AbsSimpleRefreshLoadCallback.super.requestFinish(t,objects);
+        AbsCallback.super.requestFinish(t,objects);
+        getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().isOperateSuccess,t);
     }
 
-    @Override
-    default boolean isEmpty(Object object) {
-        boolean isEmpty = AbsSimpleRefreshLoadCallback.super.isEmpty(object);
-        if (isEmpty)
-            return isEmpty;
-        else
-            if (object instanceof ListBehavior)
-                return AbsSimpleRefreshLoadCallback.super.isEmpty(((ListBehavior) object).getList());
-            else
-                return false;
+    default void operateSuccess(T t) {
+
     }
 
     public CallbackBuilder getCallbackBuilder();
 
-    public class CallbackBuilder extends AbsSimpleRefreshLoadCallback.CallbackBuilder{
+    public class CallbackBuilder extends AbsCallback.CallbackBuilder{
+        public IBaseRefreshLoadPresenter presenter;
 
-        public CallbackBuilder(boolean isRefresh,IBaseRefreshLoadView refreshLoadView, SuccessCallback callback) {
-            super(isRefresh,refreshLoadView, callback);
+        public CallbackBuilder(IBaseRefreshLoadPresenter presenter) {
+            this.presenter = presenter;
         }
-
     }
 
 }

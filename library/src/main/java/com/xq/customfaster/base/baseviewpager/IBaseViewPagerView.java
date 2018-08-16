@@ -24,8 +24,8 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends A
 
     public class ViewPagerDelegate<T extends IBaseViewPagerPresenter> extends AbsViewDelegate<T> implements AbsViewPagerView<T>{
 
-        public ViewPager vp;
-        public TabLayout tl;
+        protected ViewPager vp;
+        protected TabLayout tl;
 
         public ViewPagerDelegate(AbsView view) {
             super(view);
