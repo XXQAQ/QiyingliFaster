@@ -1,7 +1,7 @@
-package com.xq.customfaster.base.baserefreshload;
+package com.xq.customfaster.base.baserefreshloadlist;
 
 
-import com.xq.customfaster.base.basesimplerefreshload.IBaseRefreshLoadPresenter;
+import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.projectdefine.base.abs.AbsPresenter;
 import com.xq.projectdefine.bean.behavior.ListBehavior;
 import com.xq.projectdefine.util.tools.ObjectUtils;

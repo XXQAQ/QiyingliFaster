@@ -1,4 +1,4 @@
-package com.xq.customfaster.base.basesimplerefreshload;
+package com.xq.customfaster.base.baserefreshload;
 
 
 import com.xq.projectdefine.base.abs.AbsPresenter;

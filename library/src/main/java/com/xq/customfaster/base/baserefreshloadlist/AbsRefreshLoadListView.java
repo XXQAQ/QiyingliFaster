@@ -1,7 +1,7 @@
-package com.xq.customfaster.base.baserefreshload;
+package com.xq.customfaster.base.baserefreshloadlist;
 
 
-import com.xq.customfaster.base.basesimplerefreshload.AbsRefreshLoadView;
+import com.xq.customfaster.base.baserefreshload.AbsRefreshLoadView;
 
 import java.util.List;
 

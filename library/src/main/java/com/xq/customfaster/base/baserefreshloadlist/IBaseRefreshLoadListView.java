@@ -1,4 +1,4 @@
-package com.xq.customfaster.base.baserefreshload;
+package com.xq.customfaster.base.baserefreshloadlist;
 
 
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.xq.customfaster.base.basesimplerefreshload.IBaseRefreshLoadView;
+import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.customfaster.widget.view.RecyclerViewInterface;
 import com.xq.projectdefine.base.abs.AbsView;
 import com.xq.projectdefine.bean.behavior.ListBehavior;

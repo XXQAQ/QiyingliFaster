@@ -1,7 +1,7 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 
-import com.xq.customfaster.base.basesimplerefreshload.IBaseRefreshLoadPresenter;
+import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
 
 
