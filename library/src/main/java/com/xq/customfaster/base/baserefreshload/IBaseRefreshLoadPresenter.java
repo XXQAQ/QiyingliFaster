@@ -41,7 +41,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
-    default void refreshLoadData(boolean isOperateSuccess,Object object) {
+    default void refreshLoadData(boolean isOperateSuccess, Object object) {
         getRefreshLoadDelegate().refreshLoadData(isOperateSuccess,object);
     }
 
@@ -162,7 +162,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             if (isOperateSuccess)
                 return ObjectUtils.isEmpty(object);
             else
-                return false;
+                return true;
         }
 
         //重写此方法可指定第一页下标

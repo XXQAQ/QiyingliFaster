@@ -119,7 +119,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     }
 
     private void hideSystemBar() {
-        BarUtils.setStatusBarAlpha((Activity) getContext(),255);
+        BarUtils.setStatusBarAlpha((Activity) getContext(),0);
         if (toolbar != null)
             BarUtils.addPaddingTopEqualStatusBarHeight(toolbar);
     }

@@ -48,9 +48,9 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                 if (object instanceof ListBehavior)
                     return super.isEmptyData(isOperateSuccess,((ListBehavior) object).getList());
                 else
-                    return ObjectUtils.isEmpty(object);
+                    return super.isEmptyData(isOperateSuccess,object);
             else
-                return false;
+                return true;
         }
     }
 
