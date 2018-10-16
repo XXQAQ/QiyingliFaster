@@ -27,7 +27,7 @@
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         />
 
-    <com.xq.customfaster.widget.view.CustomRefreshView
+    <com.xq.customfaster.widget.view.CustomRefreshLoadView
         android:id="@+id/refreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,6 +42,6 @@
             android:overScrollMode="never"
             />
 
-    </com.xq.customfaster.widget.view.CustomRefreshView>
+    </com.xq.customfaster.widget.view.CustomRefreshLoadView>
 
 </LinearLayout>
