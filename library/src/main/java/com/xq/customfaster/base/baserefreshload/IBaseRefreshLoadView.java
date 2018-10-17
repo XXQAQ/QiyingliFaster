@@ -67,7 +67,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsRefreshLoadView<T> {
 
-        public RefreshLoadViewInterface refreshView;
+        public RefreshLoadViewInterface refreshLoadView;
 
         public RefreshLoadDelegate(AbsView view) {
             super(view);
@@ -77,14 +77,14 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         public void afterOnCreate(Bundle savedInstanceState) {
 
             if (getRootView() instanceof RefreshLoadViewInterface)
-                refreshView = (RefreshLoadViewInterface) getRootView();
+                refreshLoadView = (RefreshLoadViewInterface) getRootView();
             else
-                refreshView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshView", "id", getContext().getPackageName()));
+                refreshLoadView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshLoadView", "id", getContext().getPackageName()));
 
             //以下初始化刷新控件
-            if (refreshView != null)
+            if (refreshLoadView != null)
             {
-                refreshView.setRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
+                refreshLoadView.setRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
                     @Override
                     public void onFinishRefresh(RefreshLoadViewInterface view) {
 
@@ -115,8 +115,8 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
                         getPresenter().cancleLoadmore();
                     }
                 });
-                refreshView.setRefreshHeadView(getRefreshHeadView());
-                refreshView.setLoadmoreFootView(getLoadmoreFootView());
+                refreshLoadView.setRefreshHeadView(getRefreshHeadView());
+                refreshLoadView.setLoadmoreFootView(getLoadmoreFootView());
             }
         }
 
@@ -142,16 +142,16 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void startRefresh(){
-            if (refreshView != null)
-                refreshView.startRefresh();
+            if (refreshLoadView != null)
+                refreshLoadView.startRefresh();
             else
                 refreshing();
         }
 
         @Override
         public void startLoadmore(){
-            if (refreshView != null)
-                refreshView.startLoadmore();
+            if (refreshLoadView != null)
+                refreshLoadView.startLoadmore();
             else
                 loadmoring();
         }
@@ -168,13 +168,13 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void refreshLoadEmpty(){
-            if (refreshView != null)
+            if (refreshLoadView != null)
             {
                 View view = (View) getEmptyView();
                 if (view == null)
                     view = new View(getContext());
-                refreshView.setEmptyView(view);
-                refreshView.showEmptyView();
+                refreshLoadView.setEmptyView(view);
+                refreshLoadView.showEmptyView();
             }
         }
 
@@ -185,14 +185,14 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void afterRefresh() {
-            if (refreshView != null)
-                refreshView.finishRefreshing();
+            if (refreshLoadView != null)
+                refreshLoadView.finishRefreshing();
         }
 
         @Override
         public void afterLoadmore() {
-            if (refreshView != null)
-                refreshView.finishLoadmore();
+            if (refreshLoadView != null)
+                refreshLoadView.finishLoadmore();
         }
 
         //返回刷新头布局

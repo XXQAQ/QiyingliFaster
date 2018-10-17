@@ -28,7 +28,7 @@
         />
 
     <com.xq.customfaster.widget.view.CustomRefreshLoadView
-        android:id="@+id/refreshView"
+        android:id="@+id/refreshLoadView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
