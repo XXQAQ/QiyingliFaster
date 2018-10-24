@@ -27,4 +27,8 @@ public abstract class BaseDelegate implements ItemViewDelegate {
     protected abstract void initListener(ViewHolder holder, Object o, int position);
 
     protected abstract void initView(ViewHolder holder, Object o, int position);
+
+    protected Context getContext() {
+        return context;
+    }
 }
