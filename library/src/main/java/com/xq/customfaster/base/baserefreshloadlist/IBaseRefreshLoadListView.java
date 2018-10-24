@@ -38,6 +38,8 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         public RecyclerView rv;
 
+        public DiffUtil.DiffResult diffResult;
+
         public RefreshLoadDelegate(AbsView view) {
             super(view);
         }
@@ -117,7 +119,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             {
                 List newList = new LinkedList();
                 newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(),newList),false);
+                diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(),newList),false);
                 diffResult.dispatchUpdatesTo(rv.getAdapter());
                 getPresenter().getListData().clear();
                 getPresenter().getListData().addAll(updateList);
@@ -145,7 +147,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
                 List newList = new LinkedList();
                 newList.addAll(getPresenter().getListData());
                 newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(), newList), true);
+                diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(), newList), true);
                 diffResult.dispatchUpdatesTo(rv.getAdapter());
                 getPresenter().getListData().addAll(updateList);
             }
