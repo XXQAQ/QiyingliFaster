@@ -22,16 +22,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
     }
 
     @Override
-    default int getAdapterHeadCount() {
-        return getRefreshLoadDelegate().getAdapterHeadCount();
-    }
-
-    @Override
-    default int getAdapterFootCount() {
-        return getRefreshLoadDelegate().getAdapterFootCount();
-    }
-
-    @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListPresenter> extends IBaseRefreshLoadView.RefreshLoadDelegate<T> implements AbsRefreshLoadListView<T> {
@@ -82,20 +72,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         @Override
         public void initAdapter(List list, Object... objects) {
             rv.setAdapter(getAdapter(list,objects));
-        }
-
-        @Override
-        public int getAdapterHeadCount() {
-            if (rv instanceof RecyclerViewInterface)
-                return ((RecyclerViewInterface) rv).getHeadCount();
-            return 0;
-        }
-
-        @Override
-        public int getAdapterFootCount() {
-            if (rv instanceof RecyclerViewInterface)
-                return ((RecyclerViewInterface) rv).getFootCount();
-            return 0;
         }
 
         @Override

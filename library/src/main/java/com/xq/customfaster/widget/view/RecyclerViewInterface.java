@@ -8,7 +8,4 @@ public interface RecyclerViewInterface {
 
     public void setEmptyView(Object object);
 
-    public int getHeadCount();
-
-    public int getFootCount();
 }
