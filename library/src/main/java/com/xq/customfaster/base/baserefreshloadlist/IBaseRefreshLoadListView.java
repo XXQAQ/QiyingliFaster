@@ -117,7 +117,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             {
                 List newList = new LinkedList();
                 newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(),newList),false);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DefaultDiffCallBack(getPresenter().getListData(),newList),true);
                 diffResult.dispatchUpdatesTo(rv.getAdapter());
                 getPresenter().getListData().clear();
                 getPresenter().getListData().addAll(updateList);
@@ -145,7 +145,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
                 List newList = new LinkedList();
                 newList.addAll(getPresenter().getListData());
                 newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(getPresenter().getListData(), newList), true);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DefaultDiffCallBack(getPresenter().getListData(), newList), true);
                 diffResult.dispatchUpdatesTo(rv.getAdapter());
                 getPresenter().getListData().addAll(updateList);
             }
@@ -169,10 +169,11 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         //返回布局管理器，重写该方法以指定RecyclerView的布局方案
         protected abstract RecyclerView.LayoutManager getLayoutManager();
 
-        private class DiffCallBack extends DiffUtil.Callback {
+        protected class DefaultDiffCallBack extends DiffUtil.Callback {
+
             private List mOldDatas, mNewDatas;
 
-            public DiffCallBack(List mOldDatas, List mNewDatas) {
+            public DefaultDiffCallBack(List mOldDatas, List mNewDatas) {
                 this.mOldDatas = mOldDatas;
                 this.mNewDatas = mNewDatas;
             }
@@ -188,7 +189,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             }
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return mOldDatas.get(oldItemPosition).equals(mNewDatas.get(newItemPosition));
+                return mNewDatas.get(newItemPosition).getClass().isAssignableFrom(mOldDatas.get(oldItemPosition).getClass());
             }
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
