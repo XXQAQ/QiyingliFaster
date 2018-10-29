@@ -34,12 +34,9 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends A
         @Override
         public void afterOnCreate(Bundle savedInstanceState) {
 
-            if (getRootView() instanceof ViewPager)   //如果根布局是ViewPager，则直接将根布局转化为vp
-                vp = (ViewPager) getRootView();
-            else
-                vp = (ViewPager) getRootView().findViewById(getContext().getResources().getIdentifier("vp", "id", getContext().getPackageName()));
+            vp = (ViewPager) findViewById(getContext().getResources().getIdentifier("vp", "id", getContext().getPackageName()));
 
-            tl = (TabLayout) getRootView().findViewById(getContext().getResources().getIdentifier("tl", "id", getContext().getPackageName()));
+            tl = (TabLayout) findViewById(getContext().getResources().getIdentifier("tl", "id", getContext().getPackageName()));
 
             if (tl != null)
             {

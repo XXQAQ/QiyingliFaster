@@ -76,10 +76,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         @Override
         public void afterOnCreate(Bundle savedInstanceState) {
 
-            if (getRootView() instanceof RefreshLoadViewInterface)
-                refreshLoadView = (RefreshLoadViewInterface) getRootView();
-            else
-                refreshLoadView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshLoadView", "id", getContext().getPackageName()));
+            refreshLoadView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshLoadView", "id", getContext().getPackageName()));
 
             //以下初始化刷新控件
             if (refreshLoadView != null)

@@ -11,6 +11,9 @@ public interface AbsRefreshLoadListPresenter<T extends AbsRefreshLoadListView> e
     public void initAdapter();
 
     //获取列表数据
+    @Deprecated
     public List getListData();
+
+    public List getDataList();
 
 }

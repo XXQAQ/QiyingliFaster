@@ -36,10 +36,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         public void afterOnCreate(Bundle savedInstanceState) {
             super.afterOnCreate(savedInstanceState);
 
-            if (getRootView() instanceof RecyclerView)   //如果根布局是RecyclerView，则直接将根布局转化为rv
-                rv = (RecyclerView) getRootView();
-            else
-                rv = (RecyclerView) getRootView().findViewById(getContext().getResources().getIdentifier("rv", "id", getContext().getPackageName()));
+            rv = (RecyclerView) findViewById(getContext().getResources().getIdentifier("rv", "id", getContext().getPackageName()));
 
             //初始化RecyclerView
             rv.setLayoutManager(getLayoutManager());

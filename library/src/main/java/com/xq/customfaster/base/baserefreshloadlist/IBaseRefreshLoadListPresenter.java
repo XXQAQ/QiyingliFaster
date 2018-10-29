@@ -22,6 +22,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
+    default List getDataList() {
+        return getRefreshLoadDelegate().getDataList();
+    }
+
+    @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements AbsRefreshLoadListPresenter<T> {
@@ -39,6 +44,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
         @Override
         public List getListData() {
+            return list_data;
+        }
+
+        @Override
+        public List getDataList() {
             return list_data;
         }
 
