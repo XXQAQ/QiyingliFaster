@@ -2,27 +2,27 @@ package com.xq.customfaster.util.callback.httpcallback;
 
 
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
-import com.xq.projectdefine.util.callback.httpcallback.AbsCallback;
+import com.xq.projectdefine.util.callback.httpcallback.FasterHttpCallback;
 
 
-public interface AbsRefreshLoadCallback<T> extends AbsCallback<T> {
+public interface AbsRefreshLoadCallback<T> extends FasterHttpCallback<T> {
 
     default void requestStart(Object... objects) {
-        AbsCallback.super.requestStart(objects);
+        FasterHttpCallback.super.requestStart(objects);
     }
 
     default void requestSuccess(T t, Object... objects) {
-        AbsCallback.super.requestSuccess(t,objects);
+        FasterHttpCallback.super.requestSuccess(t,objects);
     }
 
     default void requestError(Object... objects) {
-        AbsCallback.super.requestError(objects);
+        FasterHttpCallback.super.requestError(objects);
         getCallbackBuilder().presenter.refreshLoadErro();
     }
 
     @Override
     default void requestFinish(T t,Object... objects) {
-        AbsCallback.super.requestFinish(t,objects);
+        FasterHttpCallback.super.requestFinish(t,objects);
         getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().isOperateSuccess,t);
     }
 
@@ -32,7 +32,7 @@ public interface AbsRefreshLoadCallback<T> extends AbsCallback<T> {
 
     public CallbackBuilder getCallbackBuilder();
 
-    public class CallbackBuilder extends AbsCallback.CallbackBuilder{
+    public class CallbackBuilder extends FasterHttpCallback.CallbackBuilder{
         public IBaseRefreshLoadPresenter presenter;
 
         public CallbackBuilder(IBaseRefreshLoadPresenter presenter) {
