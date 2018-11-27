@@ -37,12 +37,13 @@ public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && getBindView().getWebView().canGoBack())
+    public boolean onBackClick() {
+        if (getBindView().getWebView().canGoBack())
         {
             getBindView().getWebView().goBack();// 返回前一个页面
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        else
+            return false;
     }
 }

@@ -33,12 +33,6 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     }
 
     @Override
-    public void afterOnCreate(Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         getWebView().onResume();

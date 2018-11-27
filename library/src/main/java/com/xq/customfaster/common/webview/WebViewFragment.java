@@ -34,4 +34,14 @@ public class WebViewFragment extends CustomBaseFragment<IWebViewView> implements
         return new WebViewView(this);
     }
 
+    @Override
+    public boolean onBackClick() {
+        if (getBindView().getWebView().canGoBack())
+        {
+            getBindView().getWebView().goBack();// 返回前一个页面
+            return true;
+        }
+        else
+            return false;
+    }
 }
