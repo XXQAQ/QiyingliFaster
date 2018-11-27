@@ -5,16 +5,15 @@ import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import com.xq.androidfaster.base.base.FasterBaseView;
+import com.xq.androidfaster.util.tools.BarUtils;
+import com.xq.androidfaster.util.tools.ImageUtils;
+import com.xq.androidfaster.util.tools.ScreenUtils;
 import com.xq.customview.view.IconFontTextView;
-import com.xq.projectdefine.util.tools.BarUtils;
-import com.xq.projectdefine.util.tools.ImageUtils;
-import com.xq.projectdefine.util.tools.ScreenUtils;
 import com.xq.customfaster.R;
-import com.xq.projectdefine.base.base.FasterBaseView;
 
 public abstract class CustomBaseView<T extends ICustomBasePresenter> extends FasterBaseView<T> implements ICustomBaseView<T> {
 

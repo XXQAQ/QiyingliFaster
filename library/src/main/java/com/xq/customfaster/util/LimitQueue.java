@@ -2,7 +2,6 @@ package com.xq.customfaster.util;
 
 import java.util.LinkedList;
 
-
 public class LimitQueue<E> extends LinkedList<E> {
 
     private int limit; // 队列长度

@@ -1,7 +1,7 @@
 package com.xq.customfaster.base.base;
 
 
-import com.xq.projectdefine.base.base.IFasterBaseView;
+import com.xq.androidfaster.base.base.IFasterBaseView;
 
 public interface ICustomBaseView<T extends ICustomBasePresenter> extends IFasterBaseView<T> {
 

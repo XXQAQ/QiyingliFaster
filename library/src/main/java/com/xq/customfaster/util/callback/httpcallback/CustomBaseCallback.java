@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.projectdefine.util.callback.httpcallback.FasterHttpCallback;
+import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
 
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {

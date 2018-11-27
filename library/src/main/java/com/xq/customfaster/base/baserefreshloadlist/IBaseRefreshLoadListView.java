@@ -6,15 +6,14 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.xq.androidfaster.base.abs.IAbsView;
+import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.customfaster.widget.view.RecyclerViewInterface;
-import com.xq.projectdefine.base.abs.AbsView;
-import com.xq.projectdefine.bean.behavior.ListBehavior;
 import java.util.LinkedList;
 import java.util.List;
 
-
-public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresenter> extends AbsRefreshLoadListView<T>, IBaseRefreshLoadView<T> {
+public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresenter> extends IAbsRefreshLoadListView<T>, IBaseRefreshLoadView<T> {
 
     @Override
     default void initAdapter(List list, Object... objects) {
@@ -24,11 +23,11 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
     @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListPresenter> extends IBaseRefreshLoadView.RefreshLoadDelegate<T> implements AbsRefreshLoadListView<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListPresenter> extends IBaseRefreshLoadView.RefreshLoadDelegate<T> implements IAbsRefreshLoadListView<T> {
 
         public RecyclerView rv;
 
-        public RefreshLoadDelegate(AbsView view) {
+        public RefreshLoadDelegate(IAbsView view) {
             super(view);
         }
 

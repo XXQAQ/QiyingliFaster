@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 //组件通用通信方式
 public class ComponentEvent implements Parcelable {
 

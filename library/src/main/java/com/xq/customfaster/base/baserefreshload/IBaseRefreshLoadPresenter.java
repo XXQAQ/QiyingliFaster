@@ -1,14 +1,12 @@
 package com.xq.customfaster.base.baserefreshload;
 
-
 import android.content.Intent;
 import android.os.Bundle;
+import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
+import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.util.tools.ObjectUtils;
 
-import com.xq.projectdefine.base.abs.AbsPresenter;
-import com.xq.projectdefine.base.abs.AbsPresenterDelegate;
-import com.xq.projectdefine.util.tools.ObjectUtils;
-
-public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> extends AbsRefreshLoadPresenter<T> {
+public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> extends IAbsRefreshLoadPresenter<T> {
 
     @Override
     default void startRefresh(){
@@ -52,13 +50,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements AbsRefreshLoadPresenter<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements IAbsRefreshLoadPresenter<T> {
 
         protected int page = getFirstPage();
         protected boolean isRefresh;
         protected boolean isWorking;
 
-        public RefreshLoadDelegate(AbsPresenter presenter) {
+        public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
         }
 

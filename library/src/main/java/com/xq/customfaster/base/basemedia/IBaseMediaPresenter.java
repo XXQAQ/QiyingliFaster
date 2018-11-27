@@ -1,34 +1,31 @@
 package com.xq.customfaster.base.basemedia;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.xq.androidfaster.FasterInterface;
+import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
+import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.base.abs.IAbsView;
+import com.xq.androidfaster.util.callback.UniverseCallback;
+import com.xq.androidfaster.util.constant.PermissionConstants;
+import com.xq.androidfaster.util.tools.PermissionUtils;
+import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.R;
-import com.xq.projectdefine.FasterInterface;
-import com.xq.projectdefine.base.abs.AbsPresenter;
-import com.xq.projectdefine.base.abs.AbsPresenterDelegate;
-import com.xq.projectdefine.base.abs.AbsView;
-import com.xq.projectdefine.util.callback.UniverseCallback;
-import com.xq.projectdefine.util.constant.PermissionConstants;
-import com.xq.projectdefine.util.tools.PermissionUtils;
-import com.xq.projectdefine.util.tools.UriUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnRenameListener;
 
-public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresenter<T> {
+public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresenter<T> {
 
     @Override
     default void getPhotos(int what){
@@ -57,7 +54,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
 
     public MediaDelegate getMediaDelegate();
 
-    public abstract class MediaDelegate<T extends AbsView> extends AbsPresenterDelegate<T> implements AbsMediaPresenter<T>{
+    public abstract class MediaDelegate<T extends IAbsView> extends AbsPresenterDelegate<T> implements IAbsMediaPresenter<T> {
 
         public static final int REQUEST_CODE_PHOTOS = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
@@ -65,7 +62,7 @@ public interface IBaseMediaPresenter<T extends AbsView> extends AbsMediaPresente
 
         protected int what;
 
-        public MediaDelegate(AbsPresenter presenter) {
+        public MediaDelegate(IAbsPresenter presenter) {
             super(presenter);
         }
 

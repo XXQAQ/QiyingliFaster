@@ -1,13 +1,9 @@
 package com.xq.customfaster.base.basemedia;
 
+import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.base.abs.IAbsView;
 
-import com.xq.projectdefine.base.abs.AbsPresenter;
-import com.xq.projectdefine.base.abs.AbsView;
-
-import java.io.File;
-import java.util.List;
-
-public interface AbsMediaPresenter<T extends AbsView> extends AbsPresenter<T> {
+public interface IAbsMediaPresenter<T extends IAbsView> extends IAbsPresenter<T> {
 
     public void getPhotos(int what);
 

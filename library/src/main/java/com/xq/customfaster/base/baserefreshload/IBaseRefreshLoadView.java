@@ -1,17 +1,15 @@
 package com.xq.customfaster.base.baserefreshload;
 
-
 import android.os.Bundle;
 import android.view.View;
-
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
+import com.xq.androidfaster.base.abs.AbsViewDelegate;
+import com.xq.androidfaster.base.abs.IAbsView;
+import com.xq.androidfaster.util.tools.ToastUtils;
 import com.xq.customfaster.widget.view.RefreshLoadViewInterface;
-import com.xq.projectdefine.base.abs.AbsView;
-import com.xq.projectdefine.base.abs.AbsViewDelegate;
-import com.xq.projectdefine.util.tools.ToastUtils;
 
-public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> extends AbsRefreshLoadView<T> {
+public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> extends IAbsRefreshLoadView<T> {
 
     @Override
     default void startRefresh(){
@@ -65,11 +63,11 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements AbsRefreshLoadView<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements IAbsRefreshLoadView<T> {
 
         public RefreshLoadViewInterface refreshLoadView;
 
-        public RefreshLoadDelegate(AbsView view) {
+        public RefreshLoadDelegate(IAbsView view) {
             super(view);
         }
 

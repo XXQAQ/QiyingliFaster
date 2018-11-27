@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.XXQAQ:AndroidFaster-3.5.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AndroidFaster-3.5.0.aar/c29e187201a1aeda393230a7919b3c3a/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AndroidFaster-3.5.0.aar/c29e187201a1aeda393230a7919b3c3a/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.XXQAQ/AndroidFaster/3.5.0/ca893c71a7a1e0bf1b417bfa8a91bffd28fc241c/AndroidFaster-3.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

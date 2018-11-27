@@ -1,15 +1,13 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
 
+import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
-import com.xq.projectdefine.base.abs.AbsPresenter;
-import com.xq.projectdefine.bean.behavior.ListBehavior;
-import com.xq.projectdefine.util.tools.ObjectUtils;
-
 import java.util.LinkedList;
 import java.util.List;
 
-public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListView> extends AbsRefreshLoadListPresenter<T>, IBaseRefreshLoadPresenter<T> {
+public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListView> extends IAbsRefreshLoadListPresenter<T>, IBaseRefreshLoadPresenter<T> {
 
     @Override
     default void initAdapter(){
@@ -29,11 +27,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements AbsRefreshLoadListPresenter<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
 
         public List list_data = new LinkedList<>();
 
-        public RefreshLoadDelegate(AbsPresenter presenter) {
+        public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
         }
 

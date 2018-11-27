@@ -1,16 +1,14 @@
 package com.xq.customfaster.base.base;
 
-
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-
-import com.xq.projectdefine.util.tools.KeyboardUtils;
+import com.xq.androidfaster.base.base.FasterBaseActivity;
+import com.xq.androidfaster.util.tools.KeyboardUtils;
 import com.xq.customfaster.util.eventbus.FinishEvent;
 import com.xq.customfaster.util.eventbus.ComponentEvent;
-import com.xq.projectdefine.base.base.FasterBaseActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

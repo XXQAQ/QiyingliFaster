@@ -7,7 +7,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
 
-
 public abstract class BaseDelegate implements ItemViewDelegate {
 
     protected Context context;

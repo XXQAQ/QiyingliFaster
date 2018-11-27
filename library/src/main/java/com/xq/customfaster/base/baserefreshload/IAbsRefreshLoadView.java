@@ -1,9 +1,8 @@
 package com.xq.customfaster.base.baserefreshload;
 
+import com.xq.androidfaster.base.abs.IAbsView;
 
-import com.xq.projectdefine.base.abs.AbsView;
-
-public interface AbsRefreshLoadView<T extends AbsRefreshLoadPresenter> extends AbsView<T> {
+public interface IAbsRefreshLoadView<T extends IAbsRefreshLoadPresenter> extends IAbsView<T> {
 
     //开始刷新，主要写给P层调用
     public void startRefresh();

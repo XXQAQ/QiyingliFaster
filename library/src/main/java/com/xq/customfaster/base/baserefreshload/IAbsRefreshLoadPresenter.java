@@ -1,9 +1,8 @@
 package com.xq.customfaster.base.baserefreshload;
 
+import com.xq.androidfaster.base.abs.IAbsPresenter;
 
-import com.xq.projectdefine.base.abs.AbsPresenter;
-
-public interface AbsRefreshLoadPresenter<T extends AbsRefreshLoadView> extends AbsPresenter<T> {
+public interface IAbsRefreshLoadPresenter<T extends IAbsRefreshLoadView> extends IAbsPresenter<T> {
 
     //开始刷新
     public void startRefresh();
