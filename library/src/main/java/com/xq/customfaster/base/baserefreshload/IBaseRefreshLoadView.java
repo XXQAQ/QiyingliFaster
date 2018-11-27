@@ -73,6 +73,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void afterOnCreate(Bundle savedInstanceState) {
+            super.afterOnCreate(savedInstanceState);
 
             refreshLoadView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshLoadView", "id", getContext().getPackageName()));
 
@@ -117,22 +118,17 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void onResume() {
-
+            super.onResume();
         }
 
         @Override
         public void onPause() {
-
+            super.onPause();
         }
 
         @Override
         public void onDestroy() {
-
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle bundle) {
-
+            super.onDestroy();
         }
 
         @Override

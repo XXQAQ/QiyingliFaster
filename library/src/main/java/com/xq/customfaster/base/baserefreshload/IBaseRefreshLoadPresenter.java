@@ -62,27 +62,22 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
         @Override
         public void afterOnCreate(Bundle bundle) {
-
+            super.afterOnCreate(bundle);
         }
 
         @Override
         public void onResume() {
-
+            super.onResume();
         }
 
         @Override
         public void onPause() {
-
+            super.onPause();
         }
 
         @Override
         public void onDestroy() {
-
-        }
-
-        @Override
-        public void onActivityResult(int i, int i1, Intent intent) {
-
+            super.onDestroy();
         }
 
         @Override

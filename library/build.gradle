@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.+'
     implementation 'com.android.support:design:27.+'
     implementation 'com.android.support:cardview-v7:27.+'
-    implementation 'com.github.XXQAQ:AndroidFaster:3.5.0+'
+    implementation 'com.github.XXQAQ:AndroidFaster:3.5.2+'
     implementation 'com.github.XXQAQ:FasterResource:0.9.1+'
     implementation 'com.github.XXQAQ:CustomView:1.+'
 

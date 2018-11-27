@@ -31,6 +31,7 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
         @Override
         public void afterOnCreate(Bundle savedInstanceState) {
+            super.afterOnCreate(savedInstanceState);
 
             vp = (ViewPager) findViewById(getContext().getResources().getIdentifier("vp", "id", getContext().getPackageName()));
 
@@ -49,22 +50,17 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
         @Override
         public void onResume() {
-
+            super.onResume();
         }
 
         @Override
         public void onPause() {
-
+            super.onPause();
         }
 
         @Override
         public void onDestroy() {
-
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle bundle) {
-
+            super.onDestroy();
         }
 
         @Override
@@ -107,5 +103,4 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
         }
 
     }
-
 }

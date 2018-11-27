@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.xq.androidfaster.test", appContext.getPackageName());
+        assertEquals("com.xq.customfaster.test", appContext.getPackageName());
     }
 }

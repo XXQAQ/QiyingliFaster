@@ -46,26 +46,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle bundle) {
-            super.onSaveInstanceState(bundle);
-        }
-
-        @Override
         public void initAdapter(List list, Object... objects) {
             rv.setAdapter(getAdapter(list,objects));
         }
