@@ -73,10 +73,10 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
         // 设置数据库缓存路径
         // 开启database storage API功能
         webSettings.setDatabaseEnabled(true);
-        webSettings.setDatabasePath(PathUtils.getAppIntDbPath("webView")); // API 19 deprecated
+        webSettings.setDatabasePath(PathUtils.getInternalAppDbPath("webView")); // API 19 deprecated
         // 设置Application caches缓存目录
         webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(PathUtils.getAppExtCachePath());
+        webSettings.setAppCachePath(PathUtils.getExternalAppCachePath());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             webView.setNestedScrollingEnabled(false);
