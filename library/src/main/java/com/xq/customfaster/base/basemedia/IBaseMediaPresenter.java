@@ -1,9 +1,14 @@
 package com.xq.customfaster.base.basemedia;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.guoxiaoxing.phoenix.core.PhoenixOption;
+import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
 import com.guoxiaoxing.phoenix.core.model.MediaEntity;
 import com.guoxiaoxing.phoenix.core.model.MimeType;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
@@ -15,6 +20,7 @@ import com.xq.androidfaster.util.callback.UniverseCallback;
 import com.xq.androidfaster.util.constant.PermissionConstants;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
+import com.xq.customfaster.CustomFaster;
 import com.xq.customfaster.R;
 import java.io.File;
 import java.util.Arrays;
@@ -71,6 +77,24 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         @Override
         public void afterOnCreate(Bundle savedInstanceState) {
             super.afterOnCreate(savedInstanceState);
+            if (!CustomFaster.isInitMedia)
+            {
+                FasterInterface.addInitCallback(new UniverseCallback() {
+                    @Override
+                    public void onCallback(Object... objects) {
+                        Phoenix.config()
+                                .imageLoader(new ImageLoader() {
+                                    @Override
+                                    public void loadImage(Context mContext, ImageView imageView, String imagePath, int type) {
+                                        Glide.with(mContext)
+                                                .load(imagePath)
+                                                .into(imageView);
+                                    }
+                                });
+                    }
+                });
+                CustomFaster.isInitMedia = true;
+            }
         }
 
         @Override
