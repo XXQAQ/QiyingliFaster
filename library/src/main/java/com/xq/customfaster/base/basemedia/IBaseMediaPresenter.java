@@ -79,20 +79,15 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
             super.afterOnCreate(savedInstanceState);
             if (!CustomFaster.isInitMedia)
             {
-                FasterInterface.addInitCallback(new UniverseCallback() {
-                    @Override
-                    public void onCallback(Object... objects) {
-                        Phoenix.config()
-                                .imageLoader(new ImageLoader() {
-                                    @Override
-                                    public void loadImage(Context mContext, ImageView imageView, String imagePath, int type) {
-                                        Glide.with(mContext)
-                                                .load(imagePath)
-                                                .into(imageView);
-                                    }
-                                });
-                    }
-                });
+                Phoenix.config()
+                        .imageLoader(new ImageLoader() {
+                            @Override
+                            public void loadImage(Context mContext, ImageView imageView, String imagePath, int type) {
+                                Glide.with(mContext)
+                                        .load(imagePath)
+                                        .into(imageView);
+                            }
+                        });
                 CustomFaster.isInitMedia = true;
             }
         }
