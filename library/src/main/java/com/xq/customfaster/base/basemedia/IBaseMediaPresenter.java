@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.guoxiaoxing.phoenix.core.PhoenixOption;
 import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
@@ -18,6 +17,7 @@ import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.util.callback.UniverseCallback;
 import com.xq.androidfaster.util.constant.PermissionConstants;
+import com.xq.androidfaster.util.tools.PathUtils;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.CustomFaster;
@@ -26,7 +26,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
 import static android.app.Activity.RESULT_OK;
 
 public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresenter<T> {
@@ -52,6 +51,11 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
     }
 
     @Override
+    default void getFile(int flag) {
+        getMediaDelegate().getFile(flag);
+    }
+
+    @Override
     default void getFile(int flag, int max) {
         getMediaDelegate().getFile(flag,max);
     }
@@ -62,7 +66,6 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
         public static final int TYPE_PHOTO = 0x1;
         public static final int TYPE_VIDEO = 0x10;
-        public static final int TYPE_AUDIO = 0x100;
 
         public static final int REQUEST_CODE_MEDIA = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
@@ -153,7 +156,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
             checkPermission(new UniverseCallback() {
                 @Override
                 public void onCallback(Object... objects) {
-                    int mimeType = MimeType.ofAll();
+                    int mimeType = MimeType.ofImage();
                     PhoenixOption option = Phoenix.with()
                             .theme(getColor(R.color.colorPrimary))// 主题
                             .fileType(mimeType)//显示的文件类型图片、视频、图片和视频
@@ -166,11 +169,13 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
                             .enableCompress(isCompress)// 是否开启压缩
                             .compressPictureFilterSize(1024)//多少kb以下的图片不压缩
                             .compressVideoFilterSize(1024)//多少kb以下的视频不压缩
-                            .thumbnailHeight(height)// 选择界面图片高度
-                            .thumbnailWidth(width)// 选择界面图片宽度
+                            .thumbnailHeight(160)// 选择界面图片高度
+                            .thumbnailWidth(160)// 选择界面图片宽度
                             .enableClickSound(false)// 是否开启点击声音
                             .videoFilterTime(0)//显示多少秒以内的视频
-                            .mediaFilterSize(0);//显示多少kb以下的图片/视频，默认为0，表示不限制;
+                            .mediaFilterSize(0)//显示多少kb以下的图片/视频，默认为0，表示不限制
+                            .savePath(PathUtils.getExternalAppCachePath())
+                            ;
                     //如果是在Activity里使用就传Activity，如果是在Fragment里使用就传Fragment
                     if (getAreActivity() != null)
                         option.start(getAreActivity(),PhoenixOption.TYPE_PICK_MEDIA, REQUEST_CODE_MEDIA);
@@ -195,6 +200,11 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
                 }
             },PermissionConstants.STORAGE,PermissionConstants.CAMERA);
+        }
+
+        @Override
+        public void getFile(int flag) {
+            getFile(flag,0);
         }
 
         @Override

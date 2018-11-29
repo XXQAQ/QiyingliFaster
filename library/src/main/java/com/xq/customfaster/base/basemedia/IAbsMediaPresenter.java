@@ -13,6 +13,8 @@ public interface IAbsMediaPresenter<T extends IAbsView> extends IAbsPresenter<T>
 
     public void getCamera(int flag,int type,boolean isCompress);
 
+    public void getFile(int flag);
+
     public void getFile(int flag,int max);
 
 }
