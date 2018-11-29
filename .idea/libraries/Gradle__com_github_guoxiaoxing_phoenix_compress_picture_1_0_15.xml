@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.guoxiaoxing:phoenix-compress-picture-1.0.15">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/phoenix-compress-picture-1.0.15.aar/1af485247ea6b36b9f3201f57b94817a/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/phoenix-compress-picture-1.0.15.aar/1af485247ea6b36b9f3201f57b94817a/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.guoxiaoxing/phoenix-compress-picture/1.0.15/5a8f4bd55fa220658f1e500d02752ac6d2ce2e21/phoenix-compress-picture-1.0.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.guoxiaoxing:phoenix-compress-video-1.0.15">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/phoenix-compress-video-1.0.15.aar/556509398a937b220679523a8eeb3c5f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/phoenix-compress-video-1.0.15.aar/556509398a937b220679523a8eeb3c5f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.guoxiaoxing/phoenix-compress-video/1.0.15/ed0f475e6e0a87317abe3002b6b83631bfff48b7/phoenix-compress-video-1.0.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

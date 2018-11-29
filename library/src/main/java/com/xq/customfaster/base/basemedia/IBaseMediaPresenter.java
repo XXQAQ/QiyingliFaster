@@ -1,11 +1,12 @@
 package com.xq.customfaster.base.basemedia;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
+import com.guoxiaoxing.phoenix.core.PhoenixOption;
+import com.guoxiaoxing.phoenix.core.model.MediaEntity;
+import com.guoxiaoxing.phoenix.core.model.MimeType;
+import com.guoxiaoxing.phoenix.picker.Phoenix;
 import com.xq.androidfaster.FasterInterface;
 import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
 import com.xq.androidfaster.base.abs.IAbsPresenter;
@@ -15,52 +16,53 @@ import com.xq.androidfaster.util.constant.PermissionConstants;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.R;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnRenameListener;
+
+import static android.app.Activity.RESULT_OK;
 
 public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresenter<T> {
 
     @Override
-    default void getPhotos(int what){
-        getMediaDelegate().getPhotos(what);
+    default void getMedia(int flag){
+        getMediaDelegate().getMedia(flag);
     }
 
     @Override
-    default void getPhotos(int what, int number){
-        getMediaDelegate().getPhotos(what,number);
+    default void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, int width, int height) {
+        getMediaDelegate().getMedia(flag,type,max,useCamera,isCompress,width,height);
     }
 
     @Override
-    default void getPhotos(int what, int number, int cutWidth, int cutHeight) {
-        getMediaDelegate().getPhotos(what,number,cutWidth,cutHeight);
+    default void getCamera(int flag) {
+        getMediaDelegate().getCamera(flag);
     }
 
     @Override
-    default void getCamera(int what) {
-        getMediaDelegate().getCamera(what);
+    default void getCamera(int flag, int type, boolean isCompress) {
+        getMediaDelegate().getCamera(flag,type,isCompress);
     }
 
     @Override
-    default void getFile(int what) {
-        getMediaDelegate().getFile(what);
+    default void getFile(int flag, int max) {
+        getMediaDelegate().getFile(flag,max);
     }
 
     public MediaDelegate getMediaDelegate();
 
     public abstract class MediaDelegate<T extends IAbsView> extends AbsPresenterDelegate<T> implements IAbsMediaPresenter<T> {
 
-        public static final int REQUEST_CODE_PHOTOS = 1;
+        public static final int TYPE_PHOTO = 0x1;
+        public static final int TYPE_VIDEO = 0x10;
+        public static final int TYPE_AUDIO = 0x100;
+
+        public static final int REQUEST_CODE_MEDIA = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
         public static final int REQUEST_CODE_FILE= 3;
 
-        protected int what;
+        protected int flag;
 
         public MediaDelegate(IAbsPresenter presenter) {
             super(presenter);
@@ -90,47 +92,15 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode,resultCode,data);
 
-            if (data == null)
+            if (resultCode != RESULT_OK)
                 return;
 
-            if (requestCode == REQUEST_CODE_PHOTOS)
+            if (requestCode == REQUEST_CODE_MEDIA)
             {
-                final List<String> list_selected = Matisse.obtainPathResult(data);
+                //返回的数据
+                List<MediaEntity> list = Phoenix.result(data);
 
-                final List<File> list_file = new LinkedList<>();
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        for (String path : list_selected)
-                        {
-                            try {
-                                File file = Luban
-                                        .with(getContext())
-                                        .load(new File(path))
-                                        .setRenameListener(new OnRenameListener() {
-                                            @Override
-                                            public String rename(String filePath) {
-                                                return new File(filePath).getName();
-                                            }
-                                        })
-                                        .get()
-                                        .get(0);
-                                list_file.add(file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        ((Activity)getContext()).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onReceivePhotos(list_file, what);
-                            }
-                        });
-                    }
-                }).start();
+                onReceiveMedia(mediaEntityListToFileList(list),flag);
             }
             else    if(requestCode == REQUEST_CODE_CAMERA)
             {
@@ -139,54 +109,66 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
             else    if(requestCode == REQUEST_CODE_FILE)
             {
                 Uri uri = data.getData();            //得到uri
-
                 if (uri == null)
                     return;
 
-                onReceiveFile(new File(UriUtils.getFileForUri(uri)),what);
+                onReceiveFile(Arrays.asList(new File[]{new File(UriUtils.getFileForUri(uri))}), flag);
             }
         }
 
         @Override
-        public void getPhotos(int what){
-            getPhotos(0,1);
+        public void getMedia(int flag) {
+            getMedia(flag,TYPE_PHOTO|TYPE_VIDEO,0,true,true,0,0);
         }
 
         @Override
-        public void getPhotos(int what, int number){
-            getPhotos(what,number,0,0);
-        }
+        public void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, int width, int height) {
+            this.flag = flag;
 
-        @Override
-        public void getPhotos(int what, int number, int cutWidth, int cutHeight) {
-            this.what = what;
+            String[] permissions;
+            if (!useCamera)
+                permissions = new String[]{PermissionConstants.STORAGE};
+            else
+                permissions = new String[]{PermissionConstants.STORAGE,PermissionConstants.CAMERA};
 
             checkPermission(new UniverseCallback() {
                 @Override
                 public void onCallback(Object... objects) {
-
-                    Matisse matisse = null;
-
+                    int mimeType = MimeType.ofAll();
+                    PhoenixOption option = Phoenix.with()
+                            .theme(getColor(R.color.colorPrimary))// 主题
+                            .fileType(mimeType)//显示的文件类型图片、视频、图片和视频
+                            .maxPickNumber(max)// 最大选择数量
+                            .minPickNumber(0)// 最小选择数量
+                            .spanCount(4)// 每行显示个数
+                            .enablePreview(true)// 是否开启预览
+                            .enableCamera(useCamera)// 是否开启拍照
+                            .enableAnimation(true)// 选择界面图片点击效果
+                            .enableCompress(isCompress)// 是否开启压缩
+                            .compressPictureFilterSize(1024)//多少kb以下的图片不压缩
+                            .compressVideoFilterSize(1024)//多少kb以下的视频不压缩
+                            .thumbnailHeight(height)// 选择界面图片高度
+                            .thumbnailWidth(width)// 选择界面图片宽度
+                            .enableClickSound(false)// 是否开启点击声音
+                            .videoFilterTime(0)//显示多少秒以内的视频
+                            .mediaFilterSize(0);//显示多少kb以下的图片/视频，默认为0，表示不限制;
+                    //如果是在Activity里使用就传Activity，如果是在Fragment里使用就传Fragment
                     if (getAreActivity() != null)
-                        matisse = Matisse.from(getAreActivity());
+                        option.start(getAreActivity(),PhoenixOption.TYPE_PICK_MEDIA, REQUEST_CODE_MEDIA);
                     else    if (getAreFragment() != null)
-                        matisse = Matisse.from(getAreFragment());
-
-                    matisse.choose(MimeType.ofImage())
-                            .countable(true)
-                            .maxSelectable(number)
-                            .gridExpectedSize(getContext().getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                            .thumbnailScale(0.65f)
-                            .imageEngine(new GlideEngine())
-                            .forResult(REQUEST_CODE_PHOTOS);
+                        option.start(getAreFragment(),PhoenixOption.TYPE_PICK_MEDIA, REQUEST_CODE_MEDIA);
                 }
-            }, PermissionConstants.STORAGE);
+            },permissions);
         }
 
         @Override
-        public void getCamera(int what) {
-            this.what = what;
+        public void getCamera(int flag) {
+            getCamera(flag,TYPE_PHOTO|TYPE_VIDEO,true);
+        }
+
+        @Override
+        public void getCamera(int flag, int type, boolean isCompress) {
+            this.flag = flag;
 
             checkPermission(new UniverseCallback() {
                 @Override
@@ -197,13 +179,12 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         }
 
         @Override
-        public void getFile(int what) {
-            this.what = what;
+        public void getFile(int flag, int max) {
+            this.flag = flag;
 
             checkPermission(new UniverseCallback() {
                 @Override
                 public void onCallback(Object... objects) {
-
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");//设置类型，我这里是任意类型，任意后缀的可以这样写。
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -214,7 +195,15 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
                 }
             },PermissionConstants.STORAGE);
+        }
 
+        private List<File> mediaEntityListToFileList(List<MediaEntity> list){
+            List<File> list_file = new LinkedList<>();
+            for (MediaEntity entity:list)
+            {
+                list_file.add(new File(entity.getFinalPath()));
+            }
+            return list_file;
         }
 
         protected void checkPermission(UniverseCallback callback, String...  permission){
@@ -239,14 +228,14 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
             }
         }
 
-        //接收到图片后调用
-        protected abstract void onReceivePhotos(List<File> list_file, int what);
+        //接收到多媒体文件后调用
+        protected abstract void onReceiveMedia(List<File> list, int flag);
 
-        //接收到一个录像后调用
-        protected abstract void onReceiveCamera(File file, int what);
+        //接收到一个相机文件后调用
+        protected abstract void onReceiveCamera(File file, int flag);
 
         //接收到一个文件后调用
-        protected abstract void onReceiveFile(File file, int what);
+        protected abstract void onReceiveFile(List<File> list, int flag);
 
     }
 }

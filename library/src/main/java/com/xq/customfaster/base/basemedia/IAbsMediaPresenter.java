@@ -5,14 +5,14 @@ import com.xq.androidfaster.base.abs.IAbsView;
 
 public interface IAbsMediaPresenter<T extends IAbsView> extends IAbsPresenter<T> {
 
-    public void getPhotos(int what);
+    public void getMedia(int flag);
 
-    public void getPhotos(int what, int number);
+    public void getMedia(int flag,int type,int max,boolean useCamera,boolean isCompress,int width,int height);
 
-    public void getPhotos(int what, int number, int cutWidth, int cutHeight);
+    public void getCamera(int flag);
 
-    public void getCamera(int what);
+    public void getCamera(int flag,int type,boolean isCompress);
 
-    public void getFile(int what);
+    public void getFile(int flag,int max);
 
 }
