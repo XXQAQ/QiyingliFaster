@@ -17,7 +17,6 @@ import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.util.callback.UniverseCallback;
 import com.xq.androidfaster.util.constant.PermissionConstants;
-import com.xq.androidfaster.util.tools.PathUtils;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.CustomFaster;
@@ -174,7 +173,6 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
                             .enableClickSound(false)// 是否开启点击声音
                             .videoFilterTime(0)//显示多少秒以内的视频
                             .mediaFilterSize(0)//显示多少kb以下的图片/视频，默认为0，表示不限制
-                            .savePath(PathUtils.getExternalAppCachePath())
                             ;
                     //如果是在Activity里使用就传Activity，如果是在Fragment里使用就传Fragment
                     if (getAreActivity() != null)
