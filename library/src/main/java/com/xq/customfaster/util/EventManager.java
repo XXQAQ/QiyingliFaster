@@ -31,4 +31,8 @@ public class EventManager extends FasterEventManager {
         manager.unRegist(object,objects);
     }
 
+    public static void send(Object message,Object... objects) {
+        manager.send(message,objects);
+    }
+
 }
