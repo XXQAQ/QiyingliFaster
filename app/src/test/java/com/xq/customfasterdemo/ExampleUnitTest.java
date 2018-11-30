@@ -1,4 +1,4 @@
-package com.xq.qiyinglifasterdemo;
+package com.xq.customfasterdemo;
 
 import org.junit.Test;
 
