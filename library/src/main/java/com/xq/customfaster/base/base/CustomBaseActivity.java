@@ -7,9 +7,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import com.xq.androidfaster.base.base.FasterBaseActivity;
 import com.xq.androidfaster.util.tools.KeyboardUtils;
+import com.xq.customfaster.util.EventManager;
 import com.xq.customfaster.util.eventbus.FinishEvent;
 import com.xq.customfaster.util.eventbus.ComponentEvent;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -21,7 +21,7 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        EventBus.getDefault().register(this);
+        EventManager.regist(this);
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        EventManager.unRegist(this);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
-import com.google.gson.Gson;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
+import com.xq.customfaster.util.JsonManager;
 
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
@@ -55,7 +55,7 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     @Deprecated
     @Override
     public T convertResponse(okhttp3.Response response) throws Throwable {
-        return new Gson().fromJson(response.body().string(), entityClass);
+        return JsonManager.jsonToObject(response.body().string(),entityClass);
     }
 
 }

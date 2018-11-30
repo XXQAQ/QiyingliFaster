@@ -3,7 +3,4 @@
     <!--滑动布局越界高度-->
     <dimen name="over_scrollHeight">64dp</dimen>
 
-    <!--luban-->
-    <dimen name="grid_expected_size">120dp</dimen>
-
 </resources>
