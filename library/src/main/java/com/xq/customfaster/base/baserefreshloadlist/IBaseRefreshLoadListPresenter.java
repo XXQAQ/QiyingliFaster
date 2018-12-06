@@ -15,11 +15,6 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
-    default List getListData() {
-        return getRefreshLoadDelegate().getListData();
-    }
-
-    @Override
     default List getDataList() {
         return getRefreshLoadDelegate().getDataList();
     }
@@ -38,11 +33,6 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         @Override
         public void initAdapter(){
             getBindView().initAdapter(list_data);
-        }
-
-        @Override
-        public List getListData() {
-            return list_data;
         }
 
         @Override

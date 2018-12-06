@@ -1,11 +1,8 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
-
 import android.os.Bundle;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
@@ -64,17 +61,9 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             if (updateList == null)
                 updateList = new LinkedList();
 
-            //DiffUtil在数据未变动的的时候不会调用adapter任何方法，因此需要手动调用notifyDataSetChanged
-            if (updateList.size() > 0)
-            {
-                List newList = new LinkedList();
-                newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DefaultDiffCallBack(getPresenter().getListData(),newList),true);
-                diffResult.dispatchUpdatesTo(rv.getAdapter());
-                getPresenter().getListData().clear();
-                getPresenter().getListData().addAll(updateList);
-            }
-            else    rv.getAdapter().notifyDataSetChanged();
+            getPresenter().getDataList().clear();
+            getPresenter().getDataList().addAll(updateList);
+            rv.getAdapter().notifyDataSetChanged();
         }
 
         @Override
@@ -90,18 +79,9 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
             if (updateList == null)
                 updateList = new LinkedList();
-            
-            //DiffUtil在数据未变动的的时候不会调用adapter任何方法，因此需要手动调用notifyDataSetChanged
-            if (updateList.size() > 0)
-            {
-                List newList = new LinkedList();
-                newList.addAll(getPresenter().getListData());
-                newList.addAll(updateList);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DefaultDiffCallBack(getPresenter().getListData(), newList), true);
-                diffResult.dispatchUpdatesTo(rv.getAdapter());
-                getPresenter().getListData().addAll(updateList);
-            }
-            else    rv.getAdapter().notifyDataSetChanged();
+
+            getPresenter().getDataList().addAll(updateList);
+            rv.getAdapter().notifyDataSetChanged();
         }
 
         @Override
@@ -121,34 +101,5 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         //返回布局管理器，重写该方法以指定RecyclerView的布局方案
         protected abstract RecyclerView.LayoutManager getLayoutManager();
 
-        protected class DefaultDiffCallBack extends DiffUtil.Callback {
-
-            private List mOldDatas, mNewDatas;
-
-            public DefaultDiffCallBack(List mOldDatas, List mNewDatas) {
-                this.mOldDatas = mOldDatas;
-                this.mNewDatas = mNewDatas;
-            }
-
-            @Override
-            public int getOldListSize() {
-                return mOldDatas != null ? mOldDatas.size() : 0;
-            }
-
-            @Override
-            public int getNewListSize() {
-                return mNewDatas != null ? mNewDatas.size() : 0;
-            }
-            @Override
-            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return mNewDatas.get(newItemPosition).getClass().isAssignableFrom(mOldDatas.get(oldItemPosition).getClass());
-            }
-            @Override
-            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                return mOldDatas.get(oldItemPosition).equals(mNewDatas.get(newItemPosition));
-            }
-        }
-
     }
-
 }

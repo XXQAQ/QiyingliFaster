@@ -30,6 +30,16 @@ public class CustomRecyclerView extends FamiliarRecyclerView implements Recycler
     }
 
     @Override
+    public int getHeadCount() {
+        return super.getHeaderViewsCount();
+    }
+
+    @Override
+    public int getFootCount() {
+        return super.getFooterViewsCount();
+    }
+
+    @Override
     public void setEmptyView(Object object) {
         super.setEmptyView((View) object,true);
     }
