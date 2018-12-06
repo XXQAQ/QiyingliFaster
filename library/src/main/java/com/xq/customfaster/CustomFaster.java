@@ -6,8 +6,6 @@ import android.widget.ImageView;
 import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
 
-
-
 public class CustomFaster {
 
     public static void init(){

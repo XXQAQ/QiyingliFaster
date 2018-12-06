@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baserefreshload;
 
-import android.content.Intent;
 import android.os.Bundle;
 import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
 import com.xq.androidfaster.base.abs.IAbsPresenter;
@@ -142,7 +141,6 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
                 getBindView().loadmoreView(object);
                 getBindView().afterLoadmore();
             }
-
         }
 
         @Override

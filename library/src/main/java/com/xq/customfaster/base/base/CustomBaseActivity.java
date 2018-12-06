@@ -8,8 +8,8 @@ import android.widget.EditText;
 import com.xq.androidfaster.base.base.FasterBaseActivity;
 import com.xq.androidfaster.util.tools.KeyboardUtils;
 import com.xq.customfaster.util.EventManager;
-import com.xq.customfaster.util.eventbus.FinishEvent;
-import com.xq.customfaster.util.eventbus.ComponentEvent;
+import com.xq.customfaster.util.event.FinishEvent;
+import com.xq.customfaster.util.event.ComponentEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

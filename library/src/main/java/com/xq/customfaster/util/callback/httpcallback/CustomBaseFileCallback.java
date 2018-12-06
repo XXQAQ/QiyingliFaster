@@ -8,6 +8,7 @@ import java.io.File;
 
 public abstract class CustomBaseFileCallback extends FileCallback implements FasterHttpCallback<File> {
 
+    @Deprecated
     @Override
     public void onStart(Request<File, ? extends Request> request) {
         super.onStart(request);
@@ -15,6 +16,7 @@ public abstract class CustomBaseFileCallback extends FileCallback implements Fas
     }
 
     private File file;
+    @Deprecated
     @Override
     public void onSuccess(Response<File> response) {
         file = response.body();

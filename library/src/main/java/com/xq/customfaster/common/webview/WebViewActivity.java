@@ -1,9 +1,7 @@
 package com.xq.customfaster.common.webview;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 
 import com.xq.customfaster.base.base.CustomBaseActivity;
 

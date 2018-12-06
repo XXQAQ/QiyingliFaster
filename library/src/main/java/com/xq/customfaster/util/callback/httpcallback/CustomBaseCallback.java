@@ -6,7 +6,6 @@ import com.lzy.okgo.request.base.Request;
 import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
 import com.xq.customfaster.util.JsonManager;
 
-
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
 
     protected Class<T> entityClass;

@@ -7,7 +7,6 @@ import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
-
 public class CustomRefreshLoadView extends TwinklingRefreshLayout implements RefreshLoadViewInterface {
 
     public CustomRefreshLoadView(Context context) {

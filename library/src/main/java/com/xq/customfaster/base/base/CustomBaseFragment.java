@@ -3,7 +3,7 @@ package com.xq.customfaster.base.base;
 import android.os.Bundle;
 import com.xq.androidfaster.base.base.FasterBaseFragment;
 import com.xq.customfaster.util.EventManager;
-import com.xq.customfaster.util.eventbus.ComponentEvent;
+import com.xq.customfaster.util.event.ComponentEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

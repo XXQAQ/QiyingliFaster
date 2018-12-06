@@ -19,8 +19,6 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     protected Toolbar toolbar;
 
-    protected NestedScrollView sv;
-
     public CustomBaseView(T presenter) {
         super(presenter);
     }
@@ -28,9 +26,6 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     @Override
     public void afterOnCreate(Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
-
-        if (sv != null)
-            sv.setNestedScrollingEnabled(false);
 
         //针对顶部容器作特殊处理
         if (isTopContainer())
@@ -114,7 +109,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     }
 
     private void setStatusBarLightMode(boolean isLightStyle){
-        BarUtils.setStatusBarLightMode(getPresenter().getAreActivity(),isLightStyle);
+        BarUtils.setStatusBarLightMode((Activity) getContext(),isLightStyle);
     }
 
     private void hideSystemBar() {
