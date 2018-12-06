@@ -55,7 +55,11 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     @Deprecated
     @Override
     public T convertResponse(okhttp3.Response response) throws Throwable {
-        return JsonManager.jsonToObject(response.body().string(),entityClass);
+        String data = response.body().string();
+        if (entityClass.isAssignableFrom(String.class))
+            return (T) data;
+        else
+            return JsonManager.jsonToObject(data,entityClass);
     }
 
 }
