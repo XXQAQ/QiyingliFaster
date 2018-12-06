@@ -24,7 +24,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
 
-        public List list_data = new LinkedList<>();
+        protected List list_data = new LinkedList<>();
 
         public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
