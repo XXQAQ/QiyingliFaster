@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.XXQAQ:AndroidFaster:3.10.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AndroidFaster-3.10.0.aar/10e04526202d5550596c60536e5c442a/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AndroidFaster-3.10.0.aar/10e04526202d5550596c60536e5c442a/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AndroidFaster-3.10.0.aar/10e04526202d5550596c60536e5c442a/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.XXQAQ/AndroidFaster/3.10.0/2abe184c873c1f879adcf423951d1e267f4325bf/AndroidFaster-3.10.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
