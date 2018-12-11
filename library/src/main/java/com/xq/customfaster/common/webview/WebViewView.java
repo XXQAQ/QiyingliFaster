@@ -1,6 +1,5 @@
 package com.xq.customfaster.common.webview;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;

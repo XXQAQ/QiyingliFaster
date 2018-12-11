@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
-
 import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;

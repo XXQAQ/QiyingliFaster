@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
-
 import com.xq.customfaster.base.baserefreshload.IAbsRefreshLoadPresenter;
 
 import java.util.List;

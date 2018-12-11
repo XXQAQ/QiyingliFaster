@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baserefreshload;
 
-import android.os.Bundle;
 import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
 import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.util.tools.ObjectUtils;
@@ -60,26 +59,6 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         @Override
-        public void afterOnCreate(Bundle bundle) {
-            super.afterOnCreate(bundle);
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-        }
-
-        @Override
         public void startRefresh(){
             getBindView().startRefresh();
         }
@@ -111,12 +90,12 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
         @Override
         public void cancleRefresh() {
-
+            isWorking = false;
         }
 
         @Override
         public void cancleLoadmore() {
-
+            isWorking = false;
         }
 
         @Override

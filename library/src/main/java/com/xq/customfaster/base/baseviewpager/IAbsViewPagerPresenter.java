@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baseviewpager;
 
-
 import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.bean.behavior.TitleBehavior;
 import java.util.List;

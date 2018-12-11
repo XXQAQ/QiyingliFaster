@@ -71,26 +71,6 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         }
 
         @Override
-        public void afterOnCreate(Bundle savedInstanceState) {
-            super.afterOnCreate(savedInstanceState);
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-        }
-
-        @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode,resultCode,data);
 

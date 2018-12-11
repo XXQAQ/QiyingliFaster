@@ -117,21 +117,6 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-        }
-
-        @Override
         public void startRefresh(){
             if (refreshLoadView != null)
                 refreshLoadView.startRefresh();

@@ -1,6 +1,5 @@
 package com.xq.customfaster.base.baseviewpager;
 
-
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,8 +21,8 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
     public class ViewPagerDelegate<T extends IBaseViewPagerPresenter> extends AbsViewDelegate<T> implements IAbsViewPagerView<T> {
 
-        protected ViewPager vp;
-        protected TabLayout tl;
+        public ViewPager vp;
+        public TabLayout tl;
 
         public ViewPagerDelegate(IAbsView view) {
             super(view);
@@ -46,21 +45,6 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
             }
 
             initViewPager(getPresenter().getFragmentsAndTitles());
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
         }
 
         @Override

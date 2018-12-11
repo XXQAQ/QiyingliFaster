@@ -2,6 +2,7 @@ package com.xq.customfaster.common.webview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.xq.customfaster.base.base.CustomBaseActivity;
 
@@ -15,7 +16,7 @@ public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements
     public void afterOnCreate(@Nullable Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
 
-        if (url != null)
+        if (!TextUtils.isEmpty(url))
         {
             getBindView().initToolbar("加载中...", true);
 

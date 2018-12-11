@@ -1,10 +1,8 @@
 package com.xq.customfaster.base.base;
 
-
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -39,7 +37,6 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     @Override
     public void initToolbar(CharSequence title) {
-
         initToolbar(title,true);
     }
 
@@ -50,16 +47,16 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
         toolbar.setBackgroundColor(getToolbarBackgroundColor());
 
-        TextView tv_toolTitle = (TextView) toolbar.findViewById(getContext().getResources().getIdentifier("toolTitle", "id", getContext().getPackageName()));
-        if (tv_toolTitle == null)
+        TextView toolTitle = (TextView) toolbar.findViewById(getContext().getResources().getIdentifier("toolTitle", "id", getContext().getPackageName()));
+        if (toolTitle == null)
         {
             toolbar.setTitle(title);
             toolbar.setTitleTextColor(getToolbarWidgetColor());
         }
         else
         {
-            tv_toolTitle.setText(title);
-            tv_toolTitle.setTextColor(getToolbarWidgetColor());
+            toolTitle.setText(title);
+            toolTitle.setTextColor(getToolbarWidgetColor());
         }
 
         if (isShowIcon)
