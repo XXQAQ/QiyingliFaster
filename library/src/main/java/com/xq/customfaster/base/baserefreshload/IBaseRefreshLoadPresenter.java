@@ -51,8 +51,8 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements IAbsRefreshLoadPresenter<T> {
 
         protected int page = getFirstPage();
-        protected boolean isRefresh;
-        protected boolean isWorking;
+        protected boolean isRefresh = true;
+        protected boolean isWorking = false;
 
         public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
