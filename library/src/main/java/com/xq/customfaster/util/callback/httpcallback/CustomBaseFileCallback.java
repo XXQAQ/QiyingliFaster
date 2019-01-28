@@ -15,11 +15,9 @@ public abstract class CustomBaseFileCallback extends FileCallback implements Fas
         requestStart(request);
     }
 
-    private File file;
     @Deprecated
     @Override
     public void onSuccess(Response<File> response) {
-        file = response.body();
         requestSuccess(response.body(),response);
     }
 
@@ -27,7 +25,7 @@ public abstract class CustomBaseFileCallback extends FileCallback implements Fas
     @Override
     public void onFinish() {
         super.onFinish();
-        requestFinish(file);
+        requestFinish();
     }
 
     @Deprecated

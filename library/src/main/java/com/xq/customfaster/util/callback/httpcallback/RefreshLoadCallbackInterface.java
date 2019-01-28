@@ -19,9 +19,9 @@ public interface RefreshLoadCallbackInterface<T> extends FasterHttpCallback<T> {
     }
 
     @Override
-    default void requestFinish(T t,Object... objects) {
-        FasterHttpCallback.super.requestFinish(t,objects);
-        getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().isOperateSuccess,t);
+    default void requestFinish(Object... objects) {
+        FasterHttpCallback.super.requestFinish(objects);
+        getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().isOperateSuccess,getCallbackBuilder().data);
     }
 
     default void operateSuccess(T t) {

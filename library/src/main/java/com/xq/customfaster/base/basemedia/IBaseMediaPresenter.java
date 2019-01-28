@@ -2,7 +2,6 @@ package com.xq.customfaster.base.basemedia;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import com.guoxiaoxing.phoenix.core.PhoenixOption;
 import com.guoxiaoxing.phoenix.core.model.MediaEntity;
 import com.guoxiaoxing.phoenix.core.model.MimeType;
@@ -118,7 +117,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
                 public void onCallback(Object... objects) {
                     int mimeType = MimeType.ofImage();
                     PhoenixOption option = Phoenix.with()
-                            .theme(getColor(R.color.colorPrimary))// 主题
+                            .theme(getContext().getResources().getColor(R.color.colorPrimary))// 主题
                             .fileType(mimeType)//显示的文件类型图片、视频、图片和视频
                             .maxPickNumber(max)// 最大选择数量
                             .minPickNumber(0)// 最小选择数量

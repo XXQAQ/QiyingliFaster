@@ -3,14 +3,12 @@ package com.xq.customfaster.util.callback.httpcallback;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.xq.androidfaster.util.JsonConverter;
 import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
-import com.xq.customfaster.util.JsonManager;
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
 
     protected Class<T> entityClass;
-
-    private T t;
 
     public CustomBaseCallback(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -33,15 +31,14 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     @Deprecated
     @Override
     public void onSuccess(Response<T> response) {
-        t = response.body();
-        requestSuccess(t,response);
+        requestSuccess(response.body(),response);
     }
 
     @Deprecated
     @Override
     public void onFinish() {
         super.onFinish();
-        requestFinish(t);
+        requestFinish();
     }
 
     @Deprecated
@@ -58,7 +55,7 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
         if (entityClass.isAssignableFrom(String.class))
             return (T) data;
         else
-            return JsonManager.jsonToObject(data,entityClass);
+            return JsonConverter.jsonToObject(data,entityClass);
     }
 
 }
