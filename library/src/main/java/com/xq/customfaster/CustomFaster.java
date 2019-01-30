@@ -49,7 +49,7 @@ public class CustomFaster {
 
         JsonConverter.setConverter(new JsonConverter.Converter() {
             @Override
-            public <T> T jsonToObject(String json, Class<T> mClass, Object... objects) {
+            public <T> T jsonToObject(String json, Class<T> mClass, Object... objects) throws RuntimeException {
                 return new Gson().fromJson(json,mClass);
             }
 
