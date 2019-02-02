@@ -147,8 +147,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             if (refreshLoadView != null)
             {
                 View view = (View) getEmptyView();
-                if (view == null)
-                    view = new View(getContext());
+                if (view == null) view = new View(getContext());
                 refreshLoadView.setEmptyView(view);
                 refreshLoadView.showEmptyView();
             }
