@@ -37,13 +37,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
-    default void refreshLoadData(boolean isOperateSuccess, Object object) {
-        getRefreshLoadDelegate().refreshLoadData(isOperateSuccess,object);
+    default void refreshLoadData(Object object) {
+        getRefreshLoadDelegate().refreshLoadData(object);
     }
 
     @Override
-    default void refreshLoadErro() {
-        getRefreshLoadDelegate().refreshLoadErro();
+    default void refreshLoadData(Object object,boolean isSuccess) {
+        getRefreshLoadDelegate().refreshLoadData(object,isSuccess);
     }
 
     public RefreshLoadDelegate getRefreshLoadDelegate();
@@ -90,49 +90,59 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
         @Override
         public void cancleRefresh() {
+
             isWorking = false;
+
+            getBindView().afterRefresh();
         }
 
         @Override
         public void cancleLoadmore() {
+
             isWorking = false;
+
+            getBindView().afterLoadmore();
         }
 
         @Override
-        public void refreshLoadData(boolean isOperateSuccess,Object object) {
+        public void refreshLoadData(Object object) {
+            refreshLoadData(object,true);
+        }
+
+        @Override
+        public void refreshLoadData(Object object, boolean isSuccess) {
 
             isWorking = false;
 
-            if (isEmptyData(isOperateSuccess,object))
-                getBindView().refreshLoadEmpty();
-
-            if (isRefresh)
+            if(isSuccess)
             {
-                if (!isEmptyData(isOperateSuccess,object))
-                    page = getFirstPage();
-                getBindView().refreshView(object);
-                getBindView().afterRefresh();
+                if (isEmptyData(object))
+                    getBindView().refreshLoadEmpty();
+
+                if (isRefresh)
+                {
+                    if (!isEmptyData(object))
+                        page = getFirstPage();
+                    getBindView().refreshView(object);
+                    getBindView().afterRefresh();
+                }
+                else
+                {
+                    if (!isEmptyData(object))
+                        page++;
+                    getBindView().loadmoreView(object);
+                    getBindView().afterLoadmore();
+                }
             }
             else
             {
-                if (!isEmptyData(isOperateSuccess,object))
-                    page++;
-                getBindView().loadmoreView(object);
-                getBindView().afterLoadmore();
+                getBindView().refreshLoadErro();
             }
         }
 
-        @Override
-        public void refreshLoadErro() {
-            getBindView().refreshLoadErro();
-        }
-
-        //判断是对象否含有数据(您需要根据需要重写该方法，因为page和emptyView需要本方法的返回值进行后续处理)
-        protected boolean isEmptyData(boolean isOperateSuccess,Object object){
-            if (isOperateSuccess)
+        //判断是对象否含有数据(您需要根据需求重写该方法，因为page和emptyView需要本方法的返回值进行后续处理)
+        protected boolean isEmptyData(Object object){
                 return ObjectUtils.isEmpty(object);
-            else
-                return true;
         }
 
         //重写此方法可指定第一页下标

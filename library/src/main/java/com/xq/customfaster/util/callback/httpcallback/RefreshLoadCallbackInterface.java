@@ -15,13 +15,12 @@ public interface RefreshLoadCallbackInterface<T> extends FasterHttpCallback<T> {
 
     default void requestError(Object... objects) {
         FasterHttpCallback.super.requestError(objects);
-        getCallbackBuilder().presenter.refreshLoadErro();
     }
 
     @Override
     default void requestFinish(Object... objects) {
         FasterHttpCallback.super.requestFinish(objects);
-        getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().isOperateSuccess,getCallbackBuilder().data);
+        getCallbackBuilder().presenter.refreshLoadData(getCallbackBuilder().data,getCallbackBuilder().isOperateSuccess);
     }
 
     default void operateSuccess(T t) {

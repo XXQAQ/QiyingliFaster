@@ -25,9 +25,9 @@ public interface IAbsRefreshLoadPresenter<T extends IAbsRefreshLoadView> extends
     public void cancleLoadmore();
 
     //刷新加载数据回调的方法
-    public void refreshLoadData(boolean isOperateSuccess, Object object);
+    public void refreshLoadData(Object object);
 
-    //刷新加载失败后回调的方法
-    public void refreshLoadErro();
+    //刷新加载数据回调的方法
+    public void refreshLoadData(Object object,boolean isSuccess);
 
 }

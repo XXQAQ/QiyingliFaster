@@ -22,7 +22,6 @@ import com.xq.customfaster.base.base.CustomBaseView;
 @TopContainer
 public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IWebViewView  {
 
-    private TwinklingRefreshLayout refreshView;
     private WebView webView;
     private ProgressBar pb;
 

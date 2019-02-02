@@ -22,7 +22,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListPresenter> extends IBaseRefreshLoadView.RefreshLoadDelegate<T> implements IAbsRefreshLoadListView<T> {
 
-        public RecyclerView rv;
+        public RecyclerView recyclerView;
 
         public RefreshLoadDelegate(IAbsView view) {
             super(view);
@@ -32,11 +32,11 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         public void afterOnCreate(Bundle savedInstanceState) {
             super.afterOnCreate(savedInstanceState);
 
-            rv = (RecyclerView) findViewById(getContext().getResources().getIdentifier("rv", "id", getContext().getPackageName()));
+            recyclerView = (RecyclerView) findViewById(getContext().getResources().getIdentifier("recyclerView", "id", getContext().getPackageName()));
 
             //初始化RecyclerView
-            rv.setLayoutManager(getLayoutManager());
-            rv.setNestedScrollingEnabled(false);
+            recyclerView.setLayoutManager(getLayoutManager());
+            recyclerView.setNestedScrollingEnabled(false);
 
             //通知P层初始化Adapter
             getPresenter().initAdapter();
@@ -44,7 +44,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void initAdapter(List list, Object... objects) {
-            rv.setAdapter(getAdapter(list,objects));
+            recyclerView.setAdapter(getAdapter(list,objects));
         }
 
         @Override
@@ -63,7 +63,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
             getPresenter().getDataList().clear();
             getPresenter().getDataList().addAll(updateList);
-            rv.getAdapter().notifyDataSetChanged();
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
 
         @Override
@@ -81,17 +81,17 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
                 updateList = new LinkedList();
 
             getPresenter().getDataList().addAll(updateList);
-            rv.getAdapter().notifyDataSetChanged();
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
 
         @Override
         public void refreshLoadEmpty(){
-            if (rv instanceof RecyclerViewInterface)
+            if (recyclerView instanceof RecyclerViewInterface)
             {
                 View view = (View) getEmptyView();
                 if (view == null)
                     view = new View(getContext());
-                ((RecyclerViewInterface) rv).setEmptyView(view);
+                ((RecyclerViewInterface) recyclerView).setEmptyView(view);
             }
         }
 

@@ -21,8 +21,8 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
     public class ViewPagerDelegate<T extends IBaseViewPagerPresenter> extends AbsViewDelegate<T> implements IAbsViewPagerView<T> {
 
-        public ViewPager vp;
-        public TabLayout tl;
+        public ViewPager viewPager;
+        public TabLayout tabLayout;
 
         public ViewPagerDelegate(IAbsView view) {
             super(view);
@@ -32,24 +32,16 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
         public void afterOnCreate(Bundle savedInstanceState) {
             super.afterOnCreate(savedInstanceState);
 
-            vp = (ViewPager) findViewById(getContext().getResources().getIdentifier("vp", "id", getContext().getPackageName()));
+            viewPager = (ViewPager) findViewById(getContext().getResources().getIdentifier("viewPager", "id", getContext().getPackageName()));
 
-            tl = (TabLayout) findViewById(getContext().getResources().getIdentifier("tl", "id", getContext().getPackageName()));
-
-            if (tl != null)
-            {
-                if (getTabTextNormalColor() >= 0 || getTabTextSelectColor()>= 0)
-                    tl.setTabTextColors(getTabTextNormalColor(),getTabTextSelectColor());
-                if (getTabBackgroundColor() >= 0)
-                    tl.setBackgroundColor(getTabBackgroundColor());
-            }
+            tabLayout = (TabLayout) findViewById(getContext().getResources().getIdentifier("tabLayout", "id", getContext().getPackageName()));
 
             initViewPager(getPresenter().getFragmentsAndTitles());
         }
 
         @Override
         public void refreshViewPager(){
-            vp.getAdapter().notifyDataSetChanged();
+            viewPager.getAdapter().notifyDataSetChanged();
         }
 
         protected void initViewPager(List<TitleBehavior> list) {
@@ -57,34 +49,19 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
             List<CharSequence> list_title = new LinkedList<>();
             List<Fragment> list_fragment = new LinkedList<>();
 
-            if (list != null && tl != null)
+            if (list != null && tabLayout != null)
             {
                 for (int i=0;i<list.size();i++)
                 {
-                    tl.addTab(tl.newTab());
+                    tabLayout.addTab(tabLayout.newTab());
                     list_title.add(list.get(i).getTitle());
                     list_fragment.add((Fragment) list.get(i).getTag());
                 }
-                tl.setupWithViewPager(vp);
+                tabLayout.setupWithViewPager(viewPager);
             }
 
-            vp.setAdapter(new UniverseFragmentPagerAdapter(getCPFragmentManager(),list_fragment,list_title));
+            viewPager.setAdapter(new UniverseFragmentPagerAdapter(getCPFragmentManager(),list_fragment,list_title));
         }
-
-        //返回Tab文字正常时颜色
-        protected int getTabTextNormalColor() {
-            return -1;
-        }
-
-        //返回Tab文字选择时颜色
-        protected int getTabTextSelectColor() {
-            return -1;
-        }
-
-        //返回Tab文字背景色
-        protected int getTabBackgroundColor() {
-            return -1;
-        }
-
     }
+
 }

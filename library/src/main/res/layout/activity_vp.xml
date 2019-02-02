@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +7,6 @@
     android:background="@android:color/transparent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -17,7 +15,7 @@
         <include layout="@layout/layout_toolbar"/>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tl"
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
             app:tabSelectedTextColor="?colorPrimary"
@@ -29,7 +27,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vp"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

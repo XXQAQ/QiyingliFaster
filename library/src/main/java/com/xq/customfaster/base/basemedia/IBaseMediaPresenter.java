@@ -1,7 +1,9 @@
 package com.xq.customfaster.base.basemedia;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Size;
 import com.guoxiaoxing.phoenix.core.PhoenixOption;
 import com.guoxiaoxing.phoenix.core.model.MediaEntity;
 import com.guoxiaoxing.phoenix.core.model.MimeType;
@@ -28,8 +30,13 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
     }
 
     @Override
-    default void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, int width, int height) {
-        getMediaDelegate().getMedia(flag,type,max,useCamera,isCompress,width,height);
+    default void getMedia(int flag, int type, int max, boolean useCamera) {
+        getMediaDelegate().getMedia(flag,type,max,useCamera);
+    }
+
+    @Override
+    default void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, Size cropSize) {
+        getMediaDelegate().getMedia(flag,type,max,useCamera,isCompress,cropSize);
     }
 
     @Override
@@ -38,8 +45,13 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
     }
 
     @Override
-    default void getCamera(int flag, int type, boolean isCompress) {
-        getMediaDelegate().getCamera(flag,type,isCompress);
+    default void getCamera(int flag, int type) {
+        getMediaDelegate().getCamera(flag,type);
+    }
+
+    @Override
+    default void getCamera(int flag, int type, boolean isCompress,Size cropSize) {
+        getMediaDelegate().getCamera(flag,type,isCompress,cropSize);
     }
 
     @Override
@@ -56,8 +68,8 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
     public abstract class MediaDelegate<T extends IAbsView> extends AbsPresenterDelegate<T> implements IAbsMediaPresenter<T> {
 
-        public static final int TYPE_PHOTO = 0x1;
-        public static final int TYPE_VIDEO = 0x10;
+        public static final int TYPE_PHOTO = 0x01;
+        public static final int TYPE_VIDEO = 0x02;
 
         public static final int REQUEST_CODE_MEDIA = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
@@ -99,11 +111,17 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
         @Override
         public void getMedia(int flag) {
-            getMedia(flag,TYPE_PHOTO|TYPE_VIDEO,0,true,true,0,0);
+            getMedia(flag,TYPE_PHOTO|TYPE_VIDEO,0,true,true,null);
+        }
+
+
+        @Override
+        public void getMedia(int flag, int type, int max, boolean useCamera) {
+            getMedia(flag,type,max,useCamera,true,null);
         }
 
         @Override
-        public void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, int width, int height) {
+        public void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, Size cropSize) {
             this.flag = flag;
 
             String[] permissions;
@@ -145,11 +163,16 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
         @Override
         public void getCamera(int flag) {
-            getCamera(flag,TYPE_PHOTO|TYPE_VIDEO,true);
+            getCamera(flag,TYPE_PHOTO|TYPE_VIDEO,true,null);
         }
 
         @Override
-        public void getCamera(int flag, int type, boolean isCompress) {
+        public void getCamera(int flag, int type) {
+            getCamera(flag,type,true,null);
+        }
+
+        @Override
+        public void getCamera(int flag, int type, boolean isCompress,Size cropSize) {
             this.flag = flag;
 
             checkPermission(new UniverseCallback() {
@@ -193,6 +216,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
             return list_file;
         }
 
+        @SuppressLint("WrongConstant")
         protected void checkPermission(UniverseCallback callback, String...  permission){
             PermissionUtils.permission(permission)
                     .callback(new PermissionUtils.FullCallback() {

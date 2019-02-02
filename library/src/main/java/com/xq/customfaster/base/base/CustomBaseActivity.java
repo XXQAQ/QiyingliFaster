@@ -73,7 +73,7 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
 
     @Deprecated
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void isMineComponentEvent(ComponentEvent event){
+    public void isMyComponentEvent(ComponentEvent event){
         if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))
             return;
         else

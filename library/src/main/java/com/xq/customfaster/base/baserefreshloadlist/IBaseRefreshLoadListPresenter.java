@@ -40,14 +40,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        protected boolean isEmptyData(boolean isOperateSuccess,Object object) {
-            if (isOperateSuccess)
-                if (object instanceof ListBehavior)
-                    return super.isEmptyData(isOperateSuccess,((ListBehavior) object).getList());
-                else
-                    return super.isEmptyData(isOperateSuccess,object);
+        protected boolean isEmptyData(Object object) {
+            if (object instanceof ListBehavior)
+                return super.isEmptyData(((ListBehavior) object).getList());
             else
-                return true;
+                return super.isEmptyData(object);
         }
     }
 

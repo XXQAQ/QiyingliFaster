@@ -5,7 +5,6 @@
 
         <activity
             android:name="com.xq.customfaster.common.webview.WebViewActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
     </application>
