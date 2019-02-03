@@ -117,30 +117,35 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             if(isSuccess)
             {
                 if (isEmptyData(object))
-                    getBindView().refreshLoadEmpty();
-
-                if (isRefresh)
                 {
-                    if (!isEmptyData(object))
-                        page = getFirstPage();
-                    getBindView().refreshView(object);
-                    getBindView().afterRefresh();
+                    getBindView().refreshLoadEmpty();
                 }
                 else
                 {
-                    if (!isEmptyData(object))
+                    if (isRefresh)
+                    {
+                        page = getFirstPage();
+                        getBindView().refreshView(object);
+                    }
+                    else
+                    {
                         page++;
-                    getBindView().loadmoreView(object);
-                    getBindView().afterLoadmore();
+                        getBindView().loadmoreView(object);
+                    }
                 }
             }
             else
             {
                 getBindView().refreshLoadErro();
             }
+
+            if (isRefresh)
+                getBindView().afterRefresh();
+            else
+                getBindView().afterLoadmore();
         }
 
-        //判断是对象否含有数据(您需要根据需求重写该方法，因为page和emptyView需要本方法的返回值进行后续处理)
+        //判断对象是否含有数据(您需要根据需求重写该方法，因为page和emptyView需要本方法的返回值进行后续处理)
         protected boolean isEmptyData(Object object){
                 return ObjectUtils.isEmpty(object);
         }

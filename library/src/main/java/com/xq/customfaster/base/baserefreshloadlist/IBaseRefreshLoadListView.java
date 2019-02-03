@@ -92,6 +92,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
                 if (view == null)
                     view = new View(getContext());
                 ((RecyclerViewInterface) recyclerView).setEmptyView(view);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
         }
 
