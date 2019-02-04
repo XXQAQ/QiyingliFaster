@@ -23,7 +23,7 @@ import com.xq.customfaster.base.base.CustomBaseView;
 public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IWebViewView  {
 
     private WebView webView;
-    private ProgressBar pb;
+    private ProgressBar progressBar;
 
     public WebViewView(IWebViewPresenter presenter) {
         super(presenter);
@@ -97,8 +97,8 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress <= 100)
                 {
-                    pb.setVisibility(View.VISIBLE);
-                    pb.setProgress(newProgress);
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
                 }
                 if (newProgress >= 100)
                 {
@@ -110,8 +110,8 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
                                 ((Activity)getContext()).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (pb.getProgress() >=100)
-                                            pb.setVisibility(View.INVISIBLE);
+                                        if (progressBar.getProgress() >=100)
+                                            progressBar.setVisibility(View.INVISIBLE);
                                     }
                                 });
                             } catch (InterruptedException e) {

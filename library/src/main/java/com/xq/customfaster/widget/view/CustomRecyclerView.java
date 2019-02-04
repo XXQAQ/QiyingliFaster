@@ -20,23 +20,13 @@ public class CustomRecyclerView extends FamiliarRecyclerView implements Recycler
     }
 
     @Override
-    public void addHeadView(Object object) {
+    public void addHeaderView(Object object) {
         super.addHeaderView((View) object);
     }
 
     @Override
-    public void addFootView(Object object) {
+    public void addFooterView(Object object) {
         super.addFooterView((View) object);
-    }
-
-    @Override
-    public int getHeadCount() {
-        return super.getHeaderViewsCount();
-    }
-
-    @Override
-    public int getFootCount() {
-        return super.getFooterViewsCount();
     }
 
     @Override

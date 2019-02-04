@@ -111,8 +111,8 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
                         getPresenter().cancleLoadmore();
                     }
                 });
-                refreshLoadView.setRefreshHeadView(getRefreshHeadView());
-                refreshLoadView.setLoadmoreFootView(getLoadmoreFootView());
+                refreshLoadView.setRefreshHeaderView(getRefreshHeadView());
+                refreshLoadView.setLoadmoreFooterView(getLoadmoreFootView());
             }
         }
 
