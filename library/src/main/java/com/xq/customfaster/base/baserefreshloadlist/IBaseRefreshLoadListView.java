@@ -18,6 +18,21 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
     }
 
     @Override
+    default void refreshItemView(int position) {
+        getRefreshLoadDelegate().refreshItemView(position);
+    }
+
+    @Override
+    default void removeItemView(int position) {
+        getRefreshLoadDelegate().removeItemView(position);
+    }
+
+    @Override
+    default void insertItemView(int position) {
+        getRefreshLoadDelegate().insertItemView(position);
+    }
+
+    @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListPresenter> extends IBaseRefreshLoadView.RefreshLoadDelegate<T> implements IAbsRefreshLoadListView<T> {
@@ -39,7 +54,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             recyclerView.setNestedScrollingEnabled(false);
 
             //通知P层初始化Adapter
-            getPresenter().initAdapter();
+            getBindPresenter().initAdapter();
         }
 
         @Override
@@ -61,8 +76,8 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             if (updateList == null)
                 updateList = new LinkedList();
 
-            getPresenter().getDataList().clear();
-            getPresenter().getDataList().addAll(updateList);
+            getBindPresenter().clearDatas();
+            getBindPresenter().addDifferentDatas(updateList);
             recyclerView.getAdapter().notifyDataSetChanged();
         }
 
@@ -80,8 +95,29 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             if (updateList == null)
                 updateList = new LinkedList();
 
-            getPresenter().getDataList().addAll(updateList);
+            getBindPresenter().addDifferentDatas(updateList);
             recyclerView.getAdapter().notifyDataSetChanged();
+        }
+
+        @Override
+        public void refreshItemView(int position) {
+            int headerCount = 0;
+            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
+            recyclerView.getAdapter().notifyItemChanged(position+headerCount);
+        }
+
+        @Override
+        public void removeItemView(int position) {
+            int headerCount = 0;
+            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
+            recyclerView.getAdapter().notifyItemRemoved(position+headerCount);
+        }
+
+        @Override
+        public void insertItemView(int position) {
+            int headerCount = 0;
+            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
+            recyclerView.getAdapter().notifyItemInserted(position+headerCount);
         }
 
         @Override

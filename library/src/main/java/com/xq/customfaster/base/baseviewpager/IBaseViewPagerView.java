@@ -36,7 +36,7 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
             tabLayout = (TabLayout) findViewById(getContext().getResources().getIdentifier("tabLayout", "id", getContext().getPackageName()));
 
-            initViewPager(getPresenter().getFragmentsAndTitles());
+            initViewPager(getBindPresenter().getFragmentsAndTitles());
         }
 
         @Override

@@ -34,4 +34,14 @@ public class CustomRecyclerView extends FamiliarRecyclerView implements Recycler
         super.setEmptyView((View) object,true);
     }
 
+    @Override
+    public int getHeaderCount() {
+        return super.getHeaderViewsCount();
+    }
+
+    @Override
+    public int getFooterCount() {
+        return super.getFooterViewsCount();
+    }
+
 }

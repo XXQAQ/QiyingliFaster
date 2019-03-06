@@ -93,7 +93,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
                     @Override
                     public void onCancleRefresh(RefreshLoadViewInterface view) {
-                        getPresenter().cancleRefresh();
+                        getBindPresenter().cancleRefresh();
                     }
 
                     @Override
@@ -108,7 +108,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
                     @Override
                     public void onCancleLoadmore(RefreshLoadViewInterface view) {
-                        getPresenter().cancleLoadmore();
+                        getBindPresenter().cancleLoadmore();
                     }
                 });
                 refreshLoadView.setRefreshHeaderView(getRefreshHeadView());
@@ -134,12 +134,12 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void refreshing() {
-            getPresenter().refreshing();
+            getBindPresenter().refreshing();
         }
 
         @Override
         public void loadmoring() {
-            getPresenter().loadmoring();
+            getBindPresenter().loadmoring();
         }
 
         @Override
