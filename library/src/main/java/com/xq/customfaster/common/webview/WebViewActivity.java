@@ -3,7 +3,7 @@ package com.xq.customfaster.common.webview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-
+import com.xq.customfaster.R;
 import com.xq.customfaster.base.base.CustomBaseActivity;
 
 public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements IWebViewPresenter {
@@ -18,9 +18,9 @@ public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements
 
         if (!TextUtils.isEmpty(url))
         {
-            getBindView().initToolbar("加载中...", true);
+            getBindView().initToolbar(getString(R.string.loading), true);
 
-            getBindView().initWebView(url);
+            getBindView().loadUrl(url);
         }
     }
 

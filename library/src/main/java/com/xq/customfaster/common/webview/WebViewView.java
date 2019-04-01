@@ -2,7 +2,9 @@ package com.xq.customfaster.common.webview;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.Build;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.DownloadListener;
@@ -11,7 +13,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.xq.androidfaster.base.base.TopContainer;
 import com.xq.androidfaster.util.tools.IntentUtils;
 import com.xq.androidfaster.util.tools.NetworkUtils;
@@ -27,6 +28,12 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
 
     public WebViewView(IWebViewPresenter presenter) {
         super(presenter);
+    }
+
+    @Override
+    public void afterOnCreate(Bundle savedInstanceState) {
+        super.afterOnCreate(savedInstanceState);
+        initWebView();
     }
 
     @Override
@@ -47,46 +54,88 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
         getWebView().destroy();
     }
 
-    @SuppressLint("MissingPermission")
     @Override
-    public void initWebView(String url){
+    public void loadUrl(String url) {
+        webView.loadUrl(url);
+    }
+
+    @Override
+    public void clearCache() {
+        webView.clearCache(true);
+    }
+
+    @Override
+    public void clearHistory() {
+        webView.clearHistory();
+    }
+
+    @Override
+    public void clearFormData() {
+        webView.clearFormData();
+    }
+
+    @SuppressLint("JavascriptInterface")
+    public void addJavascriptInterfaces(Object[] objects) {
+        for (Object object:objects)
+            webView.addJavascriptInterface(object,object.getClass().getSimpleName());
+    }
+
+    @SuppressLint("MissingPermission")
+    protected void initWebView(){
 
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);  //支持js
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
+        //支持JS调用
+        webSettings.setJavaScriptEnabled(true); //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
+        //设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //设置webview推荐使用的窗口，使html界面自适应屏幕
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        //缩放操作
+        webSettings.setSupportZoom(false); //支持缩放，默认为true。是下面那个的前提。
+        webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
+        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+        //其他细节操作
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+        webSettings.setPluginState(WebSettings.PluginState.ON);    //支持Adobe插件
+        webSettings.setAllowFileAccess(true); //设置可以访问文件
+        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); //提高渲染的优先级
+        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+
+        //缓存策略，建议缓存策略为：判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
         if (NetworkUtils.isConnected())
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         else
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        // 开启DOM storage API 功能
-        webSettings.setDomStorageEnabled(true);
-        // 设置数据库缓存路径
-        // 开启database storage API功能
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setDatabasePath(PathUtils.getInternalAppDbPath("webView")); // API 19 deprecated
-        // 设置Application caches缓存目录
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(PathUtils.getExternalAppCachePath());
+        webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
+        webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
+        webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
+        webSettings.setAppCachePath(PathUtils.getExternalAppCachePath());//设置  Application Caches 缓存目录
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            webView.setNestedScrollingEnabled(false);
         webView.requestFocusFromTouch();
-        webView.setWebViewClient(new WebViewClient() {
 
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                //WebView跳转
-                if (!TextUtils.isEmpty(url) && view.getHitTestResult() == null)
+                if (view.getHitTestResult() == null)
                 {
-                    view.loadUrl(url);
-                    return true;
+                    if (!TextUtils.isEmpty(url) && url.startsWith("http"))
+                    {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        getContext().startActivity(intent);
+                        return true;
+                    }
                 }
 
-                return super.shouldOverrideUrlLoading(view, url);
+                return super.shouldOverrideUrlLoading(view,url);
             }
         });
+
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onReceivedTitle(WebView view, String title) {
@@ -122,16 +171,15 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
                 }
             }
         });
+
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 getContext().startActivity(IntentUtils.getWebIntent(url));
-                if (webView.canGoBack() == true)
-                    webView.goBack();
+                if (webView.canGoBack()) webView.goBack();
             }
         });
 
-        webView.loadUrl(url);
     }
 
     @Override
