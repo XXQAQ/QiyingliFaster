@@ -1,13 +1,18 @@
 package com.xq.customfaster.common.webview;
 
-import android.webkit.WebView;
 import com.xq.customfaster.base.base.ICustomBaseView;
+import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
+import java.util.Map;
 
-public interface IWebViewView extends ICustomBaseView<IWebViewPresenter> {
+public interface IWebViewView extends ICustomBaseView<IWebViewPresenter>, IBaseRefreshLoadView<IWebViewPresenter> {
 
     public void loadUrl(String url);
 
-//    public void addJavascriptInterfaces();
+    public void loadData(String data);
+
+    public void loadData(String data,String baseUrl);
+
+    public void addJavascriptInterfaces(Map<String,String> map);
 
     //清除网页访问留下的缓存
     public void clearCache();
@@ -18,6 +23,14 @@ public interface IWebViewView extends ICustomBaseView<IWebViewPresenter> {
     //清除自动完成填充的表单数据，并不会清除WebView存储到本地的数据
     public void clearFormData();
 
-    public WebView getWebView();
+    public void reload();
+
+    public void goBack();
+
+    public void goForward();
+
+    public boolean canGoBack();
+
+    public boolean canGoForward();
 
 }

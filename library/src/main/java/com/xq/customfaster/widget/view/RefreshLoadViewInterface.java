@@ -2,11 +2,11 @@ package com.xq.customfaster.widget.view;
 
 public interface RefreshLoadViewInterface {
 
-    //开始加载
-    public void startLoadmore();
-
     //开始刷新
     public void startRefresh();
+
+    //开始加载
+    public void startLoadmore();
 
     //结束加载
     public void finishLoadmore();
@@ -25,6 +25,12 @@ public interface RefreshLoadViewInterface {
 
     //显示空布局
     public void showEmptyView();
+
+    //设置可否刷新
+    public void setEnableRefresh(boolean enable);
+
+    //设置可否加载
+    public void setEnableLoadmore(boolean enable);
 
     //设置状态监听
     public void setRefreshLoadListener(OnRefreshLoadListener listeneri);

@@ -23,7 +23,7 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
 
     @Override
     public void startLoadmore() {
-
+        super.startLoadMore();
     }
 
     @Override
@@ -59,6 +59,16 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
     @Override
     public void showEmptyView() {
 
+    }
+
+    @Override
+    public void setEnableRefresh(boolean enableRefresh1) {
+        super.setEnableRefresh(enableRefresh1);
+    }
+
+    @Override
+    public void setEnableLoadmore(boolean enableLoadmore1) {
+        super.setEnableLoadmore(enableLoadmore1);
     }
 
     @Override

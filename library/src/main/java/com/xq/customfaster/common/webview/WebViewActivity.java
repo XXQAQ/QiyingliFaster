@@ -37,12 +37,23 @@ public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements
 
     @Override
     public boolean onBackClick() {
-        if (getBindView().getWebView().canGoBack())
+        if (getBindView().canGoBack())
         {
-            getBindView().getWebView().goBack();// 返回前一个页面
+            getBindView().goBack();// 返回前一个页面
             return true;
         }
         else
             return false;
+    }
+
+    private RefreshLoadDelegate refreshLoadDelegate = new RefreshLoadDelegate(this) {
+        @Override
+        protected void refreshLoad(boolean isRefresh, int page, Object... objects) {
+            refreshLoadData();
+        }
+    };
+    @Override
+    public RefreshLoadDelegate getRefreshLoadDelegate() {
+        return refreshLoadDelegate;
     }
 }

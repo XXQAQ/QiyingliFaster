@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.xq.androidfaster.util.tools.NetworkUtils;
 import com.xq.androidfaster.util.tools.PathUtils;
 import com.xq.customfaster.R;
 import com.xq.customfaster.base.base.CustomBaseView;
+import java.util.Map;
 
 @TopContainer
 public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IWebViewView  {
@@ -39,24 +41,38 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     @Override
     public void onResume() {
         super.onResume();
-        getWebView().onResume();
+        webView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getWebView().onPause();
+        webView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getWebView().destroy();
+        webView.loadUrl("about:blank");
+        webView.destroy();
     }
 
     @Override
     public void loadUrl(String url) {
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void loadData(String data) {
+        loadData(data,null);
+    }
+
+    @Override
+    public void loadData(String data, String baseUrl) {
+        if (TextUtils.isEmpty(baseUrl))
+            webView.loadData(data,"text/html;charset=UTF-8",null);
+        else
+            webView.loadDataWithBaseURL(baseUrl,data,"text/html;charset=UTF-8",null,null);
     }
 
     @Override
@@ -74,10 +90,34 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
         webView.clearFormData();
     }
 
+    @Override
+    public void reload() {
+        webView.reload();
+    }
+
+    @Override
+    public void goBack() {
+        webView.goBack();
+    }
+
+    @Override
+    public void goForward() {
+        webView.goForward();
+    }
+
+    @Override
+    public boolean canGoBack() {
+        return webView.canGoBack();
+    }
+
+    @Override
+    public boolean canGoForward() {
+        return webView.canGoForward();
+    }
+
     @SuppressLint("JavascriptInterface")
-    public void addJavascriptInterfaces(Object[] objects) {
-        for (Object object:objects)
-            webView.addJavascriptInterface(object,object.getClass().getSimpleName());
+    public void addJavascriptInterfaces(Map<String,String> map) {
+
     }
 
     @SuppressLint("MissingPermission")
@@ -180,15 +220,43 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
             }
         });
 
-    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int l, int t, int oldl, int oldt) {
+                    if (webView.getContentHeight() * webView.getScale() == (webView.getHeight() + webView.getScrollY())) //已经处于底端
+                    {
 
-    @Override
-    public WebView getWebView() {
-        return webView;
+                    }
+                    if(webView.getScrollY() == 0)//处于顶端
+                        getRefreshLoadDelegate(). refreshLoadView.setEnableRefresh(true);
+                    else
+                        getRefreshLoadDelegate(). refreshLoadView.setEnableRefresh(false);
+                }
+            });
+        }
+        getRefreshLoadDelegate().refreshLoadView.setEnableLoadmore(false);
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_webview;
+    }
+
+    private RefreshLoadDelegate refreshLoadDelegate = new RefreshLoadDelegate(this) {
+        @Override
+        public void refreshView(Object object) {
+            reload();
+        }
+
+        @Override
+        public void loadmoreView(Object object) {
+
+        }
+    };
+    @Override
+    public RefreshLoadDelegate getRefreshLoadDelegate() {
+        return refreshLoadDelegate;
     }
 }

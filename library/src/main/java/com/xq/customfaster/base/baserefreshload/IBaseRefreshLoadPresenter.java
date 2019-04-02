@@ -37,6 +37,11 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
+    default void refreshLoadData() {
+        getRefreshLoadDelegate().refreshLoadData();
+    }
+
+    @Override
     default void refreshLoadData(Object object) {
         getRefreshLoadDelegate().refreshLoadData(object);
     }
@@ -102,6 +107,11 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             isWorking = false;
 
             getBindView().afterLoadmore();
+        }
+
+        @Override
+        public void refreshLoadData() {
+            refreshLoadData(new Object());
         }
 
         @Override
