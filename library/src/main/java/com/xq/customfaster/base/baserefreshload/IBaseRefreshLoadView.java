@@ -42,13 +42,23 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
     }
 
     @Override
-    default void refreshLoadEmpty(){
-        getRefreshLoadDelegate().refreshLoadEmpty();
+    default void refreshEmpty() {
+        getRefreshLoadDelegate().refreshEmpty();
     }
 
     @Override
-    default void refreshLoadErro() {
-        getRefreshLoadDelegate().refreshLoadErro();
+    default void loadmoreEmpty(){
+        getRefreshLoadDelegate().loadmoreEmpty();
+    }
+
+    @Override
+    default void refreshErro() {
+        getRefreshLoadDelegate().refreshErro();
+    }
+
+    @Override
+    default void loadmoreErro() {
+        getRefreshLoadDelegate().loadmoreErro();
     }
 
     @Override
@@ -80,7 +90,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             //以下初始化刷新控件
             if (refreshLoadView != null)
             {
-                refreshLoadView.setRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
+                refreshLoadView.setOnRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
                     @Override
                     public void onFinishRefresh(RefreshLoadViewInterface view) {
 
@@ -113,6 +123,8 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
                 });
                 refreshLoadView.setRefreshHeaderView(getRefreshHeadView());
                 refreshLoadView.setLoadmoreFooterView(getLoadmoreFootView());
+                refreshLoadView.setEmptyView(getEmptyView());
+                refreshLoadView.setErroView(getErroView());
             }
         }
 
@@ -143,46 +155,63 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         }
 
         @Override
-        public void refreshLoadEmpty(){
-            if (refreshLoadView != null)
-            {
-                View view = (View) getEmptyView();
-                if (view == null) view = new View(getContext());
-                refreshLoadView.setEmptyView(view);
-                refreshLoadView.showEmptyView();
-            }
+        public void refreshView(Object object){
+            if (refreshLoadView != null) refreshLoadView.showContent();
         }
 
         @Override
-        public void refreshLoadErro() {
+        public void loadmoreView(Object object) {
+
+        }
+
+        @Override
+        public void refreshEmpty() {
+            if (refreshLoadView != null) refreshLoadView.showEmpty();
+        }
+
+        @Override
+        public void loadmoreEmpty() {
+            ToastUtils.showShort("没有更多数据啦");
+        }
+
+        @Override
+        public void refreshErro() {
+            if (refreshLoadView != null) refreshLoadView.showErro();
+        }
+
+        @Override
+        public void loadmoreErro() {
             ToastUtils.showShort("数据加载失败");
         }
 
         @Override
         public void afterRefresh() {
-            if (refreshLoadView != null)
-                refreshLoadView.finishRefreshing();
+            if (refreshLoadView != null) refreshLoadView.finishRefresh();
         }
 
         @Override
         public void afterLoadmore() {
-            if (refreshLoadView != null)
-                refreshLoadView.finishLoadmore();
+            if (refreshLoadView != null) refreshLoadView.finishLoadmore();
         }
 
-        //返回刷新头布局
+        //获取刷新头布局
         protected Object getRefreshHeadView(){
             return new ProgressLayout(getContext());
         }
 
-        //返回加载尾布局
+        //获取加载尾布局
         protected Object getLoadmoreFootView() {
             return new LoadingView(getContext());
         }
 
-        //返回空布局
+        //获取空布局
         protected Object getEmptyView() {
-            return null;
+            return new View(getContext());
+        }
+
+        //获取错误布局
+        protected Object getErroView() {
+            return new View(getContext());
         }
 
     }

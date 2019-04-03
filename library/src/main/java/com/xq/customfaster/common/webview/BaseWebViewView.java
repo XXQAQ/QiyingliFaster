@@ -3,6 +3,7 @@ package com.xq.customfaster.common.webview;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,12 +24,12 @@ import com.xq.customfaster.base.base.CustomBaseView;
 import java.util.Map;
 
 @TopContainer
-public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IWebViewView  {
+public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> implements IBaseWebViewView {
 
     private WebView webView;
     private ProgressBar progressBar;
 
-    public WebViewView(IWebViewPresenter presenter) {
+    public BaseWebViewView(IBaseWebViewPresenter presenter) {
         super(presenter);
     }
 
@@ -116,8 +117,9 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     }
 
     @SuppressLint("JavascriptInterface")
-    public void addJavascriptInterfaces(Map<String,String> map) {
-
+    public void addJavascriptInterfaces(Map<Object,String> map) {
+        for (Object key:map.keySet())
+            webView.addJavascriptInterface(key,map.get(key));
     }
 
     @SuppressLint("MissingPermission")
@@ -154,6 +156,18 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
         webView.requestFocusFromTouch();
 
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                afterOnPageStarted();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                afterOnPageFinished();
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -239,6 +253,14 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
         getRefreshLoadDelegate().refreshLoadView.setEnableLoadmore(false);
     }
 
+    protected void afterOnPageStarted(){
+
+    }
+
+    protected void afterOnPageFinished(){
+
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_webview;
@@ -247,12 +269,13 @@ public class WebViewView extends CustomBaseView<IWebViewPresenter> implements IW
     private RefreshLoadDelegate refreshLoadDelegate = new RefreshLoadDelegate(this) {
         @Override
         public void refreshView(Object object) {
+            super.refreshView(object);
             reload();
         }
 
         @Override
         public void loadmoreView(Object object) {
-
+            super.loadmoreView(object);
         }
     };
     @Override

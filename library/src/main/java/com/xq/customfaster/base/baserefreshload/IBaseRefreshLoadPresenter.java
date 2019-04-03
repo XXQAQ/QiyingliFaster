@@ -51,6 +51,16 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         getRefreshLoadDelegate().refreshLoadData(object,isSuccess);
     }
 
+    @Override
+    default boolean isRefresh() {
+        return getRefreshLoadDelegate().isRefresh();
+    }
+
+    @Override
+    default boolean isWorking() {
+        return getRefreshLoadDelegate().isWorking();
+    }
+
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements IAbsRefreshLoadPresenter<T> {
@@ -128,7 +138,10 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             {
                 if (isEmptyData(object))
                 {
-                    getBindView().refreshLoadEmpty();
+                    if (isRefresh)
+                        getBindView().refreshEmpty();
+                    else
+                        getBindView().loadmoreEmpty();
                 }
                 else
                 {
@@ -146,13 +159,26 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             }
             else
             {
-                getBindView().refreshLoadErro();
+                if (isRefresh)
+                    getBindView().refreshErro();
+                else
+                    getBindView().loadmoreErro();
             }
 
             if (isRefresh)
                 getBindView().afterRefresh();
             else
                 getBindView().afterLoadmore();
+        }
+
+        @Override
+        public boolean isRefresh() {
+            return isRefresh;
+        }
+
+        @Override
+        public boolean isWorking() {
+            return isWorking;
         }
 
         //判断对象是否含有数据(您需要根据需求重写该方法，因为page和emptyView需要本方法的返回值进行后续处理)

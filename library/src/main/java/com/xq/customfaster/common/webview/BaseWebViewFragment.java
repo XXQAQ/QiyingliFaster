@@ -4,22 +4,33 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.xq.customfaster.R;
-import com.xq.customfaster.base.base.CustomBaseActivity;
+import com.xq.customfaster.base.base.CustomBaseFragment;
 
-public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements IWebViewPresenter {
+public class BaseWebViewFragment extends CustomBaseFragment<IBaseWebViewView> implements IBaseWebViewPresenter {
 
     public static final String KEY_URL = "url";
+    public static final String KEY_DATA = "data";
+    public static final String KEY_DATABASEURL = "dataBaseUrl";
 
     private String url;
+    private String data;
+    private String dataBaseUrl;
 
     @Override
     public void afterOnCreate(@Nullable Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
 
+        getBindView().initToolbar(getString(R.string.loading));
+
+        if (!TextUtils.isEmpty(data))
+        {
+            if (!TextUtils.isEmpty(dataBaseUrl))
+                getBindView().loadData(data,dataBaseUrl);
+            else
+                getBindView().loadData(data);
+        }
         if (!TextUtils.isEmpty(url))
         {
-            getBindView().initToolbar(getString(R.string.loading), true);
-
             getBindView().loadUrl(url);
         }
     }
@@ -28,11 +39,13 @@ public class WebViewActivity extends CustomBaseActivity<IWebViewView> implements
     protected void resolveBundle(Bundle bundle) {
         //获取url
         url = bundle.getString(KEY_URL);
+        data = bundle.getString(KEY_DATA);
+        dataBaseUrl = bundle.getString(KEY_DATABASEURL);
     }
 
     @Override
-    protected IWebViewView createBindView() {
-        return new WebViewView(this);
+    protected IBaseWebViewView createBindView() {
+        return new BaseWebViewView(this);
     }
 
     @Override

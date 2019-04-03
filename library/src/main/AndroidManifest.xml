@@ -4,7 +4,7 @@
     <application>
 
         <activity
-            android:name="com.xq.customfaster.common.webview.WebViewActivity"
+            android:name="com.xq.customfaster.common.webview.BaseWebViewActivity"
             android:screenOrientation="portrait"/>
 
     </application>

@@ -22,31 +22,6 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
     }
 
     @Override
-    public void startLoadmore() {
-        super.startLoadMore();
-    }
-
-    @Override
-    public void startRefresh() {
-        super.startRefresh();
-    }
-
-    @Override
-    public void finishLoadmore() {
-        super.finishLoadmore();
-    }
-
-    @Override
-    public void finishRefreshing() {
-        super.finishRefreshing();
-    }
-
-    @Override
-    public void setEmptyView(Object o) {
-
-    }
-
-    @Override
     public void setRefreshHeaderView(Object o) {
         super.setHeaderView((IHeaderView) o);
     }
@@ -57,7 +32,47 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
     }
 
     @Override
-    public void showEmptyView() {
+    public void startRefresh() {
+        super.startRefresh();
+    }
+
+    @Override
+    public void startLoadmore() {
+        super.startLoadMore();
+    }
+
+    @Override
+    public void finishRefresh() {
+        super.finishRefreshing();
+    }
+
+    @Override
+    public void finishLoadmore() {
+        super.finishLoadmore();
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void setEmptyView(Object o) {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void setErroView(Object o) {
+
+    }
+
+    @Override
+    public void showErro() {
 
     }
 
@@ -72,7 +87,7 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
     }
 
     @Override
-    public void setRefreshLoadListener(OnRefreshLoadListener onRefreshLoadListener) {
+    public void setOnRefreshLoadListener(OnRefreshLoadListener onRefreshLoadListener) {
         super.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override

@@ -2,9 +2,9 @@ package com.xq.customfaster.base.baserefreshloadlist;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.bean.behavior.ListBehavior;
+import com.xq.androidfaster.util.tools.ToastUtils;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.customfaster.widget.view.RecyclerViewInterface;
 import java.util.LinkedList;
@@ -64,7 +64,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void refreshView(Object object){
-
             List updateList = null;
             if (object instanceof List)
                 updateList = (List) object;
@@ -83,7 +82,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void loadmoreView(Object object){
-
             List updateList = null;
             if (object instanceof List)
                 updateList = (List) object;
@@ -97,6 +95,34 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
             getBindPresenter().addDifferentDatas(updateList);
             recyclerView.getAdapter().notifyDataSetChanged();
+        }
+
+        @Override
+        public void refreshEmpty() {
+            if (recyclerView instanceof RecyclerViewInterface)
+            {
+                ((RecyclerViewInterface) recyclerView).setEmptyView(getEmptyView());
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void loadmoreEmpty() {
+            ToastUtils.showShort("没有更多数据啦");
+        }
+
+        @Override
+        public void refreshErro() {
+            if (recyclerView instanceof RecyclerViewInterface)
+            {
+                ((RecyclerViewInterface) recyclerView).setEmptyView(getErroView());
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void loadmoreErro() {
+            ToastUtils.showShort("数据加载失败");
         }
 
         @Override
@@ -118,17 +144,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             int headerCount = 0;
             if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
             recyclerView.getAdapter().notifyItemInserted(position+headerCount);
-        }
-
-        @Override
-        public void refreshLoadEmpty(){
-            if (recyclerView instanceof RecyclerViewInterface)
-            {
-                View view = (View) getEmptyView();
-                if (view == null) view = new View(getContext());
-                ((RecyclerViewInterface) recyclerView).setEmptyView(view);
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
         }
 
         //返回适配器，可以在重写时为Adater设置更多参数
