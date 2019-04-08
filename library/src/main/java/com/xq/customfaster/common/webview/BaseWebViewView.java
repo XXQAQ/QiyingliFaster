@@ -142,6 +142,7 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); //提高渲染的优先级
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); //设置https网站可以访问http资源
 
         //缓存策略，建议缓存策略为：判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
         if (NetworkUtils.isConnected())
@@ -183,8 +184,16 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
                 else
                 {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    getContext().startActivity(intent);
-                    return true;
+                    if (IntentUtils.isIntentAvailable(intent))
+                    {
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        getContext().startActivity(intent);
+                        return true;
+                    }
+                    else
+                    {
+                        return super.shouldOverrideUrlLoading(view,url);
+                    }
                 }
             }
         });
