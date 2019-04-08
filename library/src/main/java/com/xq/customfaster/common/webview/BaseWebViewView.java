@@ -171,22 +171,21 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if (view.getHitTestResult() == null)
+                if(view.getHitTestResult() == null || view.getHitTestResult().getType() == WebView.HitTestResult.UNKNOWN_TYPE)
                 {
-                    if (!TextUtils.isEmpty(url) && url.startsWith("http"))
-                    {
-                        view.loadUrl(url);
-                        return true;
-                    }
-                    else
-                    {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        getContext().startActivity(intent);
-                        return true;
-                    }
+                    return false;
                 }
-
-                return super.shouldOverrideUrlLoading(view,url);
+                if (!TextUtils.isEmpty(url) && url.startsWith("http"))
+                {
+                    view.loadUrl(url);
+                    return true;
+                }
+                else
+                {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    getContext().startActivity(intent);
+                    return true;
+                }
             }
         });
 
@@ -244,9 +243,9 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
 
                     }
                     if(webView.getScrollY() == 0)//处于顶端
-                        getRefreshLoadDelegate(). refreshLoadView.setEnableRefresh(true);
-                    else
-                        getRefreshLoadDelegate(). refreshLoadView.setEnableRefresh(false);
+                    {
+
+                    }
                 }
             });
         }
