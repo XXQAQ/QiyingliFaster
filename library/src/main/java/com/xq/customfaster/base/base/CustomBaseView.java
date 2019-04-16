@@ -45,7 +45,10 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
         if (toolbar == null)
             return;
 
-        toolbar.setBackgroundColor(getToolbarBackgroundColor());
+        if (getToolbarBackgroundResource() != 0)
+            toolbar.setBackgroundResource(getToolbarBackgroundResource());
+        else
+            toolbar.setBackgroundColor(getToolbarBackgroundColor());
 
         TextView toolTitle = (TextView) toolbar.findViewById(getContext().getResources().getIdentifier("toolTitle", "id", getContext().getPackageName()));
         if (toolTitle == null)
@@ -82,6 +85,11 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     //重写该方法以自定Toolbar图标
     protected int getNavIcon() {
+        return 0;
+    }
+
+    //重写该方法以自定Toolbar背景drawable
+    protected int getToolbarBackgroundResource(){
         return 0;
     }
 

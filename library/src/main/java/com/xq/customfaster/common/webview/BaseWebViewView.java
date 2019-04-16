@@ -271,7 +271,7 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_webview;
+        return R.layout.layout_webview;
     }
 
     private RefreshLoadDelegate refreshLoadDelegate = new RefreshLoadDelegate(this) {

@@ -3,11 +3,12 @@ package com.xq.customfaster.base.baseviewpager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import com.xq.androidfaster.base.abs.AbsViewDelegate;
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.androidfaster.bean.behavior.TitleBehavior;
-import java.util.LinkedList;
+import com.xq.androidfaster.bean.behavior.FragmentTitleBehavior;
 import java.util.List;
 
 public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends IAbsViewPagerView<T> {
@@ -36,7 +37,6 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
             tabLayout = (TabLayout) findViewById(getContext().getResources().getIdentifier("tabLayout", "id", getContext().getPackageName()));
 
-            initViewPager(getBindPresenter().getFragmentsAndTitles());
         }
 
         @Override
@@ -44,23 +44,48 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
             viewPager.getAdapter().notifyDataSetChanged();
         }
 
-        protected void initViewPager(List<TitleBehavior> list) {
+        public void initViewPager(List<FragmentTitleBehavior> list) {
 
-            List<CharSequence> list_title = new LinkedList<>();
-            List<Fragment> list_fragment = new LinkedList<>();
-
-            if (list != null && tabLayout != null)
+            if (list != null)
             {
                 for (int i=0;i<list.size();i++)
                 {
-                    tabLayout.addTab(tabLayout.newTab());
-                    list_title.add(list.get(i).getTitle());
-                    list_fragment.add((Fragment) list.get(i).getTag());
+//                    tabLayout.addTab(tabLayout.newTab());
                 }
-                tabLayout.setupWithViewPager(viewPager);
             }
 
-            viewPager.setAdapter(new UniverseFragmentPagerAdapter(getCPFragmentManager(),list_fragment,list_title));
+            if (tabLayout != null) tabLayout.setupWithViewPager(viewPager);
+
+            viewPager.setAdapter(new UniverseFragmentPagerAdapter(getCPFragmentManager(),list));
+        }
+
+        //万能FragmentPagerAdapter
+        public class UniverseFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+            private List<FragmentTitleBehavior> list;
+
+            public UniverseFragmentPagerAdapter(FragmentManager fm, List<FragmentTitleBehavior> list) {
+                super(fm);
+                this.list = list;
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return list.get(position).getFragment();
+            }
+
+            @Override
+            public int getCount() {
+                return list.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                if (list == null)
+                    return super.getPageTitle(position);
+                else
+                    return list.get(position).getTitle();
+            }
         }
     }
 

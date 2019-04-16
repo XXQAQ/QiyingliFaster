@@ -121,7 +121,24 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
         @Override
         public void refreshLoadData() {
-            refreshLoadData(new Object());
+
+            isWorking = false;
+
+            if (isRefresh)
+            {
+                page = getFirstPage();
+                getBindView().refreshView(null);
+            }
+            else
+            {
+                page++;
+                getBindView().loadmoreView(null);
+            }
+
+            if (isRefresh)
+                getBindView().afterRefresh();
+            else
+                getBindView().afterLoadmore();
         }
 
         @Override
