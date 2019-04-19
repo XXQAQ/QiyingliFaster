@@ -72,7 +72,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finish();
+                    back();
                 }
             });
         }
