@@ -68,9 +68,6 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
     public abstract class MediaDelegate<T extends IAbsView> extends AbsPresenterDelegate<T> implements IAbsMediaPresenter<T> {
 
-        public static final int TYPE_PHOTO = 0x01;
-        public static final int TYPE_VIDEO = 0x02;
-
         public static final int REQUEST_CODE_MEDIA = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
         public static final int REQUEST_CODE_FILE= 3;
