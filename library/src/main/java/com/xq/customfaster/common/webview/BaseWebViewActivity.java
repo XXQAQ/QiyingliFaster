@@ -8,10 +8,6 @@ import com.xq.customfaster.base.base.CustomBaseActivity;
 
 public class BaseWebViewActivity extends CustomBaseActivity<IBaseWebViewView> implements IBaseWebViewPresenter {
 
-    public static final String KEY_URL = "url";
-    public static final String KEY_DATA = "data";
-    public static final String KEY_DATABASEURL = "dataBaseUrl";
-
     private String url;
     private String data;
     private String dataBaseUrl;

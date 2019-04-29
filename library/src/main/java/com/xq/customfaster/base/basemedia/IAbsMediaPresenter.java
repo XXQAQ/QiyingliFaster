@@ -6,6 +6,9 @@ import com.xq.androidfaster.base.abs.IAbsView;
 
 public interface IAbsMediaPresenter<T extends IAbsView> extends IAbsPresenter<T> {
 
+    public static final int TYPE_PHOTO = 0x01;
+    public static final int TYPE_VIDEO = 0x02;
+
     public void getMedia(int flag);
 
     public void getMedia(int flag, int type, int max, boolean useCamera);

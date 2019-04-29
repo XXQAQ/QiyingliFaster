@@ -9,8 +9,10 @@ import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
 import com.xq.androidfaster.util.EventManager;
 import com.xq.androidfaster.util.JsonConverter;
-
 import org.greenrobot.eventbus.EventBus;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class CustomFaster {
 
@@ -50,6 +52,27 @@ public class CustomFaster {
         JsonConverter.setConverter(new JsonConverter.Converter() {
             @Override
             public <T> T jsonToObject(String json, Class<T> mClass, Object... objects) throws RuntimeException {
+                if (List.class.isAssignableFrom(mClass) && objects.length>=1 && objects[0]!= null)
+                {
+                    Class typeClass = (Class)objects[0];
+                    Type type = new ParameterizedType() {
+                        @Override
+                        public Type[] getActualTypeArguments() {
+                            return new Type[]{typeClass};
+                        }
+
+                        @Override
+                        public Type getRawType() {
+                            return List.class;
+                        }
+
+                        @Override
+                        public Type getOwnerType() {
+                            return null;
+                        }
+                    };
+                    return new Gson().fromJson(json, type);
+                }
                 return new Gson().fromJson(json,mClass);
             }
 
