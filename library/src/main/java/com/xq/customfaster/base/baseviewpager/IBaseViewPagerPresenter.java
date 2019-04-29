@@ -8,9 +8,14 @@ import java.util.List;
 
 public interface IBaseViewPagerPresenter<T extends IBaseViewPagerView> extends IAbsViewPagerPresenter<T> {
 
+    @Override
+    default List<FragmentTitleBehavior> getFragmentTitleList() {
+        return getViewPagerDelegate().getFragmentTitleList();
+    }
+
     public ViewPagerDelegate getViewPagerDelegate();
 
-    public abstract class ViewPagerDelegate<T extends IBaseViewPagerView> extends AbsPresenterDelegate<T> implements IAbsViewPagerPresenter<T>{
+    public abstract class ViewPagerDelegate<T extends IBaseViewPagerView> extends AbsPresenterDelegate<T> implements IAbsViewPagerPresenter<T> {
 
         protected List<FragmentTitleBehavior> list_fragmentTitle;
 

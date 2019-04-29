@@ -1,17 +1,24 @@
 package com.xq.customfaster.base.baseviewpager;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 import com.xq.androidfaster.base.abs.AbsViewDelegate;
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.bean.behavior.FragmentTitleBehavior;
 import java.util.List;
 
 public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends IAbsViewPagerView<T> {
+
+    @Override
+    default void initViewPager(List<FragmentTitleBehavior> list) {
+        getViewPagerDelegate().initViewPager(list);
+    }
 
     @Override
     default void refreshViewPager(){
@@ -46,25 +53,17 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
         public void initViewPager(List<FragmentTitleBehavior> list) {
 
-            if (list != null)
-            {
-                for (int i=0;i<list.size();i++)
-                {
-//                    tabLayout.addTab(tabLayout.newTab());
-                }
-            }
-
             if (tabLayout != null) tabLayout.setupWithViewPager(viewPager);
 
-            viewPager.setAdapter(new UniverseFragmentPagerAdapter(getCPFragmentManager(),list));
+            viewPager.setAdapter(new DefaultFragmentPagerAdapter(getCPFragmentManager(),list));
+
         }
 
-        //万能FragmentPagerAdapter
-        public class UniverseFragmentPagerAdapter extends FragmentStatePagerAdapter {
+        public class DefaultFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
             private List<FragmentTitleBehavior> list;
 
-            public UniverseFragmentPagerAdapter(FragmentManager fm, List<FragmentTitleBehavior> list) {
+            public DefaultFragmentPagerAdapter(FragmentManager fm, List<FragmentTitleBehavior> list) {
                 super(fm);
                 this.list = list;
             }
@@ -80,11 +79,13 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
             }
 
             @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+
+            }
+
+            @Override
             public CharSequence getPageTitle(int position) {
-                if (list == null)
-                    return super.getPageTitle(position);
-                else
-                    return list.get(position).getTitle();
+                return list.get(position).getTitle();
             }
         }
     }
