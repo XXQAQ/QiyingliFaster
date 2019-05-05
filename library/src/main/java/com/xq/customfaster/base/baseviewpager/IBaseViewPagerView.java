@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import com.xq.androidfaster.base.abs.AbsViewDelegate;
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.androidfaster.bean.behavior.FragmentTitleBehavior;
+import com.xq.worldbean.bean.behavior.FragmentTitleBehavior;
 import java.util.List;
 
 public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends IAbsViewPagerView<T> {

@@ -1,9 +1,9 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
 import com.xq.androidfaster.base.abs.IAbsPresenter;
-import com.xq.androidfaster.bean.behavior.IdBehavior;
-import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
+import com.xq.worldbean.bean.behavior.IdBehavior;
+import com.xq.worldbean.bean.behavior.ListBehavior;
 import java.util.LinkedList;
 import java.util.List;
 

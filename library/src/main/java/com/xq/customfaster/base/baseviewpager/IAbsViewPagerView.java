@@ -1,7 +1,7 @@
 package com.xq.customfaster.base.baseviewpager;
 
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.androidfaster.bean.behavior.FragmentTitleBehavior;
+import com.xq.worldbean.bean.behavior.FragmentTitleBehavior;
 import java.util.List;
 
 public interface IAbsViewPagerView<T extends IAbsViewPagerPresenter> extends IAbsView<T> {

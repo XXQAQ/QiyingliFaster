@@ -3,10 +3,10 @@ package com.xq.customfaster.base.baserefreshloadlist;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.androidfaster.bean.behavior.ListBehavior;
 import com.xq.androidfaster.util.tools.ToastUtils;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.customfaster.widget.view.RecyclerViewInterface;
+import com.xq.worldbean.bean.behavior.ListBehavior;
 import java.util.LinkedList;
 import java.util.List;
 
