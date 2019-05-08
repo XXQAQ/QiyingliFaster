@@ -15,6 +15,7 @@ import com.xq.androidfaster.util.constant.PermissionConstants;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.R;
+import com.xq.worldbean.bean.behavior.SizeBehavior;
 import com.xq.worldbean.util.callback.UniverseCallback;
 import java.io.File;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
     }
 
     @Override
-    default void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, Size cropSize) {
+    default void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, SizeBehavior cropSize) {
         getMediaDelegate().getMedia(flag,type,max,useCamera,isCompress,cropSize);
     }
 
@@ -50,7 +51,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
     }
 
     @Override
-    default void getCamera(int flag, int type, boolean isCompress,Size cropSize) {
+    default void getCamera(int flag, int type, boolean isCompress,SizeBehavior cropSize) {
         getMediaDelegate().getCamera(flag,type,isCompress,cropSize);
     }
 
@@ -118,7 +119,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         }
 
         @Override
-        public void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, Size cropSize) {
+        public void getMedia(int flag, int type, int max, boolean useCamera, boolean isCompress, SizeBehavior cropSize) {
             this.flag = flag;
 
             String[] permissions;
@@ -169,7 +170,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
         }
 
         @Override
-        public void getCamera(int flag, int type, boolean isCompress,Size cropSize) {
+        public void getCamera(int flag, int type, boolean isCompress,SizeBehavior cropSize) {
             this.flag = flag;
 
             checkPermission(new UniverseCallback() {
