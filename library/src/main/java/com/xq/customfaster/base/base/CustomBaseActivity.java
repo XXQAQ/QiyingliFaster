@@ -8,7 +8,6 @@ import android.widget.EditText;
 import com.xq.androidfaster.base.base.FasterBaseActivity;
 import com.xq.androidfaster.util.EventManager;
 import com.xq.androidfaster.util.tools.KeyboardUtils;
-import com.xq.customfaster.util.event.FinishEvent;
 import com.xq.customfaster.util.event.ComponentEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -61,11 +60,6 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
         }
         // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
         return false;
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onFinishEvent(FinishEvent event){
-        finish();
     }
 
     @Deprecated
