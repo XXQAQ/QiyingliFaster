@@ -92,35 +92,35 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
             for (int i=0;i<list.size();i++)
             {
-                Object newObject = list.get(i);
+                Object object = list.get(i);
 
-                if (newObject == null) continue;
+                if (object == null) continue;
 
-                if (newObject instanceof IdBehavior)
+                if (object instanceof IdBehavior && ((IdBehavior) object).getId() != 0)
                 {
                     for (int j=0;j<getDataList().size();j++)
                     {
                         Object oldObject = getDataList().get(j);
-                        if (oldObject instanceof IdBehavior && ((IdBehavior) oldObject).getId() == ((IdBehavior) newObject).getId())
+                        if (oldObject instanceof IdBehavior && ((IdBehavior) oldObject).getId() == ((IdBehavior) object).getId())
                         {
                             getDataList().remove(j);
                             break;
                         }
                     }
-                    getDataList().add(newObject);
+                    getDataList().add(object);
                 }
                 else
                 {
                     for (int j=0;j<getDataList().size();j++)
                     {
                         Object oldObject = getDataList().get(j);
-                        if (newObject.equals(oldObject))
+                        if (object.equals(oldObject))
                         {
                             getDataList().remove(j);
                             break;
                         }
                     }
-                    getDataList().add(newObject);
+                    getDataList().add(object);
                 }
             }
         }
@@ -146,7 +146,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
             if (object == null)
                 return;
 
-            if (object instanceof IdBehavior)
+            if (object instanceof IdBehavior  && ((IdBehavior) object).getId() != 0)
             {
                 for (int i=0;i<getDataList().size();i++)
                 {
@@ -181,7 +181,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
             if (object == null)
                 return;
 
-            if (object instanceof IdBehavior)
+            if (object instanceof IdBehavior && ((IdBehavior) object).getId() != 0)
             {
                 for (int i=0;i<getDataList().size();i++)
                 {
