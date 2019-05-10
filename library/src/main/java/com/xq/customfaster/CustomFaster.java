@@ -27,14 +27,14 @@ public class CustomFaster {
 
         com.xq.androidfaster.util.ImageLoader.setLoader(new com.xq.androidfaster.util.ImageLoader.Loader() {
             @Override
-            public void loadImage(Context context, ImageView view, String url, int placeHolder, Object... objects) {
-                RequestOptions options = new RequestOptions();
-                if (placeHolder != 0) options = options.placeholder(placeHolder).diskCacheStrategy(DiskCacheStrategy.ALL);
+            public void loadImage(Context context, int placeHolder, String url, ImageView view, Object... objects) {
+                RequestOptions options = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
+                if (placeHolder != 0) options = options.placeholder(placeHolder);
                 Glide.with(context).load(url).apply(options).into(view);
             }
 
             @Override
-            public void loadImage(Context context, String url, com.xq.androidfaster.util.ImageLoader.BitmapTarget target, Object... objects) {
+            public void loadImage(Context context, int placeHolder, String url, com.xq.androidfaster.util.ImageLoader.BitmapTarget target, Object... objects) {
                 SimpleTarget glideTarget = new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -42,8 +42,8 @@ public class CustomFaster {
                             target.onReceiveBitmap(((BitmapDrawable) resource).getBitmap());
                     }
                 };
-                RequestOptions options = new RequestOptions();
-                options.diskCacheStrategy(DiskCacheStrategy.ALL);
+                RequestOptions options = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
+                if (placeHolder != 0) options = options.placeholder(placeHolder);
                 Glide.with(context)	.load(url).apply(options).into(glideTarget);
             }
         });
@@ -107,7 +107,7 @@ public class CustomFaster {
                 .imageLoader(new ImageLoader() {
                     @Override
                     public void loadImage(Context mContext, ImageView imageView, String imagePath, int type) {
-                        com.xq.androidfaster.util.ImageLoader.loadImage(mContext,imageView,imagePath);
+                        com.xq.androidfaster.util.ImageLoader.loadImage(mContext,imagePath,imageView);
                     }
                 });
     }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.NestedScrollingChild;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.xq.androidfaster.base.base.FasterBaseView;
 import com.xq.androidfaster.util.tools.BarUtils;
 import com.xq.androidfaster.util.tools.ImageUtils;
 import com.xq.androidfaster.util.tools.ScreenUtils;
+import com.xq.customfaster.widget.view.CustomRefreshLoadView;
 import com.xq.customview.view.IconFontTextView;
 import com.xq.customfaster.R;
 import java.util.ArrayList;
@@ -42,6 +44,8 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
         initBarLayout();
 
+        initNestedScrollingChild();
+
     }
 
     @Override
@@ -51,8 +55,13 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     @Override
     public void initToolbar(CharSequence title, boolean isShowIcon) {
+
         if (toolbar == null)
-            return;
+        {
+            List<Toolbar> list = getAllSomeView(rootView, Toolbar.class);
+            if (list == null || list.isEmpty()) return;
+            toolbar = list.get(0);
+        }
 
         if (!TextUtils.isEmpty(title))
         {
@@ -92,10 +101,10 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     protected void initBarLayout() {
 
-        View barLayout;
-        List<View> list = getAllSomeView(rootView, AppBarLayout.class);
+        ViewGroup barLayout;
+        List<ViewGroup> list = getAllSomeView(rootView, AppBarLayout.class);
         if (list == null || list.isEmpty())
-            barLayout = findViewById(getContext().getResources().getIdentifier("barLayout", "id", getContext().getPackageName()));
+            barLayout = (ViewGroup) findViewById(getContext().getResources().getIdentifier("barLayout", "id", getContext().getPackageName()));
         else
             barLayout = list.get(0);
 
@@ -105,6 +114,20 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             barLayout.setBackgroundResource(getBarLayoutBackgroundResource());
         else
             barLayout.setBackgroundColor(getBarLayoutBackgroundColor());
+    }
+
+    protected void initNestedScrollingChild(){
+
+        CustomRefreshLoadView refreshLoadView;
+
+        List<CustomRefreshLoadView> list_refreshLoadView = getAllSomeView(rootView, CustomRefreshLoadView.class);
+        if (list_refreshLoadView == null || list_refreshLoadView.isEmpty()) return;
+        refreshLoadView = list_refreshLoadView.get(0);
+
+        List<NestedScrollingChild> list_child = getAllSomeView(refreshLoadView, NestedScrollingChild.class);
+        if (list_child == null || list_child.isEmpty()) return;
+        for (NestedScrollingChild child : list_child)
+            child.setNestedScrollingEnabled(false);
     }
 
     //重写该方法以自定Toolbar背景drawable
@@ -161,7 +184,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     private void hideSystemBar() {
         BarUtils.setStatusBarColor((Activity) getContext(), Color.TRANSPARENT);
-        if (toolbar != null) BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        if (toolbar != null) BarUtils.addPaddingTopEqualStatusBarHeight(toolbar);
     }
 
 }

@@ -51,7 +51,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
             //初始化RecyclerView
             recyclerView.setLayoutManager(getLayoutManager());
-            recyclerView.setNestedScrollingEnabled(false);
 
             //通知P层初始化Adapter
             getBindPresenter().initAdapter();
