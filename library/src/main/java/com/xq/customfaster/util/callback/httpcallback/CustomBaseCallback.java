@@ -1,6 +1,7 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 import com.lzy.okgo.callback.AbsCallback;
+import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.xq.androidfaster.util.JsonConverter;
@@ -12,6 +13,20 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
 
     public CustomBaseCallback(Class<T> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    @Deprecated
+    @Override
+    public void uploadProgress(Progress progress) {
+        super.uploadProgress(progress);
+        upLoadProgress(progress.fraction);
+    }
+
+    @Deprecated
+    @Override
+    public void downloadProgress(Progress progress) {
+        super.downloadProgress(progress);
+        downLoadProgress(progress.fraction);
     }
 
     @Deprecated
