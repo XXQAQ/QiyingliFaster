@@ -1,9 +1,16 @@
 package com.xq.customfaster;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
@@ -22,8 +29,22 @@ public class CustomFaster {
             @Override
             public void loadImage(Context context, ImageView view, String url, int placeHolder, Object... objects) {
                 RequestOptions options = new RequestOptions();
-                if (placeHolder != 0) options = options.placeholder(placeHolder);
+                if (placeHolder != 0) options = options.placeholder(placeHolder).diskCacheStrategy(DiskCacheStrategy.ALL);
                 Glide.with(context).load(url).apply(options).into(view);
+            }
+
+            @Override
+            public void loadImage(Context context, String url, com.xq.androidfaster.util.ImageLoader.BitmapTarget target, Object... objects) {
+                SimpleTarget glideTarget = new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        if (resource instanceof BitmapDrawable)
+                            target.onReceiveBitmap(((BitmapDrawable) resource).getBitmap());
+                    }
+                };
+                RequestOptions options = new RequestOptions();
+                options.diskCacheStrategy(DiskCacheStrategy.ALL);
+                Glide.with(context)	.load(url).apply(options).into(glideTarget);
             }
         });
 

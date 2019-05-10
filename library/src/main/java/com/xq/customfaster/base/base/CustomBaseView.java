@@ -1,6 +1,7 @@
 package com.xq.customfaster.base.base;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -159,8 +160,8 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     }
 
     private void hideSystemBar() {
-        BarUtils.setStatusBarAlpha((Activity) getContext(),0);
-        if (toolbar != null) BarUtils.addPaddingTopEqualStatusBarHeight(toolbar);
+        BarUtils.setStatusBarColor((Activity) getContext(), Color.TRANSPARENT);
+        if (toolbar != null) BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
     }
 
 }
