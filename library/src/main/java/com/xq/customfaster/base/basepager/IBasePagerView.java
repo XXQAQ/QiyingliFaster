@@ -1,38 +1,38 @@
-package com.xq.customfaster.base.baseviewpager;
+package com.xq.customfaster.base.basepager;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.ViewGroup;
 import com.xq.androidfaster.base.abs.AbsViewDelegate;
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.worldbean.bean.behavior.FragmentTitleBehavior;
+import com.xq.worldbean.bean.behavior.FragmentBehavior;
+import com.xq.worldbean.bean.behavior.TitleBehavior;
 import java.util.List;
 
-public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends IAbsViewPagerView<T> {
+public interface IBasePagerView<T extends IBasePagerPresenter> extends IAbsPagerView<T> {
 
     @Override
-    default void initViewPager(List<FragmentTitleBehavior> list) {
-        getViewPagerDelegate().initViewPager(list);
+    default void initPager(List<FragmentBehavior> list) {
+        getPagerDelegate().initPager(list);
     }
 
     @Override
-    default void refreshViewPager(){
-        getViewPagerDelegate().refreshViewPager();
+    default void refreshPager(){
+        getPagerDelegate().refreshPager();
     }
 
-    public ViewPagerDelegate getViewPagerDelegate();
+    public PagerDelegate getPagerDelegate();
 
-    public class ViewPagerDelegate<T extends IBaseViewPagerPresenter> extends AbsViewDelegate<T> implements IAbsViewPagerView<T> {
+    public class PagerDelegate<T extends IBasePagerPresenter> extends AbsViewDelegate<T> implements IAbsPagerView<T> {
 
         public ViewPager viewPager;
         public TabLayout tabLayout;
 
-        public ViewPagerDelegate(IAbsView view) {
+        public PagerDelegate(IAbsView view) {
             super(view);
         }
 
@@ -47,11 +47,11 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
         }
 
         @Override
-        public void refreshViewPager(){
+        public void refreshPager(){
             viewPager.getAdapter().notifyDataSetChanged();
         }
 
-        public void initViewPager(List<FragmentTitleBehavior> list) {
+        public void initPager(List<FragmentBehavior> list) {
 
             if (tabLayout != null) tabLayout.setupWithViewPager(viewPager);
 
@@ -61,16 +61,16 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
 
         public class DefaultFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-            private List<FragmentTitleBehavior> list;
+            private List<FragmentBehavior> list;
 
-            public DefaultFragmentPagerAdapter(FragmentManager fm, List<FragmentTitleBehavior> list) {
+            public DefaultFragmentPagerAdapter(FragmentManager fm, List<FragmentBehavior> list) {
                 super(fm);
                 this.list = list;
             }
 
             @Override
             public Fragment getItem(int position) {
-                return list.get(position).getFragment();
+                return list.get(position).createFragment();
             }
 
             @Override
@@ -79,13 +79,14 @@ public interface IBaseViewPagerView<T extends IBaseViewPagerPresenter> extends I
             }
 
             @Override
-            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
+            public void restoreState(Parcelable state, ClassLoader loader) {
+                if (view.isSaveFragmentState()) super.restoreState(state,loader);
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return list.get(position).getTitle();
+                if (list.get(position) instanceof TitleBehavior) return ((TitleBehavior) list.get(position)).getTitle();
+                return super.getPageTitle(position);
             }
         }
     }

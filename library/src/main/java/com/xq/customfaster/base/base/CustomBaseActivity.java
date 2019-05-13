@@ -24,13 +24,6 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //默认不保存Fragment状态
-        if (!isSaveFragmentState()) outState.putParcelable("android:support:fragments", null);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         KeyboardUtils.hideSoftInput(this);
@@ -81,11 +74,6 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
     //当接受到传递给本Activity的事件时回调的方法
     protected void onComponentEvent(ComponentEvent event) {
 
-    }
-
-    //当Activity销毁后是否保存Fragmnet的状态
-    protected boolean isSaveFragmentState(){
-        return false;
     }
 
 }
