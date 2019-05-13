@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import com.xq.androidfaster.base.base.FasterBaseActivity;
+import com.xq.androidfaster.base.base.aspresenter.FasterBaseActivity;
 import com.xq.androidfaster.util.EventManager;
 import com.xq.androidfaster.util.tools.KeyboardUtils;
 import com.xq.customfaster.util.event.ComponentEvent;
@@ -21,6 +21,13 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         EventManager.regist(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //默认不保存Fragment状态
+        if (!isSaveFragmentState()) outState.putParcelable("android:support:fragments", null);
     }
 
     @Override
@@ -75,4 +82,10 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
     protected void onComponentEvent(ComponentEvent event) {
 
     }
+
+    //当Activity销毁后是否保存Fragmnet的状态
+    protected boolean isSaveFragmentState(){
+        return false;
+    }
+
 }

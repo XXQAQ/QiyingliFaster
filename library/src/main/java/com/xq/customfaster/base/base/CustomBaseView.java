@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.xq.androidfaster.base.base.FasterBaseView;
+import com.xq.androidfaster.base.base.aspresenter.FasterBaseView;
 import com.xq.androidfaster.util.tools.BarUtils;
 import com.xq.androidfaster.util.tools.ImageUtils;
 import com.xq.androidfaster.util.tools.ScreenUtils;
