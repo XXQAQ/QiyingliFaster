@@ -13,14 +13,14 @@ public abstract class CustomBaseFileCallback extends FileCallback implements Fas
     @Override
     public void uploadProgress(Progress progress) {
         super.uploadProgress(progress);
-        upLoadProgress(progress.fraction);
+        if (progress != null) upLoadProgress(progress.fraction);
     }
 
     @Deprecated
     @Override
     public void downloadProgress(Progress progress) {
         super.downloadProgress(progress);
-        downLoadProgress(progress.fraction);
+        if (progress != null) downLoadProgress(progress.fraction);
     }
 
     @Deprecated
