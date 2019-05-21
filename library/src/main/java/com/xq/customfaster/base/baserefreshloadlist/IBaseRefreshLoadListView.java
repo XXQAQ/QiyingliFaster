@@ -3,18 +3,18 @@ package com.xq.customfaster.base.baserefreshloadlist;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import com.xq.androidfaster.base.abs.IAbsView;
-import com.xq.androidfaster.util.tools.ToastUtils;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
-import com.xq.customfaster.widget.view.RecyclerViewInterface;
 import com.xq.worldbean.bean.behavior.ListBehavior;
-import java.util.LinkedList;
-import java.util.List;
+import com.xq.worldbean.util.Pointer;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresenter> extends IAbsRefreshLoadListView<T>, IBaseRefreshLoadView<T> {
 
     @Override
-    default void initAdapter(List list, Object... objects) {
-        getRefreshLoadDelegate().initAdapter(list,objects);
+    default void initAdapter(Pointer<ListBehavior> pointer, Object... objects) {
+        getRefreshLoadDelegate().initAdapter(pointer,objects);
     }
 
     @Override
@@ -39,6 +39,8 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         public RecyclerView recyclerView;
 
+        private Map<String,RecyclerView.Adapter> map_childAdapter = new LinkedHashMap<>();
+
         public RefreshLoadDelegate(IAbsView view) {
             super(view);
         }
@@ -52,101 +54,69 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
             //初始化RecyclerView
             recyclerView.setLayoutManager(getLayoutManager());
 
-            //通知P层初始化Adapter
-            getBindPresenter().initAdapter();
         }
 
         @Override
-        public void initAdapter(List list, Object... objects) {
-            recyclerView.setAdapter(getAdapter(list,objects));
+        public void initAdapter(Pointer<ListBehavior> pointer, Object... objects) {
+            recyclerView.setAdapter(getAdapter(pointer,objects));
         }
 
         @Override
         public void refreshView(Object object){
-            List updateList = null;
-            if (object instanceof List)
-                updateList = (List) object;
-            else    if (object instanceof ListBehavior)
-                updateList = ((ListBehavior) object).getList();
+            if (map_childAdapter.isEmpty())
+                recyclerView.getAdapter().notifyDataSetChanged();
             else
-                return;
-
-            if (updateList == null)
-                updateList = new LinkedList();
-
-            getBindPresenter().clearDatas();
-            getBindPresenter().addDifferentDatas(updateList);
-            recyclerView.getAdapter().notifyDataSetChanged();
+            {
+                for (Map.Entry<String,RecyclerView.Adapter> entry : map_childAdapter.entrySet())
+                    entry.getValue().notifyDataSetChanged();
+            }
         }
 
         @Override
         public void loadmoreView(Object object){
-            List updateList = null;
-            if (object instanceof List)
-                updateList = (List) object;
-            else    if (object instanceof ListBehavior)
-                updateList = ((ListBehavior) object).getList();
+            if (map_childAdapter.isEmpty())
+                recyclerView.getAdapter().notifyDataSetChanged();
             else
-                return;
-
-            if (updateList == null)
-                updateList = new LinkedList();
-
-            getBindPresenter().addDifferentDatas(updateList);
-            recyclerView.getAdapter().notifyDataSetChanged();
+            {
+                Iterator<Map.Entry<String, RecyclerView.Adapter>> iterator = map_childAdapter.entrySet().iterator();
+                Map.Entry<String, RecyclerView.Adapter> tail = null;
+                while (iterator.hasNext()) tail = iterator.next();
+                tail.getValue().notifyDataSetChanged();
+            }
         }
 
         @Override
         public void refreshEmpty() {
-            if (recyclerView instanceof RecyclerViewInterface)
-            {
-                ((RecyclerViewInterface) recyclerView).setEmptyView(getEmptyView());
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void loadmoreEmpty() {
-            ToastUtils.showShort("没有更多数据啦");
-        }
-
-        @Override
-        public void refreshErro() {
-            if (recyclerView instanceof RecyclerViewInterface)
-            {
-                ((RecyclerViewInterface) recyclerView).setEmptyView(getErroView());
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void loadmoreErro() {
-            ToastUtils.showShort("数据加载失败");
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
 
         @Override
         public void refreshItemView(int position) {
-            int headerCount = 0;
-            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
-            recyclerView.getAdapter().notifyItemChanged(position+headerCount);
+            recyclerView.getAdapter().notifyItemChanged(position);
         }
 
         @Override
         public void removeItemView(int position) {
-            int headerCount = 0;
-            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
-            recyclerView.getAdapter().notifyItemRemoved(position+headerCount);
+            recyclerView.getAdapter().notifyItemRemoved(position);
         }
 
         @Override
         public void insertItemView(int position) {
-            int headerCount = 0;
-            if (recyclerView instanceof RecyclerViewInterface) headerCount = ((RecyclerViewInterface) recyclerView).getHeaderCount();
-            recyclerView.getAdapter().notifyItemInserted(position+headerCount);
+            recyclerView.getAdapter().notifyItemInserted(position);
+        }
+
+        //填充子Adapter
+        protected void putChildAdapter(String role,RecyclerView.Adapter adapter){
+            map_childAdapter.put(role,adapter);
+        }
+
+        //获取子Adapter
+        protected RecyclerView.Adapter getChildAdapter(String role){
+            return map_childAdapter.get(role);
         }
 
         //返回适配器，可以在重写时为Adater设置更多参数
-        protected abstract RecyclerView.Adapter getAdapter(List list, Object... objects);
+        protected abstract RecyclerView.Adapter getAdapter(Pointer<ListBehavior> pointer, Object... objects);
 
         //返回布局管理器，重写该方法以指定RecyclerView的布局方案
         protected abstract RecyclerView.LayoutManager getLayoutManager();

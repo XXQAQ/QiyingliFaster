@@ -1,7 +1,7 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
 import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
-import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
+import com.xq.customfaster.base.baserefreshload.IAbsRefreshLoadPresenter;
 
 public interface RefreshLoadCallbackInterface<T> extends FasterHttpCallback<T> {
 
@@ -31,9 +31,9 @@ public interface RefreshLoadCallbackInterface<T> extends FasterHttpCallback<T> {
 
     public class CallbackBuilder extends FasterHttpCallback.CallbackBuilder{
 
-        public IBaseRefreshLoadPresenter presenter;
+        public IAbsRefreshLoadPresenter presenter;
 
-        public CallbackBuilder(IBaseRefreshLoadPresenter presenter) {
+        public CallbackBuilder(IAbsRefreshLoadPresenter presenter) {
             this.presenter = presenter;
         }
     }

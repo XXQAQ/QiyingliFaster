@@ -1,33 +1,14 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
+import android.os.Bundle;
 import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.worldbean.bean.behavior.IdBehavior;
 import com.xq.worldbean.bean.behavior.ListBehavior;
-import java.util.LinkedList;
+import com.xq.worldbean.util.Pointer;
 import java.util.List;
 
 public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListView> extends IAbsRefreshLoadListPresenter<T>, IBaseRefreshLoadPresenter<T> {
-
-    @Override
-    default void initAdapter(){
-        getRefreshLoadDelegate().initAdapter();
-    }
-
-    @Override
-    default void addDatas(List list) {
-        getRefreshLoadDelegate().addDatas(list);
-    }
-
-    @Override
-    default void addDifferentDatas(List list) {
-        getRefreshLoadDelegate().addDifferentDatas(list);
-    }
-
-    @Override
-    default void clearDatas() {
-        getRefreshLoadDelegate().clearDatas();
-    }
 
     @Override
     default void refreshItem(int position, Object object) {
@@ -60,74 +41,21 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
-    default List getDataList() {
-        return getRefreshLoadDelegate().getDataList();
-    }
-
-    @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
 
-        protected List list_data = new LinkedList<>();
+        protected Pointer<ListBehavior> pointer = new Pointer<>();
 
         public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
         }
 
         @Override
-        public void initAdapter(){
-            getBindView().initAdapter(getDataList());
-        }
+        public void afterOnCreate(Bundle savedInstanceState) {
+            super.afterOnCreate(savedInstanceState);
 
-        @Override
-        public void addDatas(List list) {
-            getDataList().addAll(list);
-        }
-
-        @Override
-        public void addDifferentDatas(List list) {
-            if (list == null)
-                list = new LinkedList();
-
-            for (int i=0;i<list.size();i++)
-            {
-                Object object = list.get(i);
-
-                if (object == null) continue;
-
-                if (object instanceof IdBehavior && ((IdBehavior) object).getId() != 0)
-                {
-                    for (int j=0;j<getDataList().size();j++)
-                    {
-                        Object oldObject = getDataList().get(j);
-                        if (oldObject instanceof IdBehavior && ((IdBehavior) oldObject).getId() == ((IdBehavior) object).getId())
-                        {
-                            getDataList().remove(j);
-                            break;
-                        }
-                    }
-                    getDataList().add(object);
-                }
-                else
-                {
-                    for (int j=0;j<getDataList().size();j++)
-                    {
-                        Object oldObject = getDataList().get(j);
-                        if (object.equals(oldObject))
-                        {
-                            getDataList().remove(j);
-                            break;
-                        }
-                    }
-                    getDataList().add(object);
-                }
-            }
-        }
-
-        @Override
-        public void clearDatas() {
-            getDataList().clear();
+            initAdapter();
         }
 
         @Override
@@ -143,32 +71,9 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
         @Override
         public void refreshItem(Object object) {
-            if (object == null)
-                return;
-
-            if (object instanceof IdBehavior  && ((IdBehavior) object).getId() != 0)
-            {
-                for (int i=0;i<getDataList().size();i++)
-                {
-                    Object oldObject = getDataList().get(i);
-                    if (oldObject instanceof IdBehavior && ((IdBehavior) oldObject).getId() == ((IdBehavior) object).getId())
-                    {
-                        refreshItem(i);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                for (int i=0;i<getDataList().size();i++)
-                {
-                    if (object.equals(getDataList().get(i)))
-                    {
-                        refreshItem(i);
-                        break;
-                    }
-                }
-            }
+            for (int i=0;i<getDataList().size();i++)
+                if (isSameObject(object,getDataList().get(i),true))
+                    refreshItem(i);
         }
 
         @Override
@@ -178,32 +83,9 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
         @Override
         public void removeItem(Object object) {
-            if (object == null)
-                return;
-
-            if (object instanceof IdBehavior && ((IdBehavior) object).getId() != 0)
-            {
-                for (int i=0;i<getDataList().size();i++)
-                {
-                    Object oldObject = getDataList().get(i);
-                    if (oldObject instanceof IdBehavior && ((IdBehavior) oldObject).getId() == ((IdBehavior) object).getId())
-                    {
-                        removeItem(i);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                for (int i=0;i<getDataList().size();i++)
-                {
-                    if (object.equals(getDataList().get(i)))
-                    {
-                        removeItem(i);
-                        break;
-                    }
-                }
-            }
+            for (int i=0;i<getDataList().size();i++)
+                if (isSameObject(object,getDataList().get(i),false))
+                    removeItem(i);
         }
 
         @Override
@@ -219,8 +101,27 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        public List getDataList() {
-            return list_data;
+        protected void refreshData(Object object) {
+            super.refreshData(object);
+
+            if (object == null) return;
+
+            if (object instanceof ListBehavior)
+                pointer.set((ListBehavior) object);
+            else
+                throw new RuntimeException(object.getClass().getSimpleName() + " Must be implements ListBehavior");
+        }
+
+        @Override
+        protected void loadmoreData(Object object) {
+            super.loadmoreData(object);
+
+            if (object == null) return;
+
+            if (object instanceof ListBehavior)
+                addDatas(((ListBehavior) object).getList());
+            else
+                throw new RuntimeException(object.getClass().getSimpleName() + " Must be implements ListBehavior");
         }
 
         @Override
@@ -230,6 +131,33 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
             else
                 return super.isEmptyData(object);
         }
+
+        protected List getDataList() {
+            return pointer.get().getList();
+        }
+
+        //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数
+        protected void initAdapter(){
+            getBindView().initAdapter(pointer);
+        }
+
+        protected void addDatas(List list) {
+            getDataList().addAll(list);
+        }
+
+        protected boolean isSameObject(Object one,Object two,boolean isEqualsById){
+
+            if (one == null && two == null) return true;
+
+            if (one == null || two == null) return false;
+
+            //如果one two存在继承关系且都实现了IdBehavior且设置过Id字段（id!=0）,那么以id是否相同作为比较依据
+            if (isEqualsById && one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != 0 && ((IdBehavior) two).getId() != 0)
+                return ((IdBehavior) one).getId() == ((IdBehavior) two).getId();
+
+            return one.equals(two);
+        }
+
     }
 
 }

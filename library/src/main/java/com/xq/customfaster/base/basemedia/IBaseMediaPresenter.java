@@ -13,6 +13,7 @@ import com.xq.androidfaster.base.abs.IAbsPresenter;
 import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.androidfaster.util.constant.PermissionConstants;
 import com.xq.androidfaster.util.tools.PermissionUtils;
+import com.xq.androidfaster.util.tools.ResourceUtils;
 import com.xq.androidfaster.util.tools.UriUtils;
 import com.xq.customfaster.R;
 import com.xq.worldbean.bean.behavior.SizeBehavior;
@@ -133,7 +134,7 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
                 public void onCallback(Object... objects) {
                     int mimeType = MimeType.ofImage();
                     PhoenixOption option = Phoenix.with()
-                            .theme(getContext().getResources().getColor(R.color.colorPrimary))// 主题
+                            .theme(ResourceUtils.getColor(R.color.colorPrimary))// 主题
                             .fileType(mimeType)//显示的文件类型图片、视频、图片和视频
                             .maxPickNumber(max)// 最大选择数量
                             .minPickNumber(0)// 最小选择数量

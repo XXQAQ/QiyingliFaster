@@ -165,11 +165,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
                     if (isRefresh)
                     {
                         page = getFirstPage();
+                        refreshData(object);
                         getBindView().refreshView(object);
                     }
                     else
                     {
                         page++;
+                        loadmoreData(object);
                         getBindView().loadmoreView(object);
                     }
                 }
@@ -206,6 +208,16 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         //重写此方法可指定第一页下标
         protected int getFirstPage(){
             return 1;
+        }
+
+        //在刷新View前需要处理的方法
+        protected void refreshData(Object object){
+
+        }
+
+        //在加载View前需要处理的方法
+        protected void loadmoreData(Object object){
+
         }
 
         //屏蔽了刷新和加载的差异，提供给程序员以实现刷新或加载的方法

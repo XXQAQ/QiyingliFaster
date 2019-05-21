@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.xq.androidfaster.base.base.aspresenter.FasterBaseView;
 import com.xq.androidfaster.util.tools.BarUtils;
 import com.xq.androidfaster.util.tools.ImageUtils;
+import com.xq.androidfaster.util.tools.ResourceUtils;
 import com.xq.androidfaster.util.tools.ScreenUtils;
 import com.xq.customfaster.widget.view.CustomRefreshLoadView;
 import com.xq.customview.view.IconFontTextView;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public abstract class CustomBaseView<T extends ICustomBasePresenter> extends FasterBaseView<T> implements ICustomBaseView<T> {
 
+    protected ViewGroup barLayout;
     protected Toolbar toolbar;
 
     public CustomBaseView(T presenter) {
@@ -33,6 +35,10 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     public void afterOnCreate(Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
 
+        initBarLayout();
+
+        initNestedScrollingChild();
+
         //针对顶部容器作特殊处理
         if (isTopContainer())
         {
@@ -41,10 +47,6 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             //设置状态栏字体颜色
             setStatusBarLightMode(isLightStyle());
         }
-
-        initBarLayout();
-
-        initNestedScrollingChild();
 
     }
 
@@ -101,19 +103,16 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     protected void initBarLayout() {
 
-        ViewGroup barLayout;
-        List<ViewGroup> list = getAllSomeView(rootView, AppBarLayout.class);
-        if (list == null || list.isEmpty())
-            barLayout = (ViewGroup) findViewById(getContext().getResources().getIdentifier("barLayout", "id", getContext().getPackageName()));
-        else
-            barLayout = list.get(0);
+        if (barLayout == null)
+        {
+            List<ViewGroup> list = getAllSomeView(rootView, AppBarLayout.class);
+            if (list != null && !list.isEmpty()) barLayout = list.get(0);
+        }
 
         if (barLayout == null) return;
 
         if (getBarLayoutBackgroundResource() != 0)
             barLayout.setBackgroundResource(getBarLayoutBackgroundResource());
-        else
-            barLayout.setBackgroundColor(getBarLayoutBackgroundColor());
     }
 
     protected void initNestedScrollingChild(){
@@ -132,12 +131,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     //重写该方法以自定Toolbar背景drawable
     protected int getBarLayoutBackgroundResource(){
-        return 0;
-    }
-
-    //重写该方法以自定Toolbar背景色
-    protected int getBarLayoutBackgroundColor(){
-        return getContext().getResources().getColor(R.color.colorWidely);
+        return R.color.colorWidely;
     }
 
     //重写该方法以自定Toolbar图标
@@ -147,7 +141,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     //重写该方法以自定Toolbar控件颜色
     protected int getToolbarWidgetColor(){
-        return getContext().getResources().getColor(R.color.text_normal);
+        return ResourceUtils.getColor(R.color.text_normal);
     }
 
     //重写该方法以沉浸状态栏(仅在TopContainer有意义)
@@ -184,7 +178,11 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
     private void hideSystemBar() {
         BarUtils.setStatusBarColor((Activity) getContext(), Color.TRANSPARENT);
-        if (toolbar != null) BarUtils.addPaddingTopEqualStatusBarHeight(toolbar);
+
+        if (toolbar != null)
+            BarUtils.addPaddingTopEqualStatusBarHeight(toolbar);
+        else    if (barLayout != null && barLayout.getChildCount() > 0)         //注意：BarLayout的第一个子控件（建议BarLayout只包含一个子控件或BarLayout继承于线性布局）高度必须是固定值，才能正常处理状态栏高度
+            BarUtils.addPaddingTopEqualStatusBarHeight(barLayout.getChildAt(0));
     }
 
 }

@@ -16,9 +16,9 @@ public abstract class CustomBaseActivity<T extends ICustomBaseView> extends Fast
 
     @Override
     public void afterOnCreate(Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        super.afterOnCreate(savedInstanceState);
 
         EventManager.regist(this);
     }
