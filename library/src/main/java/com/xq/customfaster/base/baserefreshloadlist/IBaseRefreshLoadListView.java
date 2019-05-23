@@ -6,8 +6,10 @@ import com.xq.androidfaster.base.abs.IAbsView;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.worldbean.bean.behavior.ListBehavior;
 import com.xq.worldbean.util.Pointer;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresenter> extends IAbsRefreshLoadListView<T>, IBaseRefreshLoadView<T> {
@@ -30,6 +32,11 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
     @Override
     default void insertItemView(int position) {
         getRefreshLoadDelegate().insertItemView(position);
+    }
+
+    @Override
+    default List<String> getRoleList() {
+        return getRefreshLoadDelegate().getRoleList();
     }
 
     @Override
@@ -63,7 +70,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void refreshView(Object object){
-            if (map_childAdapter.isEmpty())
+            if (getRoleList().isEmpty())
                 recyclerView.getAdapter().notifyDataSetChanged();
             else
             {
@@ -74,7 +81,7 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void loadmoreView(Object object){
-            if (map_childAdapter.isEmpty())
+            if (getRoleList().isEmpty())
                 recyclerView.getAdapter().notifyDataSetChanged();
             else
             {
@@ -103,6 +110,13 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         @Override
         public void insertItemView(int position) {
             recyclerView.getAdapter().notifyItemInserted(position);
+        }
+
+        @Override
+        public List<String> getRoleList() {
+            ArrayList list = new ArrayList();
+            list.addAll(map_childAdapter.keySet());
+            return list;
         }
 
         //填充子Adapter

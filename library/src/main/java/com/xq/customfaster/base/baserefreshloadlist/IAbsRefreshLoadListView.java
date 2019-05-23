@@ -3,6 +3,7 @@ package com.xq.customfaster.base.baserefreshloadlist;
 import com.xq.customfaster.base.baserefreshload.IAbsRefreshLoadView;
 import com.xq.worldbean.bean.behavior.ListBehavior;
 import com.xq.worldbean.util.Pointer;
+import java.util.List;
 
 public interface IAbsRefreshLoadListView<T extends IAbsRefreshLoadListPresenter> extends IAbsRefreshLoadView<T> {
 
@@ -18,4 +19,5 @@ public interface IAbsRefreshLoadListView<T extends IAbsRefreshLoadListPresenter>
     //单Item新增
     public void insertItemView(int position);
 
+    public List<String> getRoleList();
 }

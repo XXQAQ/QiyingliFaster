@@ -41,6 +41,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
+    default List<String> getRoleList() {
+        return getRefreshLoadDelegate().getRoleList();
+    }
+
+    @Override
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
@@ -127,7 +132,20 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         @Override
         protected boolean isEmptyData(Object object) {
             if (object instanceof ListBehavior)
-                return super.isEmptyData(((ListBehavior) object).getList());
+            {
+                if (getRoleList() == null || getRoleList().isEmpty())
+                    return super.isEmptyData(((ListBehavior) object).getList());
+                else
+                {
+                    boolean isEmpty = true;
+                    for (String role : getRoleList())
+                    {
+                        if (super.isEmptyData(((ListBehavior) object).getList(role))) continue;
+                        isEmpty = super.isEmptyData(((ListBehavior) object).getList(role));
+                    }
+                    return isEmpty;
+                }
+            }
             else
                 return super.isEmptyData(object);
         }
