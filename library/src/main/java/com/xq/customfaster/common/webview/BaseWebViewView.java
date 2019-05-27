@@ -152,7 +152,7 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
         webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
         webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
         webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
-        webSettings.setAppCachePath(PathUtils.getExternalAppCachePath());//设置  Application Caches 缓存目录
+        webSettings.setAppCachePath(PathUtils.getInternalAppDataPath());//设置  Application Caches 缓存目录
 
         webView.requestFocusFromTouch();
 
