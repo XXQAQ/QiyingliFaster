@@ -137,13 +137,20 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                     return super.isEmptyData(((ListBehavior) object).getList());
                 else
                 {
-                    boolean isEmpty = true;
-                    for (String role : getRoleList())
+                    if (isRefresh)
                     {
-                        if (super.isEmptyData(((ListBehavior) object).getList(role))) continue;
-                        isEmpty = super.isEmptyData(((ListBehavior) object).getList(role));
+                        boolean isEmpty = true;
+                        for (String role : getRoleList())
+                        {
+                            if (super.isEmptyData(((ListBehavior) object).getList(role))) continue;
+                            isEmpty = super.isEmptyData(((ListBehavior) object).getList(role));
+                        }
+                        return isEmpty;
                     }
-                    return isEmpty;
+                    else
+                    {
+                        return super.isEmptyData(((ListBehavior) object).getList());
+                    }
                 }
             }
             else
