@@ -85,7 +85,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
             if (getToolbarNavIcon() !=0 )
                 toolbar.setNavigationIcon(getToolbarNavIcon());
             else
-                toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextView.Bulder(getContext()).setText(getContext().getResources().getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(ScreenUtils.dip2px(16)).build())));
+                toolbar.setNavigationIcon(new BitmapDrawable(ImageUtils.view2Bitmap(new IconFontTextView.Bulder(getContext()).setText(ResourceUtils.getString(R.string.ic_return)).setTextColor(getToolbarWidgetColor()).setTextSize(ScreenUtils.dip2px(16)).build())));
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

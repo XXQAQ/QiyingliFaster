@@ -79,11 +79,6 @@ public interface IBasePagerView<T extends IBasePagerPresenter> extends IAbsPager
             }
 
             @Override
-            public void restoreState(Parcelable state, ClassLoader loader) {
-                if (view.isSaveFragmentState()) super.restoreState(state,loader);
-            }
-
-            @Override
             public CharSequence getPageTitle(int position) {
                 if (list.get(position) instanceof TitleBehavior) return ((TitleBehavior) list.get(position)).getTitle();
                 return super.getPageTitle(position);

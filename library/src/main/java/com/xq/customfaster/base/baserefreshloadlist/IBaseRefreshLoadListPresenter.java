@@ -177,7 +177,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
             if (one == null || two == null) return false;
 
             //如果one two存在继承关系且都实现了IdBehavior且设置过Id字段（id!=0）,那么以id是否相同作为比较依据
-            if (isEqualsById && one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != 0 && ((IdBehavior) two).getId() != 0)
+            if (isEqualsById && one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != null && ((IdBehavior) two).getId() != null)
                 return ((IdBehavior) one).getId() == ((IdBehavior) two).getId();
 
             return one.equals(two);

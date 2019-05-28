@@ -3,6 +3,7 @@ package com.xq.customfaster.common.webview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import com.xq.androidfaster.util.tools.ResourceUtils;
 import com.xq.customfaster.R;
 import com.xq.customfaster.base.base.CustomBaseActivity;
 
@@ -16,7 +17,7 @@ public class BaseWebViewActivity extends CustomBaseActivity<IBaseWebViewView> im
     public void afterOnCreate(@Nullable Bundle savedInstanceState) {
         super.afterOnCreate(savedInstanceState);
 
-        getBindView().initToolbar(getString(R.string.loading));
+        getBindView().initToolbar(ResourceUtils.getString(R.string.loading));
 
         if (!TextUtils.isEmpty(data))
         {
