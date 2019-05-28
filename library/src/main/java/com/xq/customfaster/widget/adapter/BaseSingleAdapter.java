@@ -14,4 +14,14 @@ public abstract class BaseSingleAdapter extends AbsAdapter {
     public int getCount() {
         return 1;
     }
+
+    @Override
+    protected void convertView(BaseViewHolder holder, int position) {
+
+    }
+
+    @Override
+    protected void convertListener(BaseViewHolder holder, int position) {
+
+    }
 }
