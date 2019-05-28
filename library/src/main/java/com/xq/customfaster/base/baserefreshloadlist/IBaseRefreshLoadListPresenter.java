@@ -106,6 +106,11 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
+        public List<String> getRoleList() {
+            return getBindView().getRoleList();
+        }
+
+        @Override
         protected void refreshData(Object object) {
             super.refreshData(object);
 
