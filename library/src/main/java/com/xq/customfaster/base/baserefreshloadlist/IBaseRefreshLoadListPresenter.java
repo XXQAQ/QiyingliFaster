@@ -41,6 +41,16 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
+    default Pointer<ListBehavior> getPointer() {
+        return getRefreshLoadDelegate().getPointer();
+    }
+
+    @Override
+    default List getDataList() {
+        return getRefreshLoadDelegate().getDataList();
+    }
+
+    @Override
     default List<String> getRoleList() {
         return getRefreshLoadDelegate().getRoleList();
     }
@@ -50,7 +60,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
 
-        protected Pointer<ListBehavior> pointer = new Pointer<>();
+        private Pointer<ListBehavior> pointer = new Pointer<>();
 
         public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
@@ -162,16 +172,23 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                 return super.isEmptyData(object);
         }
 
-        protected List getDataList() {
-            return pointer.get().getList();
+        @Override
+        public Pointer<ListBehavior> getPointer(){
+            return pointer;
+        }
+
+        @Override
+        public List getDataList() {
+            if (getPointer() == null || getPointer().get() == null) return null;
+            return getPointer().get().getList();
         }
 
         //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数
         protected void initAdapter(){
-            getBindView().initAdapter(pointer);
+            getBindView().initAdapter(getPointer());
         }
 
-        protected void addDatas(List list) {
+        public void addDatas(List list) {
             getDataList().addAll(list);
         }
 
