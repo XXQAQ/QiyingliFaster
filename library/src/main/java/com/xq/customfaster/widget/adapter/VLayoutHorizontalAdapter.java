@@ -23,9 +23,9 @@ public class VLayoutHorizontalAdapter extends AbsAdapter{
 
     @Override
     protected View createView(ViewGroup viewGroup, int viewType) {
-        RecyclerView rv = new RecyclerView(viewGroup.getContext());
+        RecyclerView rv = new RecyclerView(getContext());
         rv.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        rv.setLayoutManager(new GridLayoutManager(viewGroup.getContext(),1,RecyclerView.HORIZONTAL,false));
+        rv.setLayoutManager(new GridLayoutManager(getContext(),1,RecyclerView.HORIZONTAL,false));
         if (decoration != null) rv.addItemDecoration(decoration);
         rv.setAdapter(adapter);
         return rv;
