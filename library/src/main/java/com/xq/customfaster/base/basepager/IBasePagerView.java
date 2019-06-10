@@ -37,8 +37,8 @@ public interface IBasePagerView<T extends IBasePagerPresenter> extends IAbsPager
         }
 
         @Override
-        public void afterOnCreate(Bundle savedInstanceState) {
-            super.afterOnCreate(savedInstanceState);
+        public void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
 
             viewPager = (ViewPager) findViewById(getContext().getResources().getIdentifier("viewPager", "id", getContext().getPackageName()));
 

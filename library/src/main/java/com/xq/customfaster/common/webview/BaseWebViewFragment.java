@@ -14,8 +14,8 @@ public class BaseWebViewFragment extends CustomBaseFragment<IBaseWebViewView> im
     private String dataBaseUrl;
 
     @Override
-    public void afterOnCreate(@Nullable Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
+    public void create(@Nullable Bundle savedInstanceState) {
+        super.create(savedInstanceState);
 
         getBindView().initToolbar(ResourceUtils.getString(R.string.loading));
 

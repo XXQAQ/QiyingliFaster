@@ -10,14 +10,14 @@ import org.greenrobot.eventbus.ThreadMode;
 public abstract class CustomBaseFragment<T extends ICustomBaseView> extends FasterBaseFragment<T> implements ICustomBasePresenter<T> {
 
     @Override
-    public void afterOnCreate(Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
+    public void create(Bundle savedInstanceState) {
+        super.create(savedInstanceState);
         EventManager.regist(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void destroy() {
+        super.destroy();
         EventManager.unRegist(this);
     }
 

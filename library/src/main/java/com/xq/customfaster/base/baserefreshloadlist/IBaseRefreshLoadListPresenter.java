@@ -67,8 +67,8 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        public void afterOnCreate(Bundle savedInstanceState) {
-            super.afterOnCreate(savedInstanceState);
+        public void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
 
             initAdapter();
         }

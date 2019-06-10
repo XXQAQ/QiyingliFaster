@@ -4,7 +4,7 @@ import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
+import com.xq.androidfaster.util.FasterHttpCallback;
 import java.io.File;
 
 public abstract class CustomBaseFileCallback extends FileCallback implements FasterHttpCallback<File> {
@@ -53,6 +53,26 @@ public abstract class CustomBaseFileCallback extends FileCallback implements Fas
     @Override
     public boolean operating(File file, Object... objects) {
         return file != null;
+    }
+
+    @Override
+    public void requestStart(Object... objects) {
+        FasterHttpCallback.super.requestStart(objects);
+    }
+
+    @Override
+    public void requestSuccess(File file, Object... objects) {
+        FasterHttpCallback.super.requestSuccess(file,objects);
+    }
+
+    @Override
+    public void requestError(Object... objects) {
+        FasterHttpCallback.super.requestError(objects);
+    }
+
+    @Override
+    public void requestFinish(Object... objects) {
+        FasterHttpCallback.super.requestFinish(objects);
     }
 
 }

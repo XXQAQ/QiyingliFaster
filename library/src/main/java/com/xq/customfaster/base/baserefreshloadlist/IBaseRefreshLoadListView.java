@@ -53,8 +53,8 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         }
 
         @Override
-        public void afterOnCreate(Bundle savedInstanceState) {
-            super.afterOnCreate(savedInstanceState);
+        public void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
 
             recyclerView = (RecyclerView) findViewById(getContext().getResources().getIdentifier("recyclerView", "id", getContext().getPackageName()));
 

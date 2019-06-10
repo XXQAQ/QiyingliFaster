@@ -34,26 +34,26 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
     }
 
     @Override
-    public void afterOnCreate(Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
+    public void create(Bundle savedInstanceState) {
+        super.create(savedInstanceState);
         initWebView();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void visible() {
+        super.visible();
         webView.onResume();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void invisible() {
+        super.invisible();
         webView.onPause();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void destroy() {
+        super.destroy();
         webView.loadUrl("about:blank");
         webView.destroy();
     }

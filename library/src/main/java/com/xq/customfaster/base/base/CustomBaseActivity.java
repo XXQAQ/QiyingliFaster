@@ -1,6 +1,7 @@
 package com.xq.customfaster.base.base;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,23 +16,26 @@ import org.greenrobot.eventbus.ThreadMode;
 public abstract class CustomBaseActivity<T extends ICustomBaseView> extends FasterBaseActivity<T> implements ICustomBasePresenter<T> {
 
     @Override
-    public void afterOnCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onCreate(savedInstanceState);
+    }
 
-        super.afterOnCreate(savedInstanceState);
-
+    @Override
+    public void create(Bundle savedInstanceState) {
+        super.create(savedInstanceState);
         EventManager.regist(this);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void visible() {
+        super.visible();
         KeyboardUtils.hideSoftInput(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void destroy() {
+        super.destroy();
         EventManager.unRegist(this);
     }
 

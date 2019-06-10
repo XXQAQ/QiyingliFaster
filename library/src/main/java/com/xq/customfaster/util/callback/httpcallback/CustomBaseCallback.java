@@ -4,8 +4,8 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.xq.androidfaster.util.FasterHttpCallback;
 import com.xq.androidfaster.util.JsonConverter;
-import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
 
@@ -74,4 +74,23 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
             return JsonConverter.jsonToObject(response.body().string(),entityClass);
     }
 
+    @Override
+    public void requestStart(Object... objects) {
+        FasterHttpCallback.super.requestStart(objects);
+    }
+
+    @Override
+    public void requestSuccess(T t, Object... objects) {
+        FasterHttpCallback.super.requestSuccess(t,objects);
+    }
+
+    @Override
+    public void requestError(Object... objects) {
+        FasterHttpCallback.super.requestError(objects);
+    }
+
+    @Override
+    public void requestFinish(Object... objects) {
+        FasterHttpCallback.super.requestFinish(objects);
+    }
 }

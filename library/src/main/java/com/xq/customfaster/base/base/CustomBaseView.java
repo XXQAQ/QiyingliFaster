@@ -32,8 +32,8 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
     }
 
     @Override
-    public void afterOnCreate(Bundle savedInstanceState) {
-        super.afterOnCreate(savedInstanceState);
+    public void create(Bundle savedInstanceState) {
+        super.create(savedInstanceState);
 
         initBarLayout();
 
@@ -60,7 +60,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
         if (toolbar == null)
         {
-            List<Toolbar> list = getAllSomeView(rootView, Toolbar.class);
+            List<Toolbar> list = getAllSomeView(getRootView(), Toolbar.class);
             if (list == null || list.isEmpty()) return;
             toolbar = list.get(0);
         }
@@ -105,7 +105,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
         if (barLayout == null)
         {
-            List<ViewGroup> list = getAllSomeView(rootView, AppBarLayout.class);
+            List<ViewGroup> list = getAllSomeView(getRootView(), AppBarLayout.class);
             if (list != null && !list.isEmpty()) barLayout = list.get(0);
         }
 
@@ -119,7 +119,7 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
 
         CustomRefreshLoadView refreshLoadView;
 
-        List<CustomRefreshLoadView> list_refreshLoadView = getAllSomeView(rootView, CustomRefreshLoadView.class);
+        List<CustomRefreshLoadView> list_refreshLoadView = getAllSomeView(getRootView(), CustomRefreshLoadView.class);
         if (list_refreshLoadView == null || list_refreshLoadView.isEmpty()) return;
         refreshLoadView = list_refreshLoadView.get(0);
 

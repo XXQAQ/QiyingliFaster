@@ -24,8 +24,8 @@ public interface IBasePagerPresenter<T extends IBasePagerView> extends IAbsPager
         }
 
         @Override
-        public void afterOnCreate(Bundle savedInstanceState) {
-            super.afterOnCreate(savedInstanceState);
+        public void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
 
             list_fragmentBehavior = createFragmentBehaviorList();
             getBindView().initPager(getFragmentBehaviorList());
