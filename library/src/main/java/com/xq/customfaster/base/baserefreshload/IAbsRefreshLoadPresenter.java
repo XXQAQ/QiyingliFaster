@@ -19,10 +19,10 @@ public interface IAbsRefreshLoadPresenter<T extends IAbsRefreshLoadView> extends
     public void loadmoring(Object... objects);
 
     //取消刷新
-    public void cancleRefresh();
+    public void cancelRefresh();
 
     //取消加载
-    public void cancleLoadmore();
+    public void cancelLoadmore();
 
     //刷新加载数据回调的方法(如果不需要经过本地或网络处理，请直接调用本方法)
     public void refreshLoadData();

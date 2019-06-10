@@ -65,7 +65,7 @@ public class CustomFaster {
             }
 
             @Override
-            public void cancle(Object message, Object... objects) {
+            public void cancel(Object message, Object... objects) {
                 EventBus.getDefault().cancelEventDelivery(message);
             }
         });

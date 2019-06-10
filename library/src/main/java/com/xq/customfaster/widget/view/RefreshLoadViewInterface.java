@@ -50,13 +50,13 @@ public interface RefreshLoadViewInterface {
 
         public void onRefresh(RefreshLoadViewInterface view);
 
-        public void onCancleRefresh(RefreshLoadViewInterface view);
+        public void onCancelRefresh(RefreshLoadViewInterface view);
 
         public void onFinishLoadmore(RefreshLoadViewInterface view);
 
         public void onLoadmore(RefreshLoadViewInterface view);
 
-        public void onCancleLoadmore(RefreshLoadViewInterface view);
+        public void onCancelLoadmore(RefreshLoadViewInterface view);
 
     }
 

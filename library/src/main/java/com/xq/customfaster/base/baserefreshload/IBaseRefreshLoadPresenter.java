@@ -27,13 +27,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
-    default void cancleRefresh() {
-        getRefreshLoadDelegate().cancleRefresh();
+    default void cancelRefresh() {
+        getRefreshLoadDelegate().cancelRefresh();
     }
 
     @Override
-    default void cancleLoadmore() {
-        getRefreshLoadDelegate().cancleLoadmore();
+    default void cancelLoadmore() {
+        getRefreshLoadDelegate().cancelLoadmore();
     }
 
     @Override
@@ -104,7 +104,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         @Override
-        public void cancleRefresh() {
+        public void cancelRefresh() {
 
             isWorking = false;
 
@@ -112,7 +112,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         @Override
-        public void cancleLoadmore() {
+        public void cancelLoadmore() {
 
             isWorking = false;
 
