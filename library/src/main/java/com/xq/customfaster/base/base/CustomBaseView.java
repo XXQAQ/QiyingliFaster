@@ -106,10 +106,9 @@ public abstract class CustomBaseView<T extends ICustomBasePresenter> extends Fas
         if (barLayout == null)
         {
             List<ViewGroup> list = getAllSomeView(getRootView(), AppBarLayout.class);
-            if (list != null && !list.isEmpty()) barLayout = list.get(0);
+            if (list == null || list.isEmpty()) return;
+            barLayout = list.get(0);
         }
-
-        if (barLayout == null) return;
 
         if (getBarLayoutBackgroundResource() != 0)
             barLayout.setBackgroundResource(getBarLayoutBackgroundResource());

@@ -5,7 +5,7 @@ import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.xq.androidfaster.util.FasterHttpCallback;
-import com.xq.androidfaster.util.JsonConverter;
+import com.xq.worldbean.util.JsonConverter;
 
 public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
 

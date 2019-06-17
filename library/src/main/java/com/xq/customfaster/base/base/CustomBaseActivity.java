@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import com.xq.androidfaster.base.base.aspresenter.FasterBaseActivity;
-import com.xq.androidfaster.util.EventManager;
 import com.xq.androidfaster.util.tools.KeyboardUtils;
 import com.xq.customfaster.util.event.ComponentEvent;
+import com.xq.worldbean.util.EventManager;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

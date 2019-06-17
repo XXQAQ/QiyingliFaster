@@ -12,10 +12,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
-import com.guoxiaoxing.phoenix.core.listener.ImageLoader;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
-import com.xq.androidfaster.util.EventManager;
-import com.xq.androidfaster.util.JsonConverter;
+import com.xq.worldbean.util.EventManager;
+import com.xq.worldbean.util.ImageLoader;
+import com.xq.worldbean.util.JsonConverter;
 import org.greenrobot.eventbus.EventBus;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,7 +25,7 @@ public class CustomFaster {
 
     public static void init(){
 
-        com.xq.androidfaster.util.ImageLoader.setLoader(new com.xq.androidfaster.util.ImageLoader.Loader() {
+        ImageLoader.setLoader(new ImageLoader.Loader() {
             @Override
             public void loadImage(Context context, int placeHolder, String url, ImageView view, Object... objects) {
                 RequestOptions options = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -34,7 +34,7 @@ public class CustomFaster {
             }
 
             @Override
-            public void loadImage(Context context, int placeHolder, String url, com.xq.androidfaster.util.ImageLoader.BitmapTarget target, Object... objects) {
+            public void loadImage(Context context, int placeHolder, String url, ImageLoader.BitmapTarget target, Object... objects) {
                 SimpleTarget glideTarget = new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -104,10 +104,10 @@ public class CustomFaster {
         });
 
         Phoenix.config()
-                .imageLoader(new ImageLoader() {
+                .imageLoader(new com.guoxiaoxing.phoenix.core.listener.ImageLoader() {
                     @Override
                     public void loadImage(Context mContext, ImageView imageView, String imagePath, int type) {
-                        com.xq.androidfaster.util.ImageLoader.loadImage(mContext,imagePath,imageView);
+                        ImageLoader.loadImage(mContext,imagePath,imageView);
                     }
                 });
     }
