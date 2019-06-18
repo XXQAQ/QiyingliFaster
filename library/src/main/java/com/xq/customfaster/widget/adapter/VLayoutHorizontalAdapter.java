@@ -3,11 +3,10 @@ package com.xq.customfaster.widget.adapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 
-public class VLayoutHorizontalAdapter extends AbsAdapter{
+public class VLayoutHorizontalAdapter extends AbsAdapter {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.ItemDecoration decoration;
@@ -22,9 +21,8 @@ public class VLayoutHorizontalAdapter extends AbsAdapter{
     }
 
     @Override
-    protected View createView(ViewGroup viewGroup, int viewType) {
+    protected View createView(int viewType) {
         RecyclerView rv = new RecyclerView(getContext());
-        rv.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         rv.setLayoutManager(new GridLayoutManager(getContext(),1,RecyclerView.HORIZONTAL,false));
         if (decoration != null) rv.addItemDecoration(decoration);
         rv.setAdapter(adapter);
@@ -38,12 +36,10 @@ public class VLayoutHorizontalAdapter extends AbsAdapter{
 
     @Override
     protected void convertView(BaseViewHolder holder, int position) {
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void convertListener(BaseViewHolder holder, int position) {
-
+        //不滑动的情况下才进行刷新
+        if (getParent().getScrollState() == 0){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

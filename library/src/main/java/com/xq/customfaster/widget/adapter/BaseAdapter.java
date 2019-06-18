@@ -1,5 +1,6 @@
 package com.xq.customfaster.widget.adapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import com.xq.worldbean.bean.behavior.ListBehavior;
 import com.xq.worldbean.util.Pointer;
 import java.util.List;
 
-public abstract class BaseAdapter extends AbsAdapter{
+public abstract class BaseAdapter extends AbsAdapter {
 
     protected static final int TYPE_EMPTY = 0x100;  //VLayout框架会对ViewType进行判断，小于0的话不会执行后续处理，谨记此坑！
 
@@ -58,12 +59,19 @@ public abstract class BaseAdapter extends AbsAdapter{
     }
 
     @Override
-    protected SpecialViewHolder createSpecialViewHolder(ViewGroup viewGroup, int viewType) {
-        if (viewType == TYPE_EMPTY) return new SpecialViewHolder(createEmptyView(viewGroup),viewType);
-        return super.createSpecialViewHolder(viewGroup,viewType);
+    protected SpecialViewHolder createSpecialViewHolder(int viewType) {
+        if (viewType == TYPE_EMPTY)
+        {
+            View view = createEmptyView();
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams == null) layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            view.setLayoutParams(layoutParams);
+            return new SpecialViewHolder(view,viewType);
+        }
+        return super.createSpecialViewHolder(viewType);
     }
 
-    protected View createEmptyView(ViewGroup viewGroup) {
+    protected View createEmptyView() {
         return new View(getContext());
     }
 
@@ -77,16 +85,16 @@ public abstract class BaseAdapter extends AbsAdapter{
     }
 
     //以下均为便捷设置空布局的方法
-    protected View getDefaultEmptyView(ViewGroup viewGroup){
-        return getDefaultEmptyView(viewGroup,null);
+    protected View getDefaultEmptyView(){
+        return getDefaultEmptyView(null);
     }
 
-    protected View getDefaultEmptyView(ViewGroup viewGroup, CharSequence title){
-        return getDefaultEmptyView(viewGroup,title,0);
+    protected View getDefaultEmptyView(CharSequence title){
+        return getDefaultEmptyView(title,0);
     }
 
-    protected View getDefaultEmptyView(ViewGroup viewGroup, CharSequence title, int imageRes) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_empty,viewGroup,false);
+    protected View getDefaultEmptyView(CharSequence title, int imageRes) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_empty,getParent(),false);
 
         if (TextUtils.isEmpty(title)) title = "没有更多数据啦";
         TextView textView = view.findViewById(R.id.titleView);

@@ -60,7 +60,6 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
             //初始化RecyclerView
             recyclerView.setLayoutManager(getLayoutManager());
-
         }
 
         @Override

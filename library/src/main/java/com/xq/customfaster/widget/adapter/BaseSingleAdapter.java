@@ -19,9 +19,4 @@ public abstract class BaseSingleAdapter extends AbsAdapter {
     protected void convertView(BaseViewHolder holder, int position) {
 
     }
-
-    @Override
-    protected void convertListener(BaseViewHolder holder, int position) {
-
-    }
 }

@@ -58,8 +58,8 @@ public class BaseWebViewActivity extends CustomBaseActivity<IBaseWebViewView> im
 
     private RefreshLoadDelegate refreshLoadDelegate = new RefreshLoadDelegate(this) {
         @Override
-        protected void refreshLoad(boolean isRefresh, int page, Object... objects) {
-            refreshLoadData();
+        protected void refreshLoad(int page, Object... objects) {
+
         }
     };
     @Override

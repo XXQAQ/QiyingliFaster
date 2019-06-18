@@ -11,6 +11,11 @@ import java.util.List;
 public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListView> extends IAbsRefreshLoadListPresenter<T>, IBaseRefreshLoadPresenter<T> {
 
     @Override
+    default List getDataList() {
+        return getRefreshLoadDelegate().getDataList();
+    }
+
+    @Override
     default void refreshItem(int position, Object object) {
      getRefreshLoadDelegate().refreshItem(position,object);
     }
@@ -38,16 +43,6 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     @Override
     default void insertItem(int position, Object object) {
         getRefreshLoadDelegate().insertItem(position,object);
-    }
-
-    @Override
-    default Pointer<ListBehavior> getPointer() {
-        return getRefreshLoadDelegate().getPointer();
-    }
-
-    @Override
-    default List getDataList() {
-        return getRefreshLoadDelegate().getDataList();
     }
 
     @Override
@@ -152,7 +147,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                     return super.isEmptyData(((ListBehavior) object).getList());
                 else
                 {
-                    if (isRefresh)
+                    if (isRefresh())
                     {
                         boolean isEmpty = true;
                         for (String role : getRoleList())
@@ -172,23 +167,17 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                 return super.isEmptyData(object);
         }
 
-        @Override
-        public Pointer<ListBehavior> getPointer(){
-            return pointer;
-        }
-
-        @Override
         public List getDataList() {
-            if (getPointer() == null || getPointer().get() == null) return null;
-            return getPointer().get().getList();
+            if (pointer == null || pointer.get() == null) return null;
+            return pointer.get().getList();
         }
 
         //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数
         protected void initAdapter(){
-            getBindView().initAdapter(getPointer());
+            getBindView().initAdapter(pointer);
         }
 
-        public void addDatas(List list) {
+        protected void addDatas(List list) {
             getDataList().addAll(list);
         }
 
@@ -200,7 +189,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
             //如果one two存在继承关系且都实现了IdBehavior且设置过Id字段（id!=0）,那么以id是否相同作为比较依据
             if (isEqualsById && one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != null && ((IdBehavior) two).getId() != null)
-                return ((IdBehavior) one).getId() == ((IdBehavior) two).getId();
+                return ((IdBehavior) one).getId().equals(((IdBehavior) two).getId());
 
             return one.equals(two);
         }

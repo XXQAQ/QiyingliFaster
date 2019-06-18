@@ -17,13 +17,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
-    default void refreshing(Object... objects) {
-        getRefreshLoadDelegate().refreshing(objects);
+    default void refresh(Object... objects) {
+        getRefreshLoadDelegate().refresh(objects);
     }
 
     @Override
-    default void loadmoring(Object... objects) {
-        getRefreshLoadDelegate().loadmoring(objects);
+    default void loadmore(Object... objects) {
+        getRefreshLoadDelegate().loadmore(objects);
     }
 
     @Override
@@ -37,17 +37,12 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
     }
 
     @Override
-    default void refreshLoadData() {
-        getRefreshLoadDelegate().refreshLoadData();
-    }
-
-    @Override
     default void refreshLoadData(Object object) {
         getRefreshLoadDelegate().refreshLoadData(object);
     }
 
     @Override
-    default void refreshLoadData(Object object,boolean isSuccess) {
+    default void refreshLoadData(Object object, boolean isSuccess) {
         getRefreshLoadDelegate().refreshLoadData(object,isSuccess);
     }
 
@@ -65,9 +60,9 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
     public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements IAbsRefreshLoadPresenter<T> {
 
-        protected int page = getFirstPage();
-        protected boolean isRefresh = true;
-        protected boolean isWorking = false;
+        private int page = getFirstPage();
+        private boolean isRefresh = true;
+        private boolean isWorking = false;
 
         public RefreshLoadDelegate(IAbsPresenter presenter) {
             super(presenter);
@@ -84,23 +79,23 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         @Override
-        public void refreshing(Object... objects) {
+        public void refresh(Object... objects) {
             if (isWorking)
                 return;
 
             isWorking = true;
             isRefresh = true;
-            refreshLoad(true, getFirstPage(),objects);
+            refreshLoad(getFirstPage(),objects);
         }
 
         @Override
-        public void loadmoring(Object... objects) {
+        public void loadmore(Object... objects) {
             if (isWorking)
                 return;
 
             isWorking = true;
             isRefresh = false;
-            refreshLoad(false, page + 1,objects);
+            refreshLoad(page + 1,objects);
         }
 
         @Override
@@ -120,28 +115,6 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         @Override
-        public void refreshLoadData() {
-
-            isWorking = false;
-
-            if (isRefresh)
-            {
-                page = getFirstPage();
-                getBindView().refreshView(null);
-            }
-            else
-            {
-                page++;
-                getBindView().loadmoreView(null);
-            }
-
-            if (isRefresh)
-                getBindView().afterRefresh();
-            else
-                getBindView().afterLoadmore();
-        }
-
-        @Override
         public void refreshLoadData(Object object) {
             refreshLoadData(object,true);
         }
@@ -155,14 +128,14 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             {
                 if (isEmptyData(object))
                 {
-                    if (isRefresh)
+                    if (isRefresh())
                         getBindView().refreshEmpty();
                     else
                         getBindView().loadmoreEmpty();
                 }
                 else
                 {
-                    if (isRefresh)
+                    if (isRefresh())
                     {
                         page = getFirstPage();
                         refreshData(object);
@@ -178,13 +151,13 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
             }
             else
             {
-                if (isRefresh)
+                if (isRefresh())
                     getBindView().refreshErro();
                 else
                     getBindView().loadmoreErro();
             }
 
-            if (isRefresh)
+            if (isRefresh())
                 getBindView().afterRefresh();
             else
                 getBindView().afterLoadmore();
@@ -207,7 +180,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
         //重写此方法可指定第一页下标
         protected int getFirstPage(){
-            return 1;
+            return 0;
         }
 
         //在刷新View前需要处理的方法
@@ -221,7 +194,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         }
 
         //屏蔽了刷新和加载的差异，提供给程序员以实现刷新或加载的方法
-        protected abstract void refreshLoad(boolean isRefresh, int page, Object... objects);
+        protected abstract void refreshLoad(int page, Object... objects);
 
     }
 }

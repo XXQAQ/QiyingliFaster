@@ -22,16 +22,6 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
     }
 
     @Override
-    default void refreshing() {
-        getRefreshLoadDelegate().refreshing();
-    }
-
-    @Override
-    default void loadmoring() {
-        getRefreshLoadDelegate().loadmoring();
-    }
-
-    @Override
     default void refreshView(Object object) {
         getRefreshLoadDelegate().refreshView(object);
     }
@@ -71,9 +61,19 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         getRefreshLoadDelegate().afterLoadmore();
     }
 
+    @Override
+    default boolean isRefresh() {
+        return getRefreshLoadDelegate().isRefresh();
+    }
+
+    @Override
+    default boolean isWorking() {
+        return getRefreshLoadDelegate().isWorking();
+    }
+
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements IAbsRefreshLoadView<T> {
+    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements IAbsRefreshLoadView<T>, RefreshLoadViewInterface.OnRefreshLoadListener {
 
         public RefreshLoadViewInterface refreshLoadView;
 
@@ -90,37 +90,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             //以下初始化刷新控件
             if (refreshLoadView != null)
             {
-                refreshLoadView.setOnRefreshLoadListener(new RefreshLoadViewInterface.OnRefreshLoadListener() {
-                    @Override
-                    public void onFinishRefresh(RefreshLoadViewInterface view) {
-
-                    }
-
-                    @Override
-                    public void onRefresh(RefreshLoadViewInterface view) {
-                        refreshing();
-                    }
-
-                    @Override
-                    public void onCancelRefresh(RefreshLoadViewInterface view) {
-                        getBindPresenter().cancelRefresh();
-                    }
-
-                    @Override
-                    public void onFinishLoadmore(RefreshLoadViewInterface view) {
-
-                    }
-
-                    @Override
-                    public void onLoadmore(RefreshLoadViewInterface view) {
-                        loadmoring();
-                    }
-
-                    @Override
-                    public void onCancelLoadmore(RefreshLoadViewInterface view) {
-                        getBindPresenter().cancelLoadmore();
-                    }
-                });
+                refreshLoadView.setOnRefreshLoadListener(this);
                 refreshLoadView.setRefreshHeaderView(getRefreshHeadView());
                 refreshLoadView.setLoadmoreFooterView(getLoadmoreFootView());
                 refreshLoadView.setEmptyView(getEmptyView());
@@ -133,7 +103,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             if (refreshLoadView != null)
                 refreshLoadView.startRefresh();
             else
-                refreshing();
+                onRefresh(null);
         }
 
         @Override
@@ -141,17 +111,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             if (refreshLoadView != null)
                 refreshLoadView.startLoadmore();
             else
-                loadmoring();
-        }
-
-        @Override
-        public void refreshing() {
-            getBindPresenter().refreshing();
-        }
-
-        @Override
-        public void loadmoring() {
-            getBindPresenter().loadmoring();
+                onLoadmore(null);
         }
 
         @Override
@@ -192,6 +152,47 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         @Override
         public void afterLoadmore() {
             if (refreshLoadView != null) refreshLoadView.finishLoadmore();
+        }
+
+        @Override
+        public boolean isRefresh() {
+            return getBindPresenter().isRefresh();
+        }
+
+        @Override
+        public boolean isWorking() {
+            return getBindPresenter().isWorking();
+        }
+
+        //以下为刷新加载控件的监听器
+        @Override
+        public void onFinishRefresh(RefreshLoadViewInterface view) {
+
+        }
+
+        @Override
+        public void onRefresh(RefreshLoadViewInterface view) {
+            getBindPresenter().refresh();
+        }
+
+        @Override
+        public void onCancelRefresh(RefreshLoadViewInterface view) {
+            getBindPresenter().cancelRefresh();
+        }
+
+        @Override
+        public void onFinishLoadmore(RefreshLoadViewInterface view) {
+
+        }
+
+        @Override
+        public void onLoadmore(RefreshLoadViewInterface view) {
+            getBindPresenter().loadmore();
+        }
+
+        @Override
+        public void onCancelLoadmore(RefreshLoadViewInterface view) {
+            getBindPresenter().cancelLoadmore();
         }
 
         //获取刷新头布局
