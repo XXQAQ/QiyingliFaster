@@ -1,6 +1,3 @@
 <resources>
 
-    <!--滑动布局越界高度-->
-    <dimen name="over_scrollHeight">64dp</dimen>
-
 </resources>

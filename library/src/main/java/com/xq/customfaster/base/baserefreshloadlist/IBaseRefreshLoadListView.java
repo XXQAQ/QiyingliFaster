@@ -7,7 +7,6 @@ import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import com.xq.worldbean.bean.behavior.ListBehavior;
 import com.xq.worldbean.util.Pointer;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,18 +19,8 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
     }
 
     @Override
-    default void refreshItemView(int position) {
-        getRefreshLoadDelegate().refreshItemView(position);
-    }
-
-    @Override
-    default void removeItemView(int position) {
-        getRefreshLoadDelegate().removeItemView(position);
-    }
-
-    @Override
-    default void insertItemView(int position) {
-        getRefreshLoadDelegate().insertItemView(position);
+    default void refreshAdapter() {
+        getRefreshLoadDelegate().refreshAdapter();
     }
 
     @Override
@@ -68,9 +57,11 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         }
 
         @Override
-        public void refreshView(Object object){
+        public void refreshAdapter() {
             if (getRoleList().isEmpty())
+            {
                 recyclerView.getAdapter().notifyDataSetChanged();
+            }
             else
             {
                 for (Map.Entry<String,RecyclerView.Adapter> entry : map_childAdapter.entrySet())
@@ -79,41 +70,28 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
         }
 
         @Override
+        public void refreshView(Object object){
+            refreshAdapter();
+        }
+
+        @Override
         public void loadmoreView(Object object){
-            if (getRoleList().isEmpty())
-                recyclerView.getAdapter().notifyDataSetChanged();
-            else
-            {
-                Iterator<Map.Entry<String, RecyclerView.Adapter>> iterator = map_childAdapter.entrySet().iterator();
-                Map.Entry<String, RecyclerView.Adapter> tail = null;
-                while (iterator.hasNext()) tail = iterator.next();
-                tail.getValue().notifyDataSetChanged();
-            }
+            refreshAdapter();
         }
 
         @Override
         public void refreshEmpty() {
-            recyclerView.getAdapter().notifyDataSetChanged();
+            refreshAdapter();
         }
 
         @Override
-        public void refreshItemView(int position) {
-            recyclerView.getAdapter().notifyItemChanged(position);
-        }
-
-        @Override
-        public void removeItemView(int position) {
-            recyclerView.getAdapter().notifyItemRemoved(position);
-        }
-
-        @Override
-        public void insertItemView(int position) {
-            recyclerView.getAdapter().notifyItemInserted(position);
+        public void loadmoreEmpty() {
+            refreshAdapter();
         }
 
         @Override
         public List<String> getRoleList() {
-            ArrayList list = new ArrayList();
+            ArrayList<String> list = new ArrayList<>();
             list.addAll(map_childAdapter.keySet());
             return list;
         }

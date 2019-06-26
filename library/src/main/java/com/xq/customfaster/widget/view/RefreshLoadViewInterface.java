@@ -2,6 +2,9 @@ package com.xq.customfaster.widget.view;
 
 public interface RefreshLoadViewInterface {
 
+    //设置是否纯净越界模式
+    public void setPureScrollModeOn(boolean isPureScrollMode);
+
     //设置头布局
     public void setRefreshHeaderView(Object object);
 

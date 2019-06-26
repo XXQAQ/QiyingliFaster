@@ -20,8 +20,6 @@
         android:id="@+id/refreshLoadView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:tr_overscroll_height="@dimen/over_scrollHeight"
         >
 
         <com.xq.customfaster.widget.view.CustomRecyclerView

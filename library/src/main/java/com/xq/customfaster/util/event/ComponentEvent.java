@@ -11,6 +11,10 @@ public class ComponentEvent implements Parcelable {
     private Communicator srcCommunicator;
     private Bundle bundle;
 
+    public ComponentEvent(String componentName, Bundle bundle){
+        this(new Communicator(componentName,0),bundle);
+    }
+
     public ComponentEvent(String componentName, int control, Bundle bundle){
         this(new Communicator(componentName,control),bundle);
     }
@@ -87,6 +91,10 @@ public class ComponentEvent implements Parcelable {
 
         private String componentName;
         private int control;
+
+        public Communicator(String componentName) {
+            this.componentName = componentName;
+        }
 
         public Communicator(String componentName, int control) {
             this.componentName = componentName;

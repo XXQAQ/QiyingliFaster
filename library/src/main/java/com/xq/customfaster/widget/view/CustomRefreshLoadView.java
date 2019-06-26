@@ -6,19 +6,36 @@ import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lcodecore.tkrefreshlayout.footer.LoadingView;
+import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 
 public class CustomRefreshLoadView extends TwinklingRefreshLayout implements RefreshLoadViewInterface {
 
     public CustomRefreshLoadView(Context context) {
         super(context);
+        init();
     }
 
     public CustomRefreshLoadView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public CustomRefreshLoadView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init(){
+        setOverScrollHeight(64);
+        setPureScrollModeOn(true);
+        setRefreshHeaderView(new ProgressLayout(getContext()));
+        setLoadmoreFooterView( new LoadingView(getContext()));
+    }
+
+    @Override
+    public void setPureScrollModeOn(boolean isPureScrollMode){
+        isPureScrollModeOn = isPureScrollMode;
     }
 
     @Override

@@ -75,10 +75,6 @@ public abstract class BaseAdapter extends AbsAdapter {
         return new View(getContext());
     }
 
-    protected Pointer<ListBehavior> getPointer() {
-        return pointer;
-    }
-
     protected List getList() {
         if (pointer != null && pointer.get() != null)  list =  pointer.get().getList(listRole);
         return list;

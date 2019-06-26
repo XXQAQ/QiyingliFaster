@@ -91,10 +91,8 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             if (refreshLoadView != null)
             {
                 refreshLoadView.setOnRefreshLoadListener(this);
-                refreshLoadView.setRefreshHeaderView(getRefreshHeadView());
-                refreshLoadView.setLoadmoreFooterView(getLoadmoreFootView());
-                refreshLoadView.setEmptyView(getEmptyView());
-                refreshLoadView.setErroView(getErroView());
+                if (getEmptyView() != null) refreshLoadView.setEmptyView(getEmptyView());
+                if (getErroView() != null) refreshLoadView.setErroView(getErroView());
             }
         }
 
@@ -195,24 +193,14 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             getBindPresenter().cancelLoadmore();
         }
 
-        //获取刷新头布局
-        protected Object getRefreshHeadView(){
-            return new ProgressLayout(getContext());
-        }
-
-        //获取加载尾布局
-        protected Object getLoadmoreFootView() {
-            return new LoadingView(getContext());
-        }
-
         //获取空布局
         protected Object getEmptyView() {
-            return new View(getContext());
+            return null;
         }
 
         //获取错误布局
         protected Object getErroView() {
-            return new View(getContext());
+            return null;
         }
 
     }

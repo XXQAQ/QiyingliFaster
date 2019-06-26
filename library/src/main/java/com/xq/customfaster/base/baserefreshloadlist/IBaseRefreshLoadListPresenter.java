@@ -16,11 +16,6 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
     }
 
     @Override
-    default void refreshItem(int position, Object object) {
-     getRefreshLoadDelegate().refreshItem(position,object);
-    }
-
-    @Override
     default void refreshItem(Object object) {
         getRefreshLoadDelegate().refreshItem(object);
     }
@@ -69,45 +64,44 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        public void refreshItem(int position, Object object) {
-            if (object == null)
-                return;
-
-            getDataList().remove(position);
-            getDataList().add(position, object);
-
-            refreshItem(position);
-        }
-
-        @Override
         public void refreshItem(Object object) {
             for (int i=0;i<getDataList().size();i++)
-                if (isSameObject(object,getDataList().get(i),true))
+            {
+                if (isSame(object,getDataList().get(i)))
+                {
+                    getDataList().remove(i);
+                    getDataList().add(i, object);
                     refreshItem(i);
+                }
+            }
         }
 
         @Override
         public void refreshItem(int position) {
-            getBindView().refreshItemView(position);
+            getBindView().refreshAdapter();
         }
 
         @Override
         public void removeItem(Object object) {
             for (int i=0;i<getDataList().size();i++)
-                if (isSameObject(object,getDataList().get(i),false))
+            {
+                if (isSame(object,getDataList().get(i)))
+                {
                     removeItem(i);
+                }
+            }
         }
 
         @Override
         public void removeItem(int position) {
             getDataList().remove(position);
-            getBindView().removeItemView(position);
+            getBindView().refreshAdapter();
         }
 
         @Override
         public void insertItem(int position, Object object) {
             getDataList().add(position,object);
-            getBindView().insertItemView(position);
+            getBindView().refreshAdapter();
         }
 
         @Override
@@ -143,24 +137,19 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         protected boolean isEmptyData(Object object) {
             if (object instanceof ListBehavior)
             {
-                if (getRoleList() == null || getRoleList().isEmpty())
-                    return super.isEmptyData(((ListBehavior) object).getList());
+                if (isRefresh() && !getRoleList().isEmpty())
+                {
+                    boolean isEmpty = true;
+                    for (String role : getRoleList())
+                    {
+                        if (super.isEmptyData(((ListBehavior) object).getList(role))) continue;
+                        isEmpty = super.isEmptyData(((ListBehavior) object).getList(role));
+                    }
+                    return isEmpty;
+                }
                 else
                 {
-                    if (isRefresh())
-                    {
-                        boolean isEmpty = true;
-                        for (String role : getRoleList())
-                        {
-                            if (super.isEmptyData(((ListBehavior) object).getList(role))) continue;
-                            isEmpty = super.isEmptyData(((ListBehavior) object).getList(role));
-                        }
-                        return isEmpty;
-                    }
-                    else
-                    {
-                        return super.isEmptyData(((ListBehavior) object).getList());
-                    }
+                    return super.isEmptyData(((ListBehavior) object).getList());
                 }
             }
             else
@@ -177,18 +166,18 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
             getBindView().initAdapter(pointer);
         }
 
-        protected void addDatas(List list) {
+        public void addDatas(List list) {
             getDataList().addAll(list);
         }
 
-        protected boolean isSameObject(Object one,Object two,boolean isEqualsById){
+        protected boolean isSame(Object one, Object two){
 
             if (one == null && two == null) return true;
 
             if (one == null || two == null) return false;
 
             //如果one two存在继承关系且都实现了IdBehavior且设置过Id字段（id!=0）,那么以id是否相同作为比较依据
-            if (isEqualsById && one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != null && ((IdBehavior) two).getId() != null)
+            if (one instanceof IdBehavior && two instanceof IdBehavior && (one.getClass().isAssignableFrom(two.getClass())||two.getClass().isAssignableFrom(one.getClass())) && ((IdBehavior) one).getId() != null && ((IdBehavior) two).getId() != null)
                 return ((IdBehavior) one).getId().equals(((IdBehavior) two).getId());
 
             return one.equals(two);
