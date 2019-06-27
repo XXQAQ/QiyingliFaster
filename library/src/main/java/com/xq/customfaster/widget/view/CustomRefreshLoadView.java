@@ -110,37 +110,37 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
             @Override
             public void onRefreshCanceled() {
                 super.onRefreshCanceled();
-                onRefreshLoadListener.onCancelRefresh(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onCancelRefresh();
             }
 
             @Override
             public void onLoadmoreCanceled() {
                 super.onLoadmoreCanceled();
-                onRefreshLoadListener.onCancelLoadmore(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onCancelLoadmore();
             }
 
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                onRefreshLoadListener.onRefresh(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onRefresh();
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                onRefreshLoadListener.onLoadmore(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onLoadmore();
             }
 
             @Override
             public void onFinishRefresh() {
                 super.onFinishRefresh();
-                onRefreshLoadListener.onFinishRefresh(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onFinishRefresh();
             }
 
             @Override
             public void onFinishLoadMore() {
                 super.onFinishLoadMore();
-                onRefreshLoadListener.onFinishLoadmore(CustomRefreshLoadView.this);
+                onRefreshLoadListener.onFinishLoadmore();
             }
         });
     }

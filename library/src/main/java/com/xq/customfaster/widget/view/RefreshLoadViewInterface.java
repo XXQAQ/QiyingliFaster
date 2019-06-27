@@ -49,17 +49,17 @@ public interface RefreshLoadViewInterface {
 
     public static interface OnRefreshLoadListener {
 
-        public void onFinishRefresh(RefreshLoadViewInterface view);
+        public void onFinishRefresh();
 
-        public void onRefresh(RefreshLoadViewInterface view);
+        public void onRefresh();
 
-        public void onCancelRefresh(RefreshLoadViewInterface view);
+        public void onCancelRefresh();
 
-        public void onFinishLoadmore(RefreshLoadViewInterface view);
+        public void onFinishLoadmore();
 
-        public void onLoadmore(RefreshLoadViewInterface view);
+        public void onLoadmore();
 
-        public void onCancelLoadmore(RefreshLoadViewInterface view);
+        public void onCancelLoadmore();
 
     }
 

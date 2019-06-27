@@ -71,21 +71,25 @@ public interface IBaseRefreshLoadListView<T extends IBaseRefreshLoadListPresente
 
         @Override
         public void refreshView(Object object){
+            super.refreshView(object);
             refreshAdapter();
         }
 
         @Override
         public void loadmoreView(Object object){
+            super.loadmoreView(object);
             refreshAdapter();
         }
 
         @Override
         public void refreshEmpty() {
+            super.refreshEmpty();
             refreshAdapter();
         }
 
         @Override
         public void loadmoreEmpty() {
+            super.loadmoreEmpty();
             refreshAdapter();
         }
 

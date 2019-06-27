@@ -72,6 +72,7 @@ public class ComponentEvent implements Parcelable {
     protected ComponentEvent(Parcel in) {
         this.destCommunicator = in.readParcelable(Communicator.class.getClassLoader());
         this.srcCommunicator = in.readParcelable(Communicator.class.getClassLoader());
+        if (bundle == null) bundle = new Bundle();
         this.bundle = in.readBundle();
     }
 
