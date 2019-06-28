@@ -33,6 +33,17 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
         setLoadmoreFooterView( new LoadingView(getContext()));
     }
 
+    private boolean isFirstRefresh = true;
+    @Override
+    public boolean isFirstRefresh() {
+        return isFirstRefresh;
+    }
+
+    @Override
+    public void setIsFirstRefresh(boolean isFirstRefresh) {
+        this.isFirstRefresh = isFirstRefresh;
+    }
+
     @Override
     public void setPureScrollModeOn(boolean isPureScrollMode){
         isPureScrollModeOn = isPureScrollMode;
@@ -134,13 +145,11 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
             @Override
             public void onFinishRefresh() {
                 super.onFinishRefresh();
-                onRefreshLoadListener.onFinishRefresh();
             }
 
             @Override
             public void onFinishLoadMore() {
                 super.onFinishLoadMore();
-                onRefreshLoadListener.onFinishLoadmore();
             }
         });
     }

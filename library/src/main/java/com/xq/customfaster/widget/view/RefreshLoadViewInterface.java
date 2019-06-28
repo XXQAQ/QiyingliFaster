@@ -2,6 +2,10 @@ package com.xq.customfaster.widget.view;
 
 public interface RefreshLoadViewInterface {
 
+    public boolean isFirstRefresh();
+
+    public void setIsFirstRefresh(boolean isFirstRefresh);
+
     //设置是否纯净越界模式
     public void setPureScrollModeOn(boolean isPureScrollMode);
 
@@ -49,13 +53,9 @@ public interface RefreshLoadViewInterface {
 
     public static interface OnRefreshLoadListener {
 
-        public void onFinishRefresh();
-
         public void onRefresh();
 
         public void onCancelRefresh();
-
-        public void onFinishLoadmore();
 
         public void onLoadmore();
 

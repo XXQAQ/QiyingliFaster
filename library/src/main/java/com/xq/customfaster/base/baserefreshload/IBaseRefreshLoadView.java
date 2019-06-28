@@ -98,7 +98,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void startRefresh(){
-            if (refreshLoadView != null)
+            if (refreshLoadView != null && !refreshLoadView.isFirstRefresh())
                 refreshLoadView.startRefresh();
             else
                 onRefresh();
@@ -144,7 +144,11 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void afterRefresh() {
-            if (refreshLoadView != null) refreshLoadView.finishRefresh();
+            if (refreshLoadView != null)
+            {
+                refreshLoadView.finishRefresh();
+                refreshLoadView.setIsFirstRefresh(false);
+            }
         }
 
         @Override
@@ -164,11 +168,6 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         //以下为刷新加载控件的监听器
         @Override
-        public void onFinishRefresh() {
-
-        }
-
-        @Override
         public void onRefresh() {
             getBindPresenter().refresh();
         }
@@ -176,11 +175,6 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         @Override
         public void onCancelRefresh() {
             getBindPresenter().cancelRefresh();
-        }
-
-        @Override
-        public void onFinishLoadmore() {
-
         }
 
         @Override
