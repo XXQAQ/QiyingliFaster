@@ -80,31 +80,6 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
     }
 
     @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void setEmptyView(Object o) {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void setErroView(Object o) {
-
-    }
-
-    @Override
-    public void showErro() {
-
-    }
-
-    @Override
     public void setEnableRefresh(boolean enableRefresh1) {
         super.setEnableRefresh(enableRefresh1);
     }
@@ -121,13 +96,11 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
             @Override
             public void onRefreshCanceled() {
                 super.onRefreshCanceled();
-                onRefreshLoadListener.onCancelRefresh();
             }
 
             @Override
             public void onLoadmoreCanceled() {
                 super.onLoadmoreCanceled();
-                onRefreshLoadListener.onCancelLoadmore();
             }
 
             @Override
@@ -153,4 +126,40 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
             }
         });
     }
+
+    @Override
+    public void setLoadingView(Object object) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void setEmptyView(Object o) {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void setErroView(Object o) {
+
+    }
+
+    @Override
+    public void showErro() {
+
+    }
+
 }

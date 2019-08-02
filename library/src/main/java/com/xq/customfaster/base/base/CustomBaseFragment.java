@@ -23,7 +23,7 @@ public abstract class CustomBaseFragment<T extends ICustomBaseView> extends Fast
 
     @Deprecated
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void isMyComponentEvent(ComponentEvent event){
+    public void checkComponentEvent(ComponentEvent event){
         if (!event.getDestCommunicator().getComponentName().equalsIgnoreCase(getClass().getName()))
             return;
         else

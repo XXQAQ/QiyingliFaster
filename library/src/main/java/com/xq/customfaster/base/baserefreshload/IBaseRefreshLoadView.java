@@ -91,6 +91,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             if (refreshLoadView != null)
             {
                 refreshLoadView.setOnRefreshLoadListener(this);
+                if (getLoadingView() != null) refreshLoadView.setLoadingView(getLoadingView());
                 if (getEmptyView() != null) refreshLoadView.setEmptyView(getEmptyView());
                 if (getErroView() != null) refreshLoadView.setErroView(getErroView());
             }
@@ -98,8 +99,16 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void startRefresh(){
-            if (refreshLoadView != null && !refreshLoadView.isFirstRefresh())
-                refreshLoadView.startRefresh();
+            if (refreshLoadView != null)
+                if (!refreshLoadView.isFirstRefresh())
+                {
+                    refreshLoadView.startRefresh();
+                }
+                else
+                {
+                    refreshLoadView.showLoading();
+                    onRefresh();
+                }
             else
                 onRefresh();
         }
@@ -166,25 +175,8 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
             return getBindPresenter().isWorking();
         }
 
-        //以下为刷新加载控件的监听器
-        @Override
-        public void onRefresh() {
-            getBindPresenter().refresh();
-        }
-
-        @Override
-        public void onCancelRefresh() {
-            getBindPresenter().cancelRefresh();
-        }
-
-        @Override
-        public void onLoadmore() {
-            getBindPresenter().loadmore();
-        }
-
-        @Override
-        public void onCancelLoadmore() {
-            getBindPresenter().cancelLoadmore();
+        public Object getLoadingView(){
+            return null;
         }
 
         //获取空布局
@@ -195,6 +187,17 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         //获取错误布局
         protected Object getErroView() {
             return null;
+        }
+
+        //以下为刷新加载的监听器
+        @Override
+        public void onRefresh() {
+            getBindPresenter().refresh();
+        }
+
+        @Override
+        public void onLoadmore() {
+            getBindPresenter().loadmore();
         }
 
     }

@@ -57,8 +57,8 @@ dependencies {
     implementation 'com.github.XXQAQ:CustomView:1.+'
 
     //    以下为工具库
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.github.guoxiaoxing:phoenix:1.0.15'

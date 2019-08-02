@@ -8,13 +8,13 @@ public interface IAbsRefreshLoadListPresenter<T extends IAbsRefreshLoadListView>
     //获取数据列表
     public List getDataList();
 
-    //单Item刷新(ItemBean在List中已存在)
+    //单Item刷新
     public void refreshItem(Object object);
 
     //单Item刷新
     public void refreshItem(int position);
 
-    //单Item移除(ItemBean在List中已存在)
+    //单Item移除
     public void removeItem(Object object);
 
     //单Item移除

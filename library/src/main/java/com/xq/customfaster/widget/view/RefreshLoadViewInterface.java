@@ -27,6 +27,21 @@ public interface RefreshLoadViewInterface {
     //结束加载
     public void finishLoadmore();
 
+    //设置可否刷新
+    public void setEnableRefresh(boolean enable);
+
+    //设置可否加载
+    public void setEnableLoadmore(boolean enable);
+
+    //设置状态监听
+    public void setOnRefreshLoadListener(OnRefreshLoadListener listener);
+
+    //设置加载布局
+    public void setLoadingView(Object object);
+
+    //显示加载中页面
+    public void showLoading();
+
     //显示内容布局
     public void showContent();
 
@@ -42,24 +57,11 @@ public interface RefreshLoadViewInterface {
     //显示错误布局
     public void showErro();
 
-    //设置可否刷新
-    public void setEnableRefresh(boolean enable);
-
-    //设置可否加载
-    public void setEnableLoadmore(boolean enable);
-
-    //设置状态监听
-    public void setOnRefreshLoadListener(OnRefreshLoadListener listener);
-
     public static interface OnRefreshLoadListener {
 
         public void onRefresh();
 
-        public void onCancelRefresh();
-
         public void onLoadmore();
-
-        public void onCancelLoadmore();
 
     }
 

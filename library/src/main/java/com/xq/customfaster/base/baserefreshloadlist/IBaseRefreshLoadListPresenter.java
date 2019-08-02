@@ -110,8 +110,8 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        protected void refreshData(Object object) {
-            super.refreshData(object);
+        protected void resolveRefreshData(Object object) {
+            super.resolveRefreshData(object);
 
             if (object == null) return;
 
@@ -122,8 +122,8 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         }
 
         @Override
-        protected void loadmoreData(Object object) {
-            super.loadmoreData(object);
+        protected void resolveLoadmoreData(Object object) {
+            super.resolveLoadmoreData(object);
 
             if (object == null) return;
 

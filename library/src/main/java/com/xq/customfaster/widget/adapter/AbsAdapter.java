@@ -47,7 +47,11 @@ public abstract class AbsAdapter extends DelegateAdapter.Adapter  {
             if (layoutParams == null) layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             view.setLayoutParams(layoutParams);
         }
+
         holder = new BaseViewHolder(view,viewType);
+
+        initView((BaseViewHolder) holder,viewType);
+
         return holder;
     }
 
@@ -93,16 +97,20 @@ public abstract class AbsAdapter extends DelegateAdapter.Adapter  {
         return parent;
     }
 
+    protected int getViewType(int position) {
+        return 0;
+    }
+
+    protected void initView(BaseViewHolder holder, int viewType) {
+
+    }
+
     protected SpecialViewHolder createSpecialViewHolder(int viewType) {
         return null;
     }
 
     protected View createView(int viewType) {
         return null;
-    }
-
-    protected int getViewType(int position) {
-        return 0;
     }
 
     public abstract int getCount();

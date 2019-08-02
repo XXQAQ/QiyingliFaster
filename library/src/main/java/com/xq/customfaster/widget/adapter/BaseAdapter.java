@@ -20,11 +20,6 @@ public abstract class BaseAdapter extends AbsAdapter {
     private String listRole;
     private List list;
 
-    //一般情况下不建议调用无参构造方法
-    @Deprecated
-    public BaseAdapter() {
-    }
-
     public BaseAdapter(Pointer<ListBehavior> pointer) {
         this.pointer = pointer;
     }
