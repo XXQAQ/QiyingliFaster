@@ -7,6 +7,8 @@ import com.xq.androidfaster.util.tools.ObjectUtils;
 
 public interface IBaseRefreshLoadPresenter extends IBaseRefreshLoadBehavior {
 
+    public RefreshLoadDelegate getRefreshLoadDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
@@ -114,8 +116,6 @@ public interface IBaseRefreshLoadPresenter extends IBaseRefreshLoadBehavior {
     default void afterLoadmore() {
         getRefreshLoadDelegate().afterLoadmore();
     }
-
-    public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate extends BaseDelegate implements IBaseRefreshLoadBehavior {
 

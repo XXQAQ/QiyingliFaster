@@ -14,6 +14,8 @@ import java.util.Map;
 
 public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRefreshLoadListBehavior {
 
+    public RefreshLoadDelegate getRefreshLoadDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // V
     ///////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,11 @@ public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRef
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
+    @Override
+    default Pointer<ListBehavior> getPointer() {
+        return getRefreshLoadDelegate().getPointer();
+    }
+
     @Deprecated
     @Override
     default List getDataList() {
@@ -72,8 +79,6 @@ public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRef
     default void insertItem(int position, Object object) {
         getRefreshLoadDelegate().insertItem(position,object);
     }
-
-    public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public abstract class RefreshLoadDelegate extends IBaseRefreshLoadView.RefreshLoadDelegate implements IBaseRefreshLoadListBehavior {
 
@@ -165,6 +170,11 @@ public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRef
         ///////////////////////////////////////////////////////////////////////////
         // P
         ///////////////////////////////////////////////////////////////////////////
+        @Override
+        public Pointer<ListBehavior> getPointer() {
+            return ((IBaseRefreshLoadListBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).getPointer();
+        }
+
         @Deprecated
         @Override
         public List getDataList() {

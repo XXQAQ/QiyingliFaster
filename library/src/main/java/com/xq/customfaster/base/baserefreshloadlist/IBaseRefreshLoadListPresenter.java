@@ -11,9 +11,16 @@ import java.util.List;
 
 public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter, IBaseRefreshLoadListBehavior{
 
+    public RefreshLoadDelegate getRefreshLoadDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
+    @Override
+    default Pointer<ListBehavior> getPointer() {
+        return getRefreshLoadDelegate().getPointer();
+    }
+
     @Override
     default List getDataList() {
         return getRefreshLoadDelegate().getDataList();
@@ -67,11 +74,9 @@ public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter
         getRefreshLoadDelegate().refreshAdapter();
     }
 
-    public RefreshLoadDelegate getRefreshLoadDelegate();
-
     public abstract class RefreshLoadDelegate extends IBaseRefreshLoadPresenter.RefreshLoadDelegate implements IBaseRefreshLoadListBehavior {
 
-        protected Pointer<ListBehavior> pointer = new Pointer<>();
+        private Pointer<ListBehavior> pointer = new Pointer<>();
 
         public RefreshLoadDelegate(Controler controler) {
             super(controler);
@@ -82,6 +87,17 @@ public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter
             super.create(savedInstanceState);
 
             initAdapter();
+        }
+
+        @Override
+        public Pointer<ListBehavior> getPointer() {
+            return pointer;
+        }
+
+        @Override
+        public List getDataList() {
+            if (pointer == null || pointer.get() == null) return null;
+            return pointer.get().getList();
         }
 
         @Override
@@ -123,6 +139,10 @@ public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter
         public void insertItem(int position, Object object) {
             getDataList().add(position,object);
             refreshAdapter();
+        }
+
+        public void addDatas(List list) {
+            getDataList().addAll(list);
         }
 
         @Override
@@ -170,16 +190,6 @@ public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter
             }
             else
                 return super.isEmptyData(object);
-        }
-
-        @Override
-        public List getDataList() {
-            if (pointer == null || pointer.get() == null) return null;
-            return pointer.get().getList();
-        }
-
-        public void addDatas(List list) {
-            getDataList().addAll(list);
         }
 
         //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数

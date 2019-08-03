@@ -10,6 +10,8 @@ import com.xq.customfaster.widget.view.RefreshLoadViewInterface;
 
 public interface IBaseRefreshLoadView extends IBaseRefreshLoadBehavior {
 
+    public RefreshLoadDelegate getRefreshLoadDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // V
     ///////////////////////////////////////////////////////////////////////////
@@ -115,8 +117,6 @@ public interface IBaseRefreshLoadView extends IBaseRefreshLoadBehavior {
     default void refreshLoadData(Object object, boolean isSuccess) {
         getRefreshLoadDelegate().refreshLoadData(object,isSuccess);
     }
-
-    public RefreshLoadDelegate getRefreshLoadDelegate();
 
     public class RefreshLoadDelegate extends BaseDelegate implements IBaseRefreshLoadBehavior, RefreshLoadViewInterface.OnRefreshLoadListener {
 

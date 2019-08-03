@@ -8,21 +8,11 @@ import java.util.List;
 public interface IBaseRefreshLoadListBehavior extends IBaseRefreshLoadBehavior {
 
     ///////////////////////////////////////////////////////////////////////////
-    // V
-    ///////////////////////////////////////////////////////////////////////////
-    //获取role列表
-    public List<String> getRoleList();
-
-    //初始化适配器，主要写给P层调用
-    public void initAdapter(Pointer<ListBehavior> pointer, Object... objects);
-
-    //刷新适配器
-    public void refreshAdapter();
-
-
-    ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
+    //获取数据
+    public Pointer<ListBehavior> getPointer();
+
     //获取数据列表
     public List getDataList();
 
@@ -40,5 +30,19 @@ public interface IBaseRefreshLoadListBehavior extends IBaseRefreshLoadBehavior {
 
     //单Item新增
     public void insertItem(int position, Object object);
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
+    //获取role列表
+    public List<String> getRoleList();
+
+    //初始化适配器，主要写给P层调用
+    public void initAdapter(Pointer<ListBehavior> pointer, Object... objects);
+
+    //刷新适配器
+    public void refreshAdapter();
 
 }

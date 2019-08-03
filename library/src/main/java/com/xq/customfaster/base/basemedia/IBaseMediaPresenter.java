@@ -24,6 +24,8 @@ import static android.app.Activity.RESULT_OK;
 
 public interface IBaseMediaPresenter extends IBaseMediaBehavior{
 
+    public MediaDelegate getMediaDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
@@ -67,7 +69,11 @@ public interface IBaseMediaPresenter extends IBaseMediaBehavior{
         getMediaDelegate().getFile(flag,max);
     }
 
-    public MediaDelegate getMediaDelegate();
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
 
     public abstract class MediaDelegate extends BaseDelegate implements IBaseMediaBehavior{
 

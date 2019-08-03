@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface IBasePagerPresenter extends IBasePagerBehavior{
 
+    public PagerDelegate getPagerDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
@@ -33,8 +35,6 @@ public interface IBasePagerPresenter extends IBasePagerBehavior{
     default void refreshPager(){
         getPagerDelegate().refreshPager();
     }
-
-    public PagerDelegate getPagerDelegate();
 
     public abstract class PagerDelegate extends BaseDelegate implements IBasePagerBehavior {
 

@@ -15,6 +15,8 @@ import java.util.List;
 
 public interface IBasePagerView extends IBasePagerBehavior {
 
+    public PagerDelegate getPagerDelegate();
+
     ///////////////////////////////////////////////////////////////////////////
     // V
     ///////////////////////////////////////////////////////////////////////////
@@ -38,8 +40,6 @@ public interface IBasePagerView extends IBasePagerBehavior {
     default List<FragmentBehavior> getFragmentBehaviorList() {
         return getPagerDelegate().getFragmentBehaviorList();
     }
-
-    public PagerDelegate getPagerDelegate();
 
     public class PagerDelegate extends BaseDelegate implements IBasePagerBehavior {
 
