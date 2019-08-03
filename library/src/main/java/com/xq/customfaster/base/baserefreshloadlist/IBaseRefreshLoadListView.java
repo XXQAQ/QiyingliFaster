@@ -39,6 +39,7 @@ public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRef
     ///////////////////////////////////////////////////////////////////////////
     // P
     ///////////////////////////////////////////////////////////////////////////
+    @Deprecated
     @Override
     default Pointer<ListBehavior> getPointer() {
         return getRefreshLoadDelegate().getPointer();
@@ -170,6 +171,7 @@ public interface IBaseRefreshLoadListView extends IBaseRefreshLoadView, IBaseRef
         ///////////////////////////////////////////////////////////////////////////
         // P
         ///////////////////////////////////////////////////////////////////////////
+        @Deprecated
         @Override
         public Pointer<ListBehavior> getPointer() {
             return ((IBaseRefreshLoadListBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).getPointer();
