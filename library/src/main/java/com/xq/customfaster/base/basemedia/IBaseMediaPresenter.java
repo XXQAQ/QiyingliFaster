@@ -7,9 +7,8 @@ import com.guoxiaoxing.phoenix.core.PhoenixOption;
 import com.guoxiaoxing.phoenix.core.model.MediaEntity;
 import com.guoxiaoxing.phoenix.core.model.MimeType;
 import com.guoxiaoxing.phoenix.picker.Phoenix;
-import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
-import com.xq.androidfaster.base.abs.IAbsPresenter;
-import com.xq.androidfaster.base.abs.IAbsView;
+import com.xq.androidfaster.base.core.Controler;
+import com.xq.androidfaster.base.delegate.BaseDelegate;
 import com.xq.androidfaster.util.constant.PermissionConstants;
 import com.xq.androidfaster.util.tools.PermissionUtils;
 import com.xq.androidfaster.util.tools.ResourceUtils;
@@ -23,8 +22,11 @@ import java.util.LinkedList;
 import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
-public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresenter<T> {
+public interface IBaseMediaPresenter extends IBaseMediaBehavior{
 
+    ///////////////////////////////////////////////////////////////////////////
+    // P
+    ///////////////////////////////////////////////////////////////////////////
     @Override
     default void getMedia(int flag){
         getMediaDelegate().getMedia(flag);
@@ -67,16 +69,16 @@ public interface IBaseMediaPresenter<T extends IAbsView> extends IAbsMediaPresen
 
     public MediaDelegate getMediaDelegate();
 
-    public abstract class MediaDelegate<T extends IAbsView> extends AbsPresenterDelegate<T> implements IAbsMediaPresenter<T> {
+    public abstract class MediaDelegate extends BaseDelegate implements IBaseMediaBehavior{
 
         public static final int REQUEST_CODE_MEDIA = 1;
         public static final int REQUEST_CODE_CAMERA= 2;
         public static final int REQUEST_CODE_FILE= 3;
 
-        protected int flag;
+        private int flag;
 
-        public MediaDelegate(IAbsPresenter presenter) {
-            super(presenter);
+        public MediaDelegate(Controler controler) {
+            super(controler);
         }
 
         @Override

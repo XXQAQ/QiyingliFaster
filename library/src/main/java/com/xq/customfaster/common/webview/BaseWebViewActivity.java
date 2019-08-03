@@ -33,7 +33,7 @@ public class BaseWebViewActivity extends CustomBaseActivity<IBaseWebViewView> im
     }
 
     @Override
-    protected void resolveBundle(Bundle bundle) {
+    public void resolveBundle(Bundle bundle) {
         //获取url
         url = bundle.getString(KEY_URL);
         data = bundle.getString(KEY_DATA);

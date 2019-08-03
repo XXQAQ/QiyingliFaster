@@ -1,21 +1,15 @@
 package com.xq.customfaster.base.baserefreshload;
 
-import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
-import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.base.base.IFasterBaseBehavior;
+import com.xq.androidfaster.base.core.Controler;
+import com.xq.androidfaster.base.delegate.BaseDelegate;
 import com.xq.androidfaster.util.tools.ObjectUtils;
 
-public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> extends IAbsRefreshLoadPresenter<T> {
+public interface IBaseRefreshLoadPresenter extends IBaseRefreshLoadBehavior {
 
-    @Override
-    default void startRefresh(){
-        getRefreshLoadDelegate().startRefresh();
-    }
-
-    @Override
-    default void startLoadmore(){
-        getRefreshLoadDelegate().startLoadmore();
-    }
-
+    ///////////////////////////////////////////////////////////////////////////
+    // P
+    ///////////////////////////////////////////////////////////////////////////
     @Override
     default void refresh(Object... objects) {
         getRefreshLoadDelegate().refresh(objects);
@@ -56,26 +50,81 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         return getRefreshLoadDelegate().isWorking();
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
+    @Deprecated
+    @Override
+    default void startRefresh(){
+        getRefreshLoadDelegate().startRefresh();
+    }
+
+    @Deprecated
+    @Override
+    default void startLoadmore(){
+        getRefreshLoadDelegate().startLoadmore();
+    }
+
+    @Deprecated
+    @Override
+    default void refreshView(Object object) {
+        getRefreshLoadDelegate().refreshView(object);
+    }
+
+    @Deprecated
+    @Override
+    default void loadmoreView(Object object) {
+        getRefreshLoadDelegate().loadmoreView(object);
+    }
+
+    @Deprecated
+    @Override
+    default void refreshEmpty() {
+        getRefreshLoadDelegate().refreshEmpty();
+    }
+
+    @Deprecated
+    @Override
+    default void loadmoreEmpty(){
+        getRefreshLoadDelegate().loadmoreEmpty();
+    }
+
+    @Deprecated
+    @Override
+    default void refreshErro() {
+        getRefreshLoadDelegate().refreshErro();
+    }
+
+    @Deprecated
+    @Override
+    default void loadmoreErro() {
+        getRefreshLoadDelegate().loadmoreErro();
+    }
+
+    @Deprecated
+    @Override
+    default void afterRefresh() {
+        getRefreshLoadDelegate().afterRefresh();
+    }
+
+    @Deprecated
+    @Override
+    default void afterLoadmore() {
+        getRefreshLoadDelegate().afterLoadmore();
+    }
+
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadView> extends AbsPresenterDelegate<T> implements IAbsRefreshLoadPresenter<T> {
+    public abstract class RefreshLoadDelegate extends BaseDelegate implements IBaseRefreshLoadBehavior {
 
         private int page = getFirstPage();
         private boolean isRefresh = true;
         private boolean isWorking = false;
 
-        public RefreshLoadDelegate(IAbsPresenter presenter) {
-            super(presenter);
-        }
-
-        @Override
-        public void startRefresh(){
-            getBindView().startRefresh();
-        }
-
-        @Override
-        public void startLoadmore(){
-            getBindView().startLoadmore();
+        public RefreshLoadDelegate(Controler controler) {
+            super(controler);
         }
 
         @Override
@@ -103,7 +152,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
             isWorking = false;
 
-            getBindView().afterRefresh();
+            afterRefresh();
         }
 
         @Override
@@ -111,7 +160,7 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
 
             isWorking = false;
 
-            getBindView().afterLoadmore();
+            afterLoadmore();
         }
 
         @Override
@@ -129,9 +178,9 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
                 if (isEmptyData(object))
                 {
                     if (isRefresh())
-                        getBindView().refreshEmpty();
+                        refreshEmpty();
                     else
-                        getBindView().loadmoreEmpty();
+                        loadmoreEmpty();
                 }
                 else
                 {
@@ -139,28 +188,28 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
                     {
                         page = getFirstPage();
                         resolveRefreshData(object);
-                        getBindView().refreshView(object);
+                        refreshView(object);
                     }
                     else
                     {
                         page++;
                         resolveLoadmoreData(object);
-                        getBindView().loadmoreView(object);
+                        loadmoreView(object);
                     }
                 }
             }
             else
             {
                 if (isRefresh())
-                    getBindView().refreshErro();
+                    refreshErro();
                 else
-                    getBindView().loadmoreErro();
+                    loadmoreErro();
             }
 
             if (isRefresh())
-                getBindView().afterRefresh();
+                afterRefresh();
             else
-                getBindView().afterLoadmore();
+                afterLoadmore();
         }
 
         @Override
@@ -196,5 +245,69 @@ public interface IBaseRefreshLoadPresenter<T extends IBaseRefreshLoadView> exten
         //屏蔽了刷新和加载的差异，提供给程序员以实现刷新或加载的方法
         protected abstract void refreshLoad(int page, Object... objects);
 
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        // V
+        ///////////////////////////////////////////////////////////////////////////
+        @Deprecated
+        @Override
+        public void startRefresh() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).startRefresh();
+        }
+
+        @Deprecated
+        @Override
+        public void startLoadmore() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).startLoadmore();
+        }
+
+        @Deprecated
+        @Override
+        public void refreshView(Object object) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshView(object);
+        }
+
+        @Deprecated
+        @Override
+        public void loadmoreView(Object object) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).loadmoreView(object);
+        }
+
+        @Deprecated
+        @Override
+        public void refreshEmpty() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshEmpty();
+        }
+
+        @Deprecated
+        @Override
+        public void loadmoreEmpty() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).loadmoreEmpty();
+        }
+
+        @Deprecated
+        @Override
+        public void refreshErro() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshErro();
+        }
+
+        @Deprecated
+        @Override
+        public void loadmoreErro() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).loadmoreErro();
+        }
+
+        @Deprecated
+        @Override
+        public void afterRefresh() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).afterRefresh();
+        }
+
+        @Deprecated
+        @Override
+        public void afterLoadmore() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).afterLoadmore();
+        }
     }
 }

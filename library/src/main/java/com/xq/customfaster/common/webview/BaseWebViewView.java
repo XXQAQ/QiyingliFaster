@@ -258,7 +258,7 @@ public class BaseWebViewView extends CustomBaseView<IBaseWebViewPresenter> imple
                 }
             });
         }
-        getRefreshLoadDelegate().refreshLoadView.setEnableLoadmore(false);
+        getRefreshLoadView().setEnableLoadmore(false);
     }
 
     protected void afterOnPageStarted(){

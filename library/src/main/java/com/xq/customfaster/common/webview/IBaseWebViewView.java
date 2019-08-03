@@ -1,10 +1,10 @@
 package com.xq.customfaster.common.webview;
 
-import com.xq.customfaster.base.base.ICustomBaseView;
+import com.xq.customfaster.base.base.ICustomBaseBehavior;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadView;
 import java.util.Map;
 
-public interface IBaseWebViewView extends ICustomBaseView<IBaseWebViewPresenter>, IBaseRefreshLoadView<IBaseWebViewPresenter> {
+public interface IBaseWebViewView extends ICustomBaseBehavior<IBaseWebViewPresenter>, IBaseRefreshLoadView{
 
     public void loadUrl(String url);
 

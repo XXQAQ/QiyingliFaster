@@ -1,26 +1,47 @@
 package com.xq.customfaster.base.basepager;
 
 import android.os.Bundle;
-import com.xq.androidfaster.base.abs.AbsPresenterDelegate;
-import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.base.base.IFasterBaseBehavior;
+import com.xq.androidfaster.base.core.Controler;
+import com.xq.androidfaster.base.delegate.BaseDelegate;
 import com.xq.worldbean.bean.behavior.FragmentBehavior;
 import java.util.List;
 
-public interface IBasePagerPresenter<T extends IBasePagerView> extends IAbsPagerPresenter<T> {
+public interface IBasePagerPresenter extends IBasePagerBehavior{
 
+    ///////////////////////////////////////////////////////////////////////////
+    // P
+    ///////////////////////////////////////////////////////////////////////////
     @Override
     default List<FragmentBehavior> getFragmentBehaviorList() {
         return getPagerDelegate().getFragmentBehaviorList();
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
+    @Deprecated
+    @Override
+    default void initPager(List list) {
+        getPagerDelegate().initPager(list);
+    }
+
+    @Deprecated
+    @Override
+    default void refreshPager(){
+        getPagerDelegate().refreshPager();
+    }
+
     public PagerDelegate getPagerDelegate();
 
-    public abstract class PagerDelegate<T extends IBasePagerView> extends AbsPresenterDelegate<T> implements IAbsPagerPresenter<T> {
+    public abstract class PagerDelegate extends BaseDelegate implements IBasePagerBehavior {
 
         protected List<FragmentBehavior> list_fragmentBehavior;
 
-        public PagerDelegate(IAbsPresenter presenter) {
-            super(presenter);
+        public PagerDelegate(Controler controler) {
+            super(controler);
         }
 
         @Override
@@ -28,7 +49,7 @@ public interface IBasePagerPresenter<T extends IBasePagerView> extends IAbsPager
             super.create(savedInstanceState);
 
             list_fragmentBehavior = createFragmentBehaviorList();
-            getBindView().initPager(getFragmentBehaviorList());
+            initPager(getFragmentBehaviorList());
         }
 
         @Override
@@ -36,8 +57,24 @@ public interface IBasePagerPresenter<T extends IBasePagerView> extends IAbsPager
             return list_fragmentBehavior;
         }
 
-        protected abstract List<FragmentBehavior> createFragmentBehaviorList();
+        protected abstract List createFragmentBehaviorList();
 
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        // V
+        ///////////////////////////////////////////////////////////////////////////
+        @Deprecated
+        @Override
+        public void refreshPager() {
+            ((IBasePagerView)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshPager();
+        }
+
+        @Deprecated
+        @Override
+        public void initPager(List list) {
+            ((IBasePagerView)((IFasterBaseBehavior)getControler()).getBindAnother()).initPager(list);
+        }
     }
 
 }

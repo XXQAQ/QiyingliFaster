@@ -1,16 +1,18 @@
 package com.xq.customfaster.base.baserefreshload;
 
 import android.os.Bundle;
-import android.view.View;
-import com.lcodecore.tkrefreshlayout.footer.LoadingView;
-import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
-import com.xq.androidfaster.base.abs.AbsViewDelegate;
-import com.xq.androidfaster.base.abs.IAbsView;
+import com.xq.androidfaster.base.base.IFasterBaseBehavior;
+import com.xq.androidfaster.base.core.Controler;
+import com.xq.androidfaster.base.delegate.BaseDelegate;
 import com.xq.androidfaster.util.tools.ToastUtils;
+import com.xq.customfaster.base.base.ICustomBaseBehavior;
 import com.xq.customfaster.widget.view.RefreshLoadViewInterface;
 
-public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> extends IAbsRefreshLoadView<T> {
+public interface IBaseRefreshLoadView extends IBaseRefreshLoadBehavior {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
     @Override
     default void startRefresh(){
         getRefreshLoadDelegate().startRefresh();
@@ -61,52 +63,92 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         getRefreshLoadDelegate().afterLoadmore();
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // P
+    ///////////////////////////////////////////////////////////////////////////
+    @Deprecated
     @Override
     default boolean isRefresh() {
         return getRefreshLoadDelegate().isRefresh();
     }
 
+    @Deprecated
     @Override
     default boolean isWorking() {
         return getRefreshLoadDelegate().isWorking();
     }
 
+    @Deprecated
+    @Override
+    default void refresh(Object... objects) {
+        getRefreshLoadDelegate().refresh(objects);
+    }
+
+    @Deprecated
+    @Override
+    default void loadmore(Object... objects) {
+        getRefreshLoadDelegate().loadmore(objects);
+    }
+
+    @Deprecated
+    @Override
+    default void cancelRefresh() {
+        getRefreshLoadDelegate().cancelRefresh();
+    }
+
+    @Deprecated
+    @Override
+    default void cancelLoadmore() {
+        getRefreshLoadDelegate().cancelLoadmore();
+    }
+
+    @Deprecated
+    @Override
+    default void refreshLoadData(Object object) {
+        getRefreshLoadDelegate().refreshLoadData(object);
+    }
+
+    @Deprecated
+    @Override
+    default void refreshLoadData(Object object, boolean isSuccess) {
+        getRefreshLoadDelegate().refreshLoadData(object,isSuccess);
+    }
+
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadPresenter> extends AbsViewDelegate<T> implements IAbsRefreshLoadView<T>, RefreshLoadViewInterface.OnRefreshLoadListener {
+    public class RefreshLoadDelegate extends BaseDelegate implements IBaseRefreshLoadBehavior, RefreshLoadViewInterface.OnRefreshLoadListener {
 
-        public RefreshLoadViewInterface refreshLoadView;
-
-        public RefreshLoadDelegate(IAbsView view) {
-            super(view);
+        public RefreshLoadDelegate(Controler controler) {
+            super(controler);
         }
 
         @Override
         public void create(Bundle savedInstanceState) {
             super.create(savedInstanceState);
 
-            refreshLoadView = (RefreshLoadViewInterface) findViewById(getContext().getResources().getIdentifier("refreshLoadView", "id", getContext().getPackageName()));
-
             //以下初始化刷新控件
-            if (refreshLoadView != null)
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null)
             {
-                refreshLoadView.setOnRefreshLoadListener(this);
-                if (getLoadingView() != null) refreshLoadView.setLoadingView(getLoadingView());
-                if (getEmptyView() != null) refreshLoadView.setEmptyView(getEmptyView());
-                if (getErroView() != null) refreshLoadView.setErroView(getErroView());
+                ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setPureScrollModeOn(false);
+                ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setOnRefreshLoadListener(this);
+                if (getLoadingView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setLoadingView(getLoadingView());
+                if (getEmptyView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setEmptyView(getEmptyView());
+                if (getErroView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setErroView(getErroView());
             }
         }
 
         @Override
         public void startRefresh(){
-            if (refreshLoadView != null)
-                if (!refreshLoadView.isFirstRefresh())
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null)
+                if (!((ICustomBaseBehavior)getControler()).getRefreshLoadView().isFirstRefresh())
                 {
-                    refreshLoadView.startRefresh();
+                    ((ICustomBaseBehavior)getControler()).getRefreshLoadView().startRefresh();
                 }
                 else
                 {
-                    refreshLoadView.showLoading();
+                    ((ICustomBaseBehavior)getControler()).getRefreshLoadView().showLoading();
                     onRefresh();
                 }
             else
@@ -115,15 +157,15 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void startLoadmore(){
-            if (refreshLoadView != null)
-                refreshLoadView.startLoadmore();
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null)
+                ((ICustomBaseBehavior)getControler()).getRefreshLoadView().startLoadmore();
             else
                 onLoadmore();
         }
 
         @Override
         public void refreshView(Object object){
-            if (refreshLoadView != null) refreshLoadView.showContent();
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().showContent();
         }
 
         @Override
@@ -133,7 +175,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void refreshEmpty() {
-            if (refreshLoadView != null) refreshLoadView.showEmpty();
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().showEmpty();
         }
 
         @Override
@@ -143,7 +185,7 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void refreshErro() {
-            if (refreshLoadView != null) refreshLoadView.showErro();
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().showErro();
         }
 
         @Override
@@ -153,26 +195,16 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
 
         @Override
         public void afterRefresh() {
-            if (refreshLoadView != null)
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null)
             {
-                refreshLoadView.finishRefresh();
-                refreshLoadView.setIsFirstRefresh(false);
+                ((ICustomBaseBehavior)getControler()).getRefreshLoadView().finishRefresh();
+                ((ICustomBaseBehavior)getControler()).getRefreshLoadView().setIsFirstRefresh(false);
             }
         }
 
         @Override
         public void afterLoadmore() {
-            if (refreshLoadView != null) refreshLoadView.finishLoadmore();
-        }
-
-        @Override
-        public boolean isRefresh() {
-            return getBindPresenter().isRefresh();
-        }
-
-        @Override
-        public boolean isWorking() {
-            return getBindPresenter().isWorking();
+            if (((ICustomBaseBehavior)getControler()).getRefreshLoadView() != null) ((ICustomBaseBehavior)getControler()).getRefreshLoadView().finishLoadmore();
         }
 
         public Object getLoadingView(){
@@ -192,12 +224,65 @@ public interface IBaseRefreshLoadView<T extends IBaseRefreshLoadPresenter> exten
         //以下为刷新加载的监听器
         @Override
         public void onRefresh() {
-            getBindPresenter().refresh();
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refresh();
         }
 
         @Override
         public void onLoadmore() {
-            getBindPresenter().loadmore();
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).loadmore();
+        }
+
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        // P
+        ///////////////////////////////////////////////////////////////////////////
+        @Deprecated
+        @Override
+        public boolean isRefresh() {
+            return ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).isRefresh();
+        }
+
+        @Deprecated
+        @Override
+        public boolean isWorking() {
+            return ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).isWorking();
+        }
+
+        @Deprecated
+        @Override
+        public void refresh(Object... objects) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refresh(objects);
+        }
+
+        @Deprecated
+        @Override
+        public void loadmore(Object... objects) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).loadmore(objects);
+        }
+
+        @Deprecated
+        @Override
+        public void cancelRefresh() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).cancelRefresh();
+        }
+
+        @Deprecated
+        @Override
+        public void cancelLoadmore() {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).cancelLoadmore();
+        }
+
+        @Deprecated
+        @Override
+        public void refreshLoadData(Object object) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshLoadData(object);
+        }
+
+        @Deprecated
+        @Override
+        public void refreshLoadData(Object object, boolean isSuccess) {
+            ((IBaseRefreshLoadBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshLoadData(object,isSuccess);
         }
 
     }

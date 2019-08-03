@@ -1,15 +1,19 @@
 package com.xq.customfaster.base.baserefreshloadlist;
 
 import android.os.Bundle;
-import com.xq.androidfaster.base.abs.IAbsPresenter;
+import com.xq.androidfaster.base.base.IFasterBaseBehavior;
+import com.xq.androidfaster.base.core.Controler;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadPresenter;
 import com.xq.worldbean.bean.behavior.IdBehavior;
 import com.xq.worldbean.bean.behavior.ListBehavior;
 import com.xq.worldbean.util.Pointer;
 import java.util.List;
 
-public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListView> extends IAbsRefreshLoadListPresenter<T>, IBaseRefreshLoadPresenter<T> {
+public interface IBaseRefreshLoadListPresenter extends IBaseRefreshLoadPresenter, IBaseRefreshLoadListBehavior{
 
+    ///////////////////////////////////////////////////////////////////////////
+    // P
+    ///////////////////////////////////////////////////////////////////////////
     @Override
     default List getDataList() {
         return getRefreshLoadDelegate().getDataList();
@@ -40,20 +44,37 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         getRefreshLoadDelegate().insertItem(position,object);
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // V
+    ///////////////////////////////////////////////////////////////////////////
+    @Deprecated
     @Override
     default List<String> getRoleList() {
         return getRefreshLoadDelegate().getRoleList();
     }
 
+    @Deprecated
     @Override
+    default void initAdapter(Pointer<ListBehavior> pointer, Object... objects) {
+        getRefreshLoadDelegate().initAdapter(pointer,objects);
+    }
+
+    @Deprecated
+    @Override
+    default void refreshAdapter() {
+        getRefreshLoadDelegate().refreshAdapter();
+    }
+
     public RefreshLoadDelegate getRefreshLoadDelegate();
 
-    public abstract class RefreshLoadDelegate<T extends IBaseRefreshLoadListView> extends IBaseRefreshLoadPresenter.RefreshLoadDelegate<T> implements IAbsRefreshLoadListPresenter<T> {
+    public abstract class RefreshLoadDelegate extends IBaseRefreshLoadPresenter.RefreshLoadDelegate implements IBaseRefreshLoadListBehavior {
 
-        private Pointer<ListBehavior> pointer = new Pointer<>();
+        protected Pointer<ListBehavior> pointer = new Pointer<>();
 
-        public RefreshLoadDelegate(IAbsPresenter presenter) {
-            super(presenter);
+        public RefreshLoadDelegate(Controler controler) {
+            super(controler);
         }
 
         @Override
@@ -67,7 +88,7 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         public void refreshItem(Object object) {
             for (int i=0;i<getDataList().size();i++)
             {
-                if (isSame(object,getDataList().get(i)))
+                if (isEquals(object,getDataList().get(i)))
                 {
                     getDataList().remove(i);
                     getDataList().add(i, object);
@@ -78,14 +99,14 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
 
         @Override
         public void refreshItem(int position) {
-            getBindView().refreshAdapter();
+           refreshAdapter();
         }
 
         @Override
         public void removeItem(Object object) {
             for (int i=0;i<getDataList().size();i++)
             {
-                if (isSame(object,getDataList().get(i)))
+                if (isEquals(object,getDataList().get(i)))
                 {
                     removeItem(i);
                 }
@@ -95,18 +116,13 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
         @Override
         public void removeItem(int position) {
             getDataList().remove(position);
-            getBindView().refreshAdapter();
+           refreshAdapter();
         }
 
         @Override
         public void insertItem(int position, Object object) {
             getDataList().add(position,object);
-            getBindView().refreshAdapter();
-        }
-
-        @Override
-        public List<String> getRoleList() {
-            return getBindView().getRoleList();
+            refreshAdapter();
         }
 
         @Override
@@ -156,21 +172,22 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                 return super.isEmptyData(object);
         }
 
+        @Override
         public List getDataList() {
             if (pointer == null || pointer.get() == null) return null;
             return pointer.get().getList();
-        }
-
-        //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数
-        protected void initAdapter(){
-            getBindView().initAdapter(pointer);
         }
 
         public void addDatas(List list) {
             getDataList().addAll(list);
         }
 
-        protected boolean isSame(Object one, Object two){
+        //初始化适配器，可以选择重写该方法，在初始化adapter时传入更多参数
+        protected void initAdapter(){
+            initAdapter(pointer);
+        }
+
+        protected boolean isEquals(Object one, Object two){
 
             if (one == null && two == null) return true;
 
@@ -181,6 +198,29 @@ public interface IBaseRefreshLoadListPresenter<T extends IBaseRefreshLoadListVie
                 return ((IdBehavior) one).getId().equals(((IdBehavior) two).getId());
 
             return one.equals(two);
+        }
+
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        // V
+        ///////////////////////////////////////////////////////////////////////////
+        @Deprecated
+        @Override
+        public List<String> getRoleList() {
+            return ((IBaseRefreshLoadListBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).getRoleList();
+        }
+
+        @Deprecated
+        @Override
+        public void initAdapter(Pointer<ListBehavior> pointer, Object... objects) {
+            ((IBaseRefreshLoadListBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).initAdapter(pointer,objects);
+        }
+
+        @Deprecated
+        @Override
+        public void refreshAdapter() {
+            ((IBaseRefreshLoadListBehavior)((IFasterBaseBehavior)getControler()).getBindAnother()).refreshAdapter();
         }
 
     }
