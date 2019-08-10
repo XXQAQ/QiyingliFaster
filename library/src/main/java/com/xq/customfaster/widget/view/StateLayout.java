@@ -38,6 +38,7 @@ public class StateLayout extends FrameLayout {
         {
             stateViewMap.put(STATE_CONTENT,getChildAt(0));
         }
+        stateView.setVisibility(GONE);
         addView(stateView,MATCH_PARENT,MATCH_PARENT);
         stateViewMap.put(state,stateView);
     }

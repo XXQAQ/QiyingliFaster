@@ -12,6 +12,7 @@ import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import java.util.ArrayList;
 import java.util.List;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class CustomRefreshLoadView extends TwinklingRefreshLayout implements RefreshLoadViewInterface {
 
@@ -136,10 +137,32 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
         if (stateLayout == null)
         {
             List<StateLayout> list = getAllSomeView(this,StateLayout.class);
-            if (list == null || list.isEmpty()) return null;
-            stateLayout = list.get(0);
+            if (list == null || list.isEmpty())
+            {
+                ViewGroup contentLayout = findViewById(getContext().getResources().getIdentifier("contentLayout", "id", getContext().getPackageName()));
+                if (contentLayout != null)
+                {
+                    stateLayout = new StateLayout(getContext());
+                    insertView(contentLayout,stateLayout);
+                }
+            }
+            else
+            {
+                stateLayout = list.get(0);
+            }
         }
         return stateLayout;
+    }
+
+    //将insertView替换至targetView的所在的节点位置
+    protected void insertView(View targetView, ViewGroup insertView){
+        ViewGroup targetParent=((ViewGroup)targetView.getParent());
+        int index = targetParent.indexOfChild(targetView);
+        targetParent.removeView(targetView);
+        insertView.setLayoutParams(targetView.getLayoutParams());
+        targetView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        insertView.addView(targetView);
+        targetParent.addView(insertView,index,insertView.getLayoutParams());
     }
 
     //指定控件具体类型，获取Container容器下所有该类型的控件
