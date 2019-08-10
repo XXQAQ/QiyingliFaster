@@ -2,12 +2,16 @@ package com.xq.customfaster.widget.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomRefreshLoadView extends TwinklingRefreshLayout implements RefreshLoadViewInterface {
 
@@ -127,39 +131,75 @@ public class CustomRefreshLoadView extends TwinklingRefreshLayout implements Ref
         });
     }
 
-    @Override
-    public void setLoadingView(Object object) {
+    private StateLayout stateLayout;
+    protected StateLayout getStateLayout(){
+        if (stateLayout == null)
+        {
+            List<StateLayout> list = getAllSomeView(this,StateLayout.class);
+            if (list == null || list.isEmpty()) return null;
+            stateLayout = list.get(0);
+        }
+        return stateLayout;
+    }
 
+    //指定控件具体类型，获取Container容器下所有该类型的控件
+    protected List getAllSomeView(View container, Class someView) {
+        List list = new ArrayList<>();
+        if (container instanceof ViewGroup)
+        {
+            ViewGroup viewGroup = (ViewGroup) container;
+            for (int i = 0; i < viewGroup.getChildCount(); i++)
+            {
+                View view = viewGroup.getChildAt(i);
+                if (someView.isAssignableFrom(view.getClass()))
+                    list.add(view);
+                //再次 调用本身（递归）
+                list.addAll(getAllSomeView(view,someView));
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public void setLoadingView(Object o) {
+        if (getStateLayout() != null)
+            getStateLayout().addStateView(StateLayout.STATE_LOADING, (View) o);
     }
 
     @Override
     public void showLoading() {
-
+        if (getStateLayout() != null)
+            getStateLayout().showStateView(StateLayout.STATE_LOADING);
     }
 
     @Override
     public void showContent() {
-
+        if (getStateLayout() != null)
+            getStateLayout().showStateView(StateLayout.STATE_CONTENT);
     }
 
     @Override
     public void setEmptyView(Object o) {
-
+        if (getStateLayout() != null)
+            getStateLayout().addStateView(StateLayout.STATE_EMPTY, (View) o);
     }
 
     @Override
     public void showEmpty() {
-
+        if (getStateLayout() != null)
+            getStateLayout().showStateView(StateLayout.STATE_EMPTY);
     }
 
     @Override
     public void setErroView(Object o) {
-
+        if (getStateLayout() != null)
+            getStateLayout().addStateView(StateLayout.STATE_ERRO, (View) o);
     }
 
     @Override
     public void showErro() {
-
+        if (getStateLayout() != null)
+            getStateLayout().showStateView(StateLayout.STATE_ERRO);
     }
 
 }
