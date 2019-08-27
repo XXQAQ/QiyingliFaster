@@ -1,6 +1,6 @@
 package com.xq.customfaster.util.callback.httpcallback;
 
-import com.xq.androidfaster.util.callback.httpcallback.FasterHttpCallback;
+import com.xq.androidfaster.util.callback.FasterHttpCallback;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadBehavior;
 
 public interface RefreshLoadCallbackInterface<T> extends FasterHttpCallback<T> {

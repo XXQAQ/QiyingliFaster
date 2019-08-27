@@ -13,7 +13,7 @@ import com.xq.androidfaster.util.tools.KeyboardUtils;
 import com.xq.androidfaster.util.tools.ResourceUtils;
 import com.xq.customfaster.util.event.ComponentEvent;
 import com.xq.customfaster.widget.view.CustomRefreshLoadView;
-import com.xq.worldbean.util.EventManager;
+import com.xq.androidfaster.util.EventManager;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
