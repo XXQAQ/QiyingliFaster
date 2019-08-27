@@ -1,4 +1,4 @@
-package com.xq.customfaster.util.callback.httpcallback;
+package com.xq.customfaster.util.callback;
 
 import com.xq.androidfaster.util.callback.FasterHttpCallback;
 import com.xq.customfaster.base.baserefreshload.IBaseRefreshLoadBehavior;

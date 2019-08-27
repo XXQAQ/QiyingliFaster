@@ -1,19 +1,13 @@
-package com.xq.customfaster.util.callback.httpcallback;
+package com.xq.customfaster.util.callback;
 
-import com.lzy.okgo.callback.AbsCallback;
+import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.xq.androidfaster.util.JsonConverter;
 import com.xq.androidfaster.util.callback.FasterHttpCallback;
+import java.io.File;
 
-public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements FasterHttpCallback<T> {
-
-    protected Class<T> entityClass;
-
-    public CustomBaseCallback(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
+public abstract class CustomBaseFileCallback extends FileCallback implements FasterHttpCallback<File> {
 
     @Deprecated
     @Override
@@ -31,21 +25,14 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
 
     @Deprecated
     @Override
-    public void onStart(Request<T, ? extends Request> request) {
+    public void onStart(Request<File, ? extends Request> request) {
         super.onStart(request);
         requestStart(request);
     }
 
     @Deprecated
     @Override
-    public void onCacheSuccess(Response<T> response) {
-        super.onCacheSuccess(response);
-        onSuccess(response);
-    }
-
-    @Deprecated
-    @Override
-    public void onSuccess(Response<T> response) {
+    public void onSuccess(Response<File> response) {
         requestSuccess(response.body(),response);
     }
 
@@ -58,20 +45,14 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
 
     @Deprecated
     @Override
-    public void onError(Response<T> response) {
+    public void onError(Response<File> response) {
         super.onError(response);
         requestError(response);
     }
 
-    @Deprecated
     @Override
-    public T convertResponse(okhttp3.Response response) throws Throwable {
-        if (entityClass.isAssignableFrom(byte[].class))
-            return (T) response.body().bytes();
-        else    if (entityClass.isAssignableFrom(String.class))
-            return (T) response.body().string();
-        else
-            return JsonConverter.jsonToObject(response.body().string(),entityClass);
+    public boolean operating(File file, Object... objects) {
+        return file != null;
     }
 
     @Override
@@ -80,8 +61,8 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     }
 
     @Override
-    public void requestSuccess(T t, Object... objects) {
-        FasterHttpCallback.super.requestSuccess(t,objects);
+    public void requestSuccess(File file, Object... objects) {
+        FasterHttpCallback.super.requestSuccess(file,objects);
     }
 
     @Override
@@ -93,4 +74,5 @@ public abstract class CustomBaseCallback<T> extends AbsCallback<T> implements Fa
     public void requestFinish(Object... objects) {
         FasterHttpCallback.super.requestFinish(objects);
     }
+
 }
