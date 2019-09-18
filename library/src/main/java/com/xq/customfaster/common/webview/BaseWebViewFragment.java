@@ -46,6 +46,11 @@ public class BaseWebViewFragment extends CustomBaseFragment<IBaseWebViewView> im
     }
 
     @Override
+    protected IBaseWebViewView createBindPresenter() {
+        return null;
+    }
+
+    @Override
     public boolean onBackClick() {
         if (getBindView().canGoBack())
         {

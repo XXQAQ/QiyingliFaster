@@ -16,11 +16,6 @@ import java.util.List;
 public abstract class CustomBaseFragment<T extends ICustomBaseBehavior> extends FasterBaseFragment<T> implements ICustomBaseBehavior<T> {
 
     @Override
-    protected T createBindPresenter() {
-        return null;
-    }
-
-    @Override
     public void create(Bundle savedInstanceState) {
         super.create(savedInstanceState);
 

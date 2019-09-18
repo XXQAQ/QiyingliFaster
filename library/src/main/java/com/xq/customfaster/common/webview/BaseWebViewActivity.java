@@ -46,6 +46,11 @@ public class BaseWebViewActivity extends CustomBaseActivity<IBaseWebViewView> im
     }
 
     @Override
+    protected IBaseWebViewView createBindPresenter() {
+        return null;
+    }
+
+    @Override
     public boolean onBackClick() {
         if (getBindView().canGoBack())
         {
