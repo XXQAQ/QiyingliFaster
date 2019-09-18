@@ -20,11 +20,6 @@ import java.util.List;
 
 public abstract class CustomBaseActivity<T extends ICustomBaseBehavior> extends FasterBaseActivity<T> implements ICustomBaseBehavior<T> {
 
-    @Override
-    protected T createBindPresenter() {
-        return null;
-    }
-
     @Deprecated
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +43,6 @@ public abstract class CustomBaseActivity<T extends ICustomBaseBehavior> extends 
         KeyboardUtils.hideSoftInput(this);
     }
 
-    @Deprecated
     @Override
     public void destroy() {
         super.destroy();
